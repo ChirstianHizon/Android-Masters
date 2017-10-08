@@ -6,7 +6,8 @@ package com.example.chris.mainactivity.Objects;
 
 public class Constants {
 
-    public static String PayMayaKey = "pk-N6TvoB4GP2kIgNz4OCchCTKYvY5kPQd2HDRSg8rPeQG";
+    public static String PayMayaKeyCheckout = "pk-iaioBC2pbY6d3BVRSebsJxghSHeJDW4n6navI7tYdrN";
+    public static String PayMayaKeyPayment = "pk-N6TvoB4GP2kIgNz4OCchCTKYvY5kPQd2HDRSg8rPeQG";
 
-    public static String PaypalKey = "";
+    public static String PaypalKey = "AXYYXi1dM2t5X0j1OvdaXjaUwBHCSY10gMYKyFBz6N5qRKEm2x7IlXx9SFNhwYXyqzhsfK8X8oaltmiP";
 }

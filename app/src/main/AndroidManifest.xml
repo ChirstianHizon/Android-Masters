@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PayMaya.PaymayalSample"></activity>
+        <activity android:name=".Sample.SampleCheckout"></activity>
     </application>
 
 </manifest>
