@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.chris.mainactivity.Sample.SampleCheckout;
-
-public class MainActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private Activity constant =  this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
 
-        startActivity(new Intent(constant,SampleCheckout.class));
+        //Splash Page
+
+        startActivity(new Intent(constant,ProjectListActivity.class));
         finish();
     }
 
