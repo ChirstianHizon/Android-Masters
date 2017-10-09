@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -89,18 +90,29 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.current.setText("P "+project.getCurrent());
         holder.goal.setText("P "+project.getGoal());
 
+        Double goal = Double.valueOf(project.getGoal());
+        Double current = Double.valueOf(project.getCurrent());
+
         Double progress = Double.valueOf(project.getCurrent()) / Double.valueOf(project.getGoal()) * 100;
 
         Log.d("PROGRESS", String.valueOf(progress));
 
-        if(progress > Double.valueOf(project.getGoal())){
+        if(current > goal){
             holder.status.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        }else if(current.equals(goal)){
+            holder.status.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         }else{
             holder.status.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
         }
 
 
-        holder.status.setProgress(progress.intValue());
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.status.setProgress(progress.intValue(),true);
+        }else{
+            holder.status.setProgress(progress.intValue());
+        }
 
         Log.d("IMAGE",project.getImage());
 
