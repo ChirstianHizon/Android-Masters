@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".Samples.SampleCheckout" />
         <activity android:name=".ProjectListActivity" />
-        <activity android:name=".ProjectDetails"></activity>
+        <activity
+            android:name=".ProjectView"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

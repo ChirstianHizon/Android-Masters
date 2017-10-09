@@ -6,12 +6,12 @@ package com.example.chris.mainactivity.Objects;
 
 public class Project {
 
-    private String id,name,description,date,organization,image,logo;
+    private String id,name,description,date,organization,image,logo,current,goal;
 
     public Project(){
 
     }
-    public Project(String id,String name,String desc,String date,String organization,String image,String logo){
+    public Project(String id,String name,String desc,String date,String organization,String image,String logo,String current,String goal){
         this.id = id;
         this.name = name;
         this.description = desc;
@@ -19,6 +19,9 @@ public class Project {
         this.organization = organization;
         this.image = image;
         this.logo = logo;
+        this.current = current;
+        this.logo = logo;
+        this.goal = goal;
     }
 
     public String getName() {
@@ -75,5 +78,21 @@ public class Project {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(String current) {
+        this.current = current;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 }

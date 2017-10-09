@@ -2,6 +2,8 @@ package com.example.chris.mainactivity.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,12 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chris.mainactivity.Objects.Project;
+import com.example.chris.mainactivity.ProjectView;
 import com.example.chris.mainactivity.R;
-import com.example.chris.mainactivity.Samples.SampleCheckout;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -38,6 +41,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         private final ImageView logo;
         private final CardView card;
         private final TextView id;
+        private final TextView goal;
+        private final TextView current;
+        private final ProgressBar status;
 
         public ViewHolder(View view) {
             super(view);
@@ -51,6 +57,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             image = (ImageView)view.findViewById(R.id.iv_image);
             date = (TextView)view.findViewById(R.id.tv_date);
             card = (CardView)view.findViewById(R.id.cv_card);
+            goal = (TextView) view.findViewById(R.id.tv_goal);
+            current = (TextView)view.findViewById(R.id.tv_current);
+            status = (ProgressBar)view.findViewById(R.id.pb_status);
         }
     }
 
@@ -70,13 +79,31 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Project project = projectlist.get(position);
 
+//      -------------- SET THE TEXT GATHERED FROM THE PROJECT OBJECT ---------
+
         holder.id.setText(project.getId());
         holder.name.setText(project.getName());
         holder.description.setText(project.getDescription());
         holder.date.setText(project.getDate());
         holder.organization.setText(project.getOrganization());
+        holder.current.setText("P "+project.getCurrent());
+        holder.goal.setText("P "+project.getGoal());
+
+        Double progress = Double.valueOf(project.getCurrent()) / Double.valueOf(project.getGoal()) * 100;
+
+        Log.d("PROGRESS", String.valueOf(progress));
+
+        if(progress > Double.valueOf(project.getGoal())){
+            holder.status.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        }else{
+            holder.status.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+        }
+
+
+        holder.status.setProgress(progress.intValue());
 
         Log.d("IMAGE",project.getImage());
+
         Picasso.with(context)
                 .load(project.getImage())
                 .fit()
@@ -100,8 +127,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 String organization = holder.organization.getText().toString();
                 Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
-//                Intent intent =  new Intent(context, ProjectDetails.class);
-                Intent intent = new Intent(context, SampleCheckout.class);
+                Intent intent =  new Intent(context, ProjectView.class);
+//                Intent intent = new Intent(context, SampleCheckout.class);
                 intent.putExtra("id",id);
                 intent.putExtra("organization",organization);
                 context.startActivity(intent);

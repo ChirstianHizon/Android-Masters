@@ -64,21 +64,35 @@ public class ProjectListActivity extends AppCompatActivity {
 
                         adapter.clear();
                         for (DocumentSnapshot doc : value) {
+                            Log.d("DOCUMENT", String.valueOf(doc.getData()));
 //                          Project(String name,String desc,String date,String organization,String image,String logo)
                             if(doc.getString("name") != null && doc.getString("description") != null
                                     && doc.getString("date") != null && doc.getString("organization") != null
-                                    && doc.getString("image") != null && doc.getString("logo") != null){
-                                projectlist.add(
-                                        new Project(
-                                                doc.getId(),
-                                                doc.getString("name"),
-                                                doc.getString("description"),
-                                                doc.getString("date"),
-                                                doc.getString("organization"),
-                                                doc.getString("image"),
-                                                doc.getString("logo")
-                                        ));
-                                adapter.notifyDataSetChanged();
+                                    && doc.getString("image") != null && doc.getString("logo") != null
+                                    && doc.getString("goal") != null && doc.getString("current") != null){
+
+                                if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("description").equalsIgnoreCase("")
+                                        && !doc.getString("date").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
+                                        && !doc.getString("image").equalsIgnoreCase("") && !doc.getString("logo").equalsIgnoreCase("")
+                                        && !doc.getString("goal").equalsIgnoreCase("") && !doc.getString("current").equalsIgnoreCase("")){
+
+                                    projectlist.add(
+                                            new Project(
+                                                    doc.getId(),
+                                                    doc.getString("name"),
+                                                    doc.getString("description"),
+                                                    doc.getString("date"),
+                                                    doc.getString("organization"),
+                                                    doc.getString("image"),
+                                                    doc.getString("logo"),
+                                                    doc.getString("current"),
+                                                    doc.getString("goal")
+                                            ));
+                                    adapter.notifyDataSetChanged();
+
+
+                                }
+
                             }
 
 
