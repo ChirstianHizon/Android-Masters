@@ -1,11 +1,15 @@
 package com.example.chris.mainactivity.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.chris.mainactivity.DonateActivity;
+import com.example.chris.mainactivity.ProjectView;
 import com.example.chris.mainactivity.R;
 
 
@@ -17,6 +21,18 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
         View view = inflater.inflate(R.layout.fragment_projectview_details, container, false);
 
+        Button btndonate = (Button)view.findViewById(R.id.btn_donate);
+        btndonate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String id = ProjectView.getProjectId();
+
+                Intent intent = new Intent(getContext(), DonateActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

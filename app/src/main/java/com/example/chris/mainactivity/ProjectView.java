@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.chris.mainactivity.Adapters.TabsPageAdapter;
 import com.example.chris.mainactivity.Fragments.fragment_ProjectView_Contact;
@@ -19,7 +18,7 @@ import com.example.chris.mainactivity.Fragments.fragment_ProjectView_Progress;
 
 public class ProjectView extends AppCompatActivity {
 
-    private String id;
+    private static String id;
     private Activity context = this;
     private TabsPageAdapter mTabsPageAdapter;
     private ViewPager mViewPager;
@@ -45,7 +44,7 @@ public class ProjectView extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
 
 //        ------------ INSTANTIATE TABS ADAPTER AND PAGER ------
@@ -85,6 +84,10 @@ public class ProjectView extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static String getProjectId(){
+        return id;
     }
 
 }

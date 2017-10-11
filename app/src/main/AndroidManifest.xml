@@ -20,7 +20,10 @@
         <activity android:name=".ProjectListActivity" />
         <activity
             android:name=".ProjectView"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DonateActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -15,9 +15,7 @@ public class fragment_ProjectView_Contact extends android.support.v4.app.Fragmen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_projectview_contact, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_projectview_contact, container, false);
     }
 
 

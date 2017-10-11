@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.chris.mainactivity.Objects.Project;
 import com.example.chris.mainactivity.ProjectView;
@@ -137,7 +136,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
                 String id = holder.id.getText().toString();
                 String organization = holder.organization.getText().toString();
-                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
                 Intent intent =  new Intent(context, ProjectView.class);
 //                Intent intent = new Intent(context, SampleCheckout.class);
