@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Fragments;
+package com.example.chris.androidmasters.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.chris.mainactivity.DonateActivity;
-import com.example.chris.mainactivity.ProjectView;
-import com.example.chris.mainactivity.R;
+import com.example.chris.androidmasters.DonateActivity;
+import com.example.chris.androidmasters.ProjectView;
+import com.example.chris.androidmasters.R;
 
 
 public class fragment_ProjectView_Details extends android.support.v4.app.Fragment {

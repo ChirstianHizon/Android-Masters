@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Adapters;
+package com.example.chris.androidmasters.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

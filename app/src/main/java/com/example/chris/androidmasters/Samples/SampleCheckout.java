@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Samples;
+package com.example.chris.androidmasters.Samples;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.chris.mainactivity.Objects.Constants;
-import com.example.chris.mainactivity.R;
+import com.example.chris.androidmasters.Objects.Constants;
+import com.example.chris.androidmasters.R;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;

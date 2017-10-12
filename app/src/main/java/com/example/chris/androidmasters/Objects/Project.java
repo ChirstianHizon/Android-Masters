@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Objects;
+package com.example.chris.androidmasters.Objects;
 
 /**
  * Created by chris on 08/10/2017.

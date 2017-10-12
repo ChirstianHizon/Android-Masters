@@ -1,17 +1,20 @@
-package com.example.chris.mainactivity;
+package com.example.chris.androidmasters;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.chris.mainactivity.Objects.Constants;
+import com.example.chris.androidmasters.Objects.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,17 +42,30 @@ public class DonateActivity extends AppCompatActivity {
     private String amount,id;
     private FirebaseFirestore db;
     private String TAG = "DONATE_ACTIVITY";
+    private ProgressBar pbloading;
+    private Button btnamount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+
 
         db = FirebaseFirestore.getInstance();
 
         edtamount = (EditText)findViewById(R.id.edt_amount);
-        Button btnamount = (Button) findViewById(R.id.btn_donate);
+        pbloading = (ProgressBar)findViewById(R.id.pb_loading);
+        btnamount = (Button) findViewById(R.id.btn_donate);
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -61,6 +77,9 @@ public class DonateActivity extends AppCompatActivity {
 
                 amount = edtamount.getText().toString();
                 if(!amount.equals("") && amount != null){
+                    pbloading.setVisibility(View.VISIBLE);
+                    edtamount.setVisibility(View.GONE);
+                    btnamount.setVisibility(View.GONE);
                   getPayment(amount);
                 }else{
                     Toast.makeText(context, "Set Desired Amount First", Toast.LENGTH_SHORT).show();
@@ -71,6 +90,16 @@ public class DonateActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void getPayment(String amount) {
@@ -140,7 +169,6 @@ public class DonateActivity extends AppCompatActivity {
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG, "DATA_ADDED TO FS" + documentReference.getId());
                                     UpdateProgress(amount);
-                                    finish();
                                 }
                             });
                         }
@@ -177,6 +205,11 @@ public class DonateActivity extends AppCompatActivity {
 
 
                         db.collection("Projects").document(id).set(update, SetOptions.merge());
+                        finish();
+
+                        pbloading.setVisibility(View.GONE);
+                        edtamount.setVisibility(View.VISIBLE);
+                        btnamount.setVisibility(View.VISIBLE);
                     } else {
                         Log.d(TAG, "FS Update Failed", task.getException());
                     }

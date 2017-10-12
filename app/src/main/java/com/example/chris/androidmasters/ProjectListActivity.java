@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity;
+package com.example.chris.androidmasters;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.chris.mainactivity.Adapters.ProjectListAdapter;
-import com.example.chris.mainactivity.Objects.Project;
+import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
+import com.example.chris.androidmasters.Objects.Project;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;

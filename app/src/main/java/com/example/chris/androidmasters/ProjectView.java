@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity;
+package com.example.chris.androidmasters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.chris.mainactivity.Adapters.TabsPageAdapter;
-import com.example.chris.mainactivity.Fragments.fragment_ProjectView_Contact;
-import com.example.chris.mainactivity.Fragments.fragment_ProjectView_Details;
-import com.example.chris.mainactivity.Fragments.fragment_ProjectView_Progress;
+import com.example.chris.androidmasters.Adapters.TabsPageAdapter;
+import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Contact;
+import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Details;
+import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Progress;
 
 public class ProjectView extends AppCompatActivity {
 

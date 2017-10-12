@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Adapters;
+package com.example.chris.androidmasters.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.chris.mainactivity.Objects.Project;
-import com.example.chris.mainactivity.ProjectView;
-import com.example.chris.mainactivity.R;
+import com.example.chris.androidmasters.Objects.Project;
+import com.example.chris.androidmasters.ProjectView;
+import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             name = (TextView)view.findViewById(R.id.tv_name);
             description = (TextView)view.findViewById(R.id.tv_desc);
             display = (ImageView)view.findViewById(R.id.iv_image);
-            organization = (TextView)view.findViewById(R.id.tv_organization);
+            organization = (TextView)view.findViewById(R.id.tv_amount);
             logo = (ImageView)view.findViewById(R.id.iv_logo);
             image = (ImageView)view.findViewById(R.id.iv_image);
             date = (TextView)view.findViewById(R.id.tv_date);
@@ -103,8 +103,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         }else{
             holder.status.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
         }
-
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

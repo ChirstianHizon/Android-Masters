@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity.Objects;
+package com.example.chris.androidmasters.Objects;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 

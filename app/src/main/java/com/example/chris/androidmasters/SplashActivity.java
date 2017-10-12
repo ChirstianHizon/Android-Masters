@@ -1,4 +1,4 @@
-package com.example.chris.mainactivity;
+package com.example.chris.androidmasters;
 
 import android.app.Activity;
 import android.content.Intent;
