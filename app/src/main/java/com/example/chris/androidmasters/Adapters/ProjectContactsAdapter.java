@@ -7,22 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.chris.androidmasters.Objects.Transactions;
+import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.R;
 
 import java.util.List;
-
-import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
 
 /**
  * Created by chris on 08/10/2017.
  */
 
-public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTransactionAdapter.ViewHolder> {
+public class ProjectContactsAdapter extends RecyclerView.Adapter<ProjectContactsAdapter.ViewHolder> {
 
-    private final List<Transactions> transactionsList;
+    private final List<Contacts> contactsList;
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,9 +38,9 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
         }
     }
 
-    public ProjectTransactionAdapter(Context context, List<Transactions> transactionsList){
+    public ProjectContactsAdapter(Context context, List<Contacts> contactsList){
         this.context = context;
-        this.transactionsList = transactionsList;
+        this.contactsList = contactsList;
     }
 
     @Override
@@ -55,18 +52,18 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Transactions transactions = transactionsList.get(position);
+        final Contacts contacts = contactsList.get(position);
 
-        String currency = getCurrencySymbol("PHP");
-        holder.amount.setText("A user has donated  "+currency+" "+ transactions.getAmount());
-        holder.datestamp.setText(transactions.getDate());
-
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, transactions.getId(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        String currency = getCurrencySymbol("PHP");
+//        holder.amount.setText("A user has donated  "+currency+" "+ transactions.getAmount());
+//        holder.datestamp.setText(transactions.getDate());
+//
+//        holder.card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, contacts.getId(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 
@@ -74,11 +71,11 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
 
     @Override
     public int getItemCount() {
-        return transactionsList.size();
+        return contactsList.size();
     }
 
     public void clear() {
-        transactionsList.clear();
+        contactsList.clear();
 
     }
 

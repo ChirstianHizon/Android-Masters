@@ -126,13 +126,13 @@
                         android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_amount"
-                        android:layout_toEndOf="@+id/iv_logo"
                         android:text="Date Added"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:layout_below="@+id/tv_organization"
+                        android:layout_toEndOf="@+id/iv_logo" />
 
                     <TextView
-                        android:id="@+id/tv_amount"
+                        android:id="@+id/tv_organization"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"

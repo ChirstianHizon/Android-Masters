@@ -91,6 +91,7 @@
                         android:visibility="visible" />
 
                     <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_main"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 

@@ -2,6 +2,8 @@ package com.example.chris.androidmasters.Objects;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 
+import java.util.Currency;
+
 /**
  * Created by chris on 08/10/2017.
  */
@@ -16,5 +18,12 @@ public class Constants {
     public static PayPalConfiguration PaypalConfig = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(Constants.PaypalKey);
+
+    public static String getCurrencySymbol(String countryCode) {
+        // Locale locale = new Locale("", countryCode);
+        Currency currency = Currency.getInstance(countryCode);
+        String symbol = currency.getSymbol();
+        return symbol;
+    }
 
 }

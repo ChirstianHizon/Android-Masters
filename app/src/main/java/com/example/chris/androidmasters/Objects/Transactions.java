@@ -8,6 +8,7 @@ public class Transactions {
 
     private String id,date,amount;
 
+    public Transactions (){}
     public Transactions (String id,String date,String amount){
         this.id = id;
         this.date = date;

@@ -22,6 +22,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
+
 /**
  * Created by chris on 08/10/2017.
  */
@@ -52,7 +54,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             name = (TextView)view.findViewById(R.id.tv_name);
             description = (TextView)view.findViewById(R.id.tv_desc);
             display = (ImageView)view.findViewById(R.id.iv_image);
-            organization = (TextView)view.findViewById(R.id.tv_amount);
+            organization = (TextView)view.findViewById(R.id.tv_organization);
             logo = (ImageView)view.findViewById(R.id.iv_logo);
             image = (ImageView)view.findViewById(R.id.iv_image);
             date = (TextView)view.findViewById(R.id.tv_date);
@@ -86,8 +88,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.description.setText(project.getDescription());
         holder.date.setText(project.getDate());
         holder.organization.setText(project.getOrganization());
-        holder.current.setText("P "+project.getCurrent());
-        holder.goal.setText("P "+project.getGoal());
+
+        String currency = getCurrencySymbol("PHP");
+        holder.current.setText(currency+" "+project.getCurrent());
+        holder.goal.setText(currency+project.getGoal());
 
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
@@ -123,6 +127,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         Picasso.with(context)
                 .load(project.getLogo())
                 .resize(30,30)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
                 .centerCrop()
                 .into(holder.logo);
 

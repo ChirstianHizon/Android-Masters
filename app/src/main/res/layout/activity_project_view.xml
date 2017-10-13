@@ -17,7 +17,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:scrimAnimationDuration="2000"
+            app:scrimAnimationDuration="800"
             android:theme="@style/AppToolbar"
             app:toolbarId="@+id/toolbar">
 

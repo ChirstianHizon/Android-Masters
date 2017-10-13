@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,19 +159,24 @@ public class DonateActivity extends AppCompatActivity {
                             String time = response.getString("create_time");
                             String trans_id = response.getString("id");
 
-                            Map<String, Object> transaction = new HashMap<>();
-                            transaction.put("time", time);
-                            transaction.put("id", trans_id);
-                            transaction.put("amount", amount);
 
-                            db.collection("transaction_"+id).add(transaction)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DATA_ADDED TO FS" + documentReference.getId());
-                                    UpdateProgress(amount);
-                                }
-                            });
+                            Map<String, Object> transactions = new HashMap<>();
+                            transactions.put("id", trans_id);
+                            transactions.put("date", new Date());
+                            transactions.put("amount", amount);
+
+                            Map<String, Object> docData = new HashMap<>();
+                            docData.put(String.valueOf(new Date()), transactions);
+
+
+
+                            db.collection("Transactions").document(id).set(docData,SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            UpdateProgress(amount);
+                                        }
+                                    });
                         }
 
                     } catch (JSONException e) {
