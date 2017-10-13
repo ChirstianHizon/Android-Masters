@@ -10,11 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.chris.androidmasters.Adapters.TabsPageAdapter;
 import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Contact;
 import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Details;
 import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Progress;
+import com.squareup.picasso.Picasso;
 
 public class ProjectView extends AppCompatActivity {
 
@@ -65,6 +67,8 @@ public class ProjectView extends AppCompatActivity {
                 return false;
             }
         });
+
+        toolbar.setVisibility(View.GONE);
     }
 
 
@@ -88,6 +92,18 @@ public class ProjectView extends AppCompatActivity {
 
     public static String getProjectId(){
         return id;
+    }
+
+    public void changeDisplayImage(String image){
+        ImageView display = (ImageView)findViewById(R.id.app_bar_image);
+
+        if(image != null && !image.equals("")){
+            Picasso.with(this)
+                    .load(image)
+                    .resize(800,800)
+                    .error(R.mipmap.ic_launcher)
+                    .into(display);
+        }
     }
 
 }

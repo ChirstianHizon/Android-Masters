@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.chris.androidmasters.DonateActivity;
+import com.example.chris.androidmasters.Objects.Details;
 import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.google.firebase.firestore.DocumentReference;
@@ -17,12 +21,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 public class fragment_ProjectView_Details extends android.support.v4.app.Fragment {
 
     private FirebaseFirestore db;
     private String id;
     private String TAG = "FRAG_PROJVIEW";
+    private View view;
 
     @Nullable
     @Override
@@ -33,7 +39,8 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
         getProjectDetails();
 
-        View view = inflater.inflate(R.layout.fragment_projectview_details, container, false);
+
+        view = inflater.inflate(R.layout.fragment_projectview_details, container, false);
 
         Button btndonate = (Button)view.findViewById(R.id.btn_donate);
         btndonate.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +67,11 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG,snapshot.getData().toString());
+
+                    // GETS AND TRANSFER DATA TO CLASS
+                    Details details = snapshot.toObject(Details.class);
+                    setDetails(details);
+
                 }else{
                     Log.d(TAG, "Current data: null");
                 }
@@ -68,6 +79,41 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
             }
         });
+
+    }
+
+    private void setDetails(Details details){
+
+        TextView Title = (TextView)view.findViewById(R.id.tv_project_title);
+        TextView Organization = (TextView)view.findViewById(R.id.tv_organization);
+        TextView shortdesc = (TextView)view.findViewById(R.id.tv_project_description);
+
+        LinearLayout llimagedisplay = (LinearLayout)view.findViewById(R.id.ll_image_display);
+
+        Title.setText(details.getTitle());
+        Organization.setText(details.getOrganization());
+        shortdesc.setText(details.getShort_description());
+
+        llimagedisplay.removeAllViews();
+
+        ProjectView projectview = (ProjectView)getActivity();
+        projectview.changeDisplayImage(details.getDisplay_image());
+
+        int size = details.getImagesSize();
+        for(int x = 0;x < size;x++){
+
+            if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
+                ImageView myImage = new ImageView(getContext());
+                myImage.setImageResource(R.mipmap.ic_launcher);
+                llimagedisplay.addView(myImage);
+
+                Picasso.with(getContext())
+                        .load(details.getSelectedImages(x))
+                        .resize(800,800)
+                        .error(R.mipmap.ic_launcher)
+                        .into(myImage);
+            }
+        }
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.Objects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chris on 13/10/2017.
@@ -9,15 +10,9 @@ import java.util.ArrayList;
 public class Details {
 
     private String display_image,display_video,full_description,organization,short_description,title;
-    private ArrayList<String> image;
+    private List<String>images;
 
-    public ArrayList<String> getImage() {
-        return image;
-    }
-
-    public void setImage(ArrayList<String> image) {
-        this.image = image;
-    }
+    public Details(){}
 
     public String getDisplay_image() {
         return display_image;
@@ -65,5 +60,25 @@ public class Details {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public String getSelectedImages(int pos) {
+        if(pos >= images.size()){
+            return null;
+        }else {
+            return images.get(pos);
+        }
+    }
+    public int getImagesSize(){
+        return images.size();
+    }
+
+    public void setImages(List<String> images) {
+        this.images = new ArrayList<String>();
+        this.images = images;
     }
 }

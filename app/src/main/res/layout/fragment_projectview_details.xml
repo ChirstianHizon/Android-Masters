@@ -44,7 +44,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_name"
+                        android:id="@+id/tv_organization"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Organization Name" />
@@ -81,6 +81,15 @@
                         android:textAlignment="center"
                         android:textSize="24sp" />
 
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="See More"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimary" />
+
                     <View
                         android:id="@+id/view"
                         android:layout_width="fill_parent"
@@ -97,43 +106,10 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:id="@+id/ll_image_display"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/iv_project_image_1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/cio_ic_discover" />
-
-                            <ImageView
-                                android:id="@+id/iv_project_image_2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/cio_ic_discover" />
-
-                            <ImageView
-                                android:id="@+id/iv_project_image_3"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/cio_ic_discover" />
-
-                            <ImageView
-                                android:id="@+id/iv_project_image_4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/cio_ic_discover" />
-
-                            <ImageView
-                                android:id="@+id/iv_project_image_5"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/cio_ic_discover" />
 
                         </LinearLayout>
                     </HorizontalScrollView>
