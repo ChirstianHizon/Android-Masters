@@ -106,12 +106,15 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
             if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
                 ImageView myImage = new ImageView(getContext());
+                myImage.setMaxHeight(800);
+                myImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                myImage.setAdjustViewBounds(true);
+
                 myImage.setImageResource(R.mipmap.ic_launcher);
                 llimagedisplay.addView(myImage);
 
                 Picasso.with(getContext())
                         .load(details.getSelectedImages(x))
-                        .resize(800,800)
                         .error(R.mipmap.ic_launcher)
                         .into(myImage);
             }
