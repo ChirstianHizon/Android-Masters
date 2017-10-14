@@ -20,6 +20,7 @@ import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
@@ -86,6 +87,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.id.setText(project.getId());
         holder.name.setText(project.getName());
         holder.description.setText(project.getDescription());
+
+
         holder.date.setText(project.getDate());
         holder.organization.setText(project.getOrganization());
 
@@ -150,6 +153,12 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         });
 
 
+        //
+        Date now = new Date();
+        Date completion = project.getCompletion_date();
+        getDifference(now,completion);
+
+
     }
 
     @Override
@@ -160,6 +169,38 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     public void clear() {
         projectlist.clear();
 
+    }
+
+
+    // Calculate Date Difference
+    //1 minute = 60 seconds
+    //1 hour = 60 x 60 = 3600
+    //1 day = 3600 x 24 = 86400
+    public void getDifference(Date startDate, Date endDate) {
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+//        System.out.println("startDate : " + startDate);
+//        System.out.println("endDate : "+ endDate);
+//        System.out.println("different : " + different);
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        Log.d("DATE ELASPSED",elapsedDays + "|" +elapsedHours + "|" +elapsedMinutes+ "|" + elapsedSeconds);
     }
 
 

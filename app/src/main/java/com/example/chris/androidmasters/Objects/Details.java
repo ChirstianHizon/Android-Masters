@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Details {
 
-    private String display_image,display_video,full_description,organization,short_description,title;
+    private String display_image,display_video,full_description,organization,short_description,title,logo;
     private List<String>images;
 
     public Details(){}
@@ -80,5 +80,13 @@ public class Details {
     public void setImages(List<String> images) {
         this.images = new ArrayList<String>();
         this.images = images;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

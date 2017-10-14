@@ -1,5 +1,7 @@
 package com.example.chris.androidmasters.Objects;
 
+import java.util.Date;
+
 /**
  * Created by chris on 08/10/2017.
  */
@@ -7,6 +9,7 @@ package com.example.chris.androidmasters.Objects;
 public class Project {
 
     private String id,name,description,date,organization,image,logo,current,goal;
+    private Date completion_date;
 
     public Project(){
 
@@ -94,5 +97,13 @@ public class Project {
 
     public void setGoal(String goal) {
         this.goal = goal;
+    }
+
+    public Date getCompletion_date() {
+        return completion_date;
+    }
+
+    public void setCompletion_date(Date completion_date) {
+        this.completion_date = completion_date;
     }
 }
