@@ -57,6 +57,7 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
     }
 
     private void getProjectDetails(){
+        Log.d(TAG,"ID: "+id);
         DocumentReference docRef = db.collection("Details").document(id);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -69,6 +70,7 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
                 if (snapshot != null && snapshot.exists()) {
 
                     // GETS AND TRANSFER DATA TO CLASS
+                    //TODO: CREATE VALIDATION TO CHECK IF FIELDS ARE PRESENT
                     Details details = snapshot.toObject(Details.class);
                     setDetails(details);
 
