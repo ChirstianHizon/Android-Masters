@@ -105,7 +105,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         }else if(current.equals(goal)){
             holder.status.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         }else{
-            holder.status.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+            holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
         }
 
 
