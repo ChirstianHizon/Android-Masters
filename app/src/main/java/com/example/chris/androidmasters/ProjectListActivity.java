@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectListActivity extends AppCompatActivity {
@@ -70,25 +71,20 @@ public class ProjectListActivity extends AppCompatActivity {
                             if(doc.getString("name") != null && doc.getString("description") != null
                                     && doc.getString("date") != null && doc.getString("organization") != null
                                     && doc.getString("image") != null && doc.getString("logo") != null
-                                    && doc.getString("goal") != null && doc.getString("current") != null){
+                                    && doc.getString("goal") != null && doc.getString("current") != null
+                                    && doc.getDate("completion_date") != null){
 
                                 if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("description").equalsIgnoreCase("")
                                         && !doc.getString("date").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
                                         && !doc.getString("image").equalsIgnoreCase("") && !doc.getString("logo").equalsIgnoreCase("")
                                         && !doc.getString("goal").equalsIgnoreCase("") && !doc.getString("current").equalsIgnoreCase("")){
 
-                                    projectlist.add(
-                                            new Project(
-                                                    doc.getId(),
-                                                    doc.getString("name"),
-                                                    doc.getString("description"),
-                                                    doc.getString("date"),
-                                                    doc.getString("organization"),
-                                                    doc.getString("image"),
-                                                    doc.getString("logo"),
-                                                    doc.getString("current"),
-                                                    doc.getString("goal")
-                                            ));
+                                    Date date = doc.getDate("completion_date");
+                                    Log.d("DATE_COMPLETION",date.toString());
+
+                                    Project project = doc.toObject(Project.class);
+                                    project.setId(doc.getId());
+                                    projectlist.add(project);
                                     adapter.notifyDataSetChanged();
 
 
