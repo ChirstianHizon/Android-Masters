@@ -2,6 +2,8 @@ package com.example.chris.androidmasters.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +50,10 @@ public class fragment_ProjectView_Contact extends android.support.v4.app.Fragmen
         RecyclerView recmain = (RecyclerView) view.findViewById(R.id.rec_main);
         contactList = new ArrayList<Contacts>();
         adapter = new ProjectContactsAdapter(getContext(),contactList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recmain.setHasFixedSize(true);
+        recmain.setLayoutManager(layoutManager);
+        recmain.setItemAnimator(new DefaultItemAnimator());
         recmain.setAdapter(adapter);
 
         getContacts();
@@ -82,7 +88,8 @@ public class fragment_ProjectView_Contact extends android.support.v4.app.Fragmen
                         JSONArray positions = new JSONArray(obj.getString("Positions"));
 
                         adapter.clear();
-                        for(int x=0;x<size;x++){
+                        for(int x = 0;x<size;x++){
+                            Log.d(TAG,names.getString(x));
                             contactList.add(
                                     new Contacts(
                                             names.getString(x),
