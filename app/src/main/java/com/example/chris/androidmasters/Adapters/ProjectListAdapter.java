@@ -15,11 +15,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -93,8 +95,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.organization.setText(project.getOrganization());
 
         String currency = getCurrencySymbol("PHP");
-        holder.current.setText(currency+" "+project.getCurrent());
-        holder.goal.setText(currency+project.getGoal());
+        holder.current.setText(currency+" "+  NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
+        holder.goal.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getGoal())));
 
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
@@ -153,10 +155,21 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         });
 
 
-        //
+        //Get Date Elapsed
         Date now = new Date();
         Date completion = project.getCompletion_date();
-        getDifference(now,completion);
+
+        ElapsedTime elapsed = new ElapsedTime(now,completion);
+
+        if(elapsed.getDay() > 0 ){
+            holder.date.setText(elapsed.getDay() + " days remaining");
+        }else if(elapsed.getHour() > 0 ){
+            holder.date.setText(elapsed.getHour() + " hours remaining");
+        }else if(elapsed.getMinute() > 0 ){
+            holder.date.setText(elapsed.getMinute() + " minutes remaining");
+        }else{
+            holder.date.setText("Project is Already Finished");
+        }
 
 
     }
@@ -170,38 +183,5 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         projectlist.clear();
 
     }
-
-
-    // Calculate Date Difference
-    //1 minute = 60 seconds
-    //1 hour = 60 x 60 = 3600
-    //1 day = 3600 x 24 = 86400
-    public void getDifference(Date startDate, Date endDate) {
-        //milliseconds
-        long different = endDate.getTime() - startDate.getTime();
-
-//        System.out.println("startDate : " + startDate);
-//        System.out.println("endDate : "+ endDate);
-//        System.out.println("different : " + different);
-
-        long secondsInMilli = 1000;
-        long minutesInMilli = secondsInMilli * 60;
-        long hoursInMilli = minutesInMilli * 60;
-        long daysInMilli = hoursInMilli * 24;
-
-        long elapsedDays = different / daysInMilli;
-        different = different % daysInMilli;
-
-        long elapsedHours = different / hoursInMilli;
-        different = different % hoursInMilli;
-
-        long elapsedMinutes = different / minutesInMilli;
-        different = different % minutesInMilli;
-
-        long elapsedSeconds = different / secondsInMilli;
-
-        Log.d("DATE ELASPSED",elapsedDays + "|" +elapsedHours + "|" +elapsedMinutes+ "|" + elapsedSeconds);
-    }
-
 
 }
