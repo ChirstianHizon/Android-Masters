@@ -10,11 +10,12 @@
         android:id="@+id/cv_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_marginBottom="10dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
             <ImageView
                 android:id="@+id/iv_image"
@@ -58,79 +59,28 @@
                         android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Donation Title"
-                        android:textColor="#333"
+                        android:text="Title"
                         android:textSize="24sp"
                         tools:layout_editor_absoluteX="62dp"
                         tools:layout_editor_absoluteY="187dp" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp">
-
-                        <ImageView
-                            android:id="@+id/iv_logo"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginRight="5dp"
-                            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
-
-                        <TextView
-                            android:id="@+id/tv_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_organization"
-                            android:layout_toEndOf="@+id/iv_logo"
-                            android:text="Date Added"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tv_organization"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_toEndOf="@+id/iv_logo"
-                            android:text="NGO Name" />
-
-                        <TextView
-                            android:id="@+id/tv_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_toEndOf="@+id/iv_logo"
-                            android:text="NGO Name"
-                            android:visibility="gone" />
-
-                    </RelativeLayout>
 
                     <ProgressBar
                         android:id="@+id/pb_status"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="1"
                         android:elevation="1dp"
                         android:progress="100" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="16dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_current"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:text="P 100"
                             android:textSize="14sp"
@@ -141,7 +91,6 @@
                             android:id="@+id/tv_goal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:text="P 100"
                             android:textDirection="rtl"
@@ -160,6 +109,46 @@
                         tools:layout_editor_absoluteY="187dp" />
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date Added"
+                        android:textSize="12sp"
+                        android:layout_below="@+id/tv_organization"
+                        android:layout_toEndOf="@+id/iv_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_organization"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/iv_logo"
+                        android:text="NGO Name" />
+
+                    <TextView
+                        android:id="@+id/tv_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/iv_logo"
+                        android:text="NGO Name"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
