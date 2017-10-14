@@ -119,7 +119,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         Picasso.with(context)
                 .load(project.getImage())
-                .fit()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.image);
