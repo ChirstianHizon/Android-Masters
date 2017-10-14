@@ -91,7 +91,7 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
         LinearLayout llimagedisplay = (LinearLayout)view.findViewById(R.id.ll_image_display);
 
         Title.setText(details.getTitle());
-        Organization.setText(details.getOrganization());
+        Organization.setText("by" + details.getOrganization());
         shortdesc.setText(details.getShort_description());
 
         llimagedisplay.removeAllViews();
