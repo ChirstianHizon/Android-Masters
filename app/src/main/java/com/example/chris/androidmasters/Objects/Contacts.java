@@ -6,12 +6,15 @@ package com.example.chris.androidmasters.Objects;
 
 public class Contacts {
 
-    private String id,name,position;
+    private String id,name,position,contact;
 
     public Contacts(){}
 
-    public Contacts(String id,String name,String position){
+    public Contacts(String name,String position,String contaact){
 
+        this.name = name;
+        this.position = position;
+        this.contact = contaact;
 
     }
 
@@ -37,5 +40,13 @@ public class Contacts {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }

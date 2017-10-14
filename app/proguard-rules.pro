@@ -24,7 +24,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-    # This is added for okhttp 3.1.2 bug fix as shown at https://github.com/square/okhttp/issues/2323
-    -keepclassmembers class * implements javax.net.ssl.SSLSocketFactory {
-         private javax.net.ssl.SSLSocketFactory delegate;
-    }
+# This is added for okhttp 3.1.2 bug fix as shown at https://github.com/square/okhttp/issues/2323
+-keepclassmembers class * implements javax.net.ssl.SSLSocketFactory {
+     private javax.net.ssl.SSLSocketFactory delegate;
+}
+
+-dontwarn com.squareup.okhttp.**

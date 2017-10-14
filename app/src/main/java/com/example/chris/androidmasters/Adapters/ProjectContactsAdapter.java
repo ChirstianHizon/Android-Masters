@@ -3,6 +3,7 @@ package com.example.chris.androidmasters.Adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +25,17 @@ public class ProjectContactsAdapter extends RecyclerView.Adapter<ProjectContacts
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView amount;
-        private final TextView datestamp;
         private final CardView card;
+        private final TextView contact;
+        private final TextView position;
+        private final TextView name;
 
         public ViewHolder(View view) {
             super(view);
 
-            amount  = (TextView)view.findViewById(R.id.tv_name);
-            datestamp = (TextView)view.findViewById(R.id.tv_date);
+            name  = (TextView)view.findViewById(R.id.tv_name);
+            position = (TextView)view.findViewById(R.id.tv_position);
+            contact = (TextView)view.findViewById(R.id.tv_contact);
             card = (CardView)view.findViewById(R.id.cv_card);
 
         }
@@ -46,7 +49,7 @@ public class ProjectContactsAdapter extends RecyclerView.Adapter<ProjectContacts
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_transactions, parent, false);
+                .inflate(R.layout.card_contacts, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -54,19 +57,10 @@ public class ProjectContactsAdapter extends RecyclerView.Adapter<ProjectContacts
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Contacts contacts = contactsList.get(position);
 
-//        String currency = getCurrencySymbol("PHP");
-//        holder.amount.setText("A user has donated  "+currency+" "+ transactions.getAmount());
-//        holder.datestamp.setText(transactions.getDate());
-//
-//        holder.card.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(context, contacts.getId(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-
+        Log.d("Adapter","OK");
+        holder.contact.setText(contacts.getContact());
+        holder.name.setText(contacts.getName());
+        holder.position.setText(contacts.getPosition());
     }
 
     @Override
