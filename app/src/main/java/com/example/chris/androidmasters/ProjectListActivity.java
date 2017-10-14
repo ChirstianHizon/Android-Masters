@@ -64,6 +64,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
                         adapter.clear();
                         for (DocumentSnapshot doc : value) {
+
                             Log.d("DOCUMENT", String.valueOf(doc.getData()));
 //                          Project(String name,String desc,String date,String organization,String image,String logo)
                             if(doc.getString("name") != null && doc.getString("description") != null
