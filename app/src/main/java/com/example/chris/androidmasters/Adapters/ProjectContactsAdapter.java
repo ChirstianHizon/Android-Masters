@@ -68,10 +68,7 @@ public class ProjectContactsAdapter extends RecyclerView.Adapter<ProjectContacts
         return contactsList.size();
     }
 
-    public void clear() {
-        contactsList.clear();
-
-    }
+    public void clear() {contactsList.clear();}
 
 
 }
