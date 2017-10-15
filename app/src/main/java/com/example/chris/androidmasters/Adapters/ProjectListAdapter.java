@@ -21,6 +21,8 @@ import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,12 +45,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         private final TextView organization;
         private final ImageView image;
         private final TextView date;
+        private final TextView date_measure;
         private final ImageView logo;
         private final CardView card;
         private final TextView id;
         private final TextView goal;
         private final TextView current;
+        private final TextView current_label;
         private final ProgressBar status;
+        private final TextView donated;
 
         public ViewHolder(View view) {
             super(view);
@@ -61,9 +66,12 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             logo = (ImageView)view.findViewById(R.id.iv_logo);
             image = (ImageView)view.findViewById(R.id.iv_image);
             date = (TextView)view.findViewById(R.id.tv_date);
+            date_measure = (TextView)view.findViewById(R.id.tv_date_measure);
             card = (CardView)view.findViewById(R.id.cv_card);
             goal = (TextView) view.findViewById(R.id.tv_goal);
+            donated = (TextView) view.findViewById(R.id.tv_donated_value);
             current = (TextView)view.findViewById(R.id.tv_current);
+            current_label = (TextView)view.findViewById(R.id.tv_current_label);
             status = (ProgressBar)view.findViewById(R.id.pb_status);
         }
     }
@@ -93,24 +101,36 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         holder.date.setText(project.getDate());
         holder.organization.setText(project.getOrganization());
-
-        String currency = getCurrencySymbol("PHP");
-        holder.current.setText(currency+" "+  NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
-        holder.goal.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getGoal())));
-
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
 
         Double progress = Double.valueOf(project.getCurrent()) / Double.valueOf(project.getGoal()) * 100;
+        String currency = "₱";
+
+        holder.current.setText(progress.intValue() + "%");
+        holder.donated.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
+        holder.goal.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getGoal())));
+
+
 
         Log.d("PROGRESS", String.valueOf(progress));
 
         if(current > goal){
-            holder.status.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        }else if(current.equals(goal)){
-            holder.status.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
-        }else{
             holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+            holder.current.setTextColor(Color.parseColor("#FF00C853"));
+            holder.current_label.setTextColor(Color.parseColor("#FF00C853"));
+        }else if(current.equals(goal)){
+            holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+            holder.current.setTextColor(Color.parseColor("#FF00C853"));
+            holder.current_label.setTextColor(Color.parseColor("#FF00C853"));
+        }else if(current.equals(0)){
+            holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
+            holder.current.setTextColor(Color.parseColor("#F44336"));
+            holder.current_label.setTextColor(Color.parseColor("#F44336"));
+        }else{
+            holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
+            holder.current.setTextColor(Color.parseColor("#FF9800"));
+            holder.current_label.setTextColor(Color.parseColor("#FF9800"));
         }
 
 
@@ -162,13 +182,17 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         ElapsedTime elapsed = new ElapsedTime(now,completion);
 
         if(elapsed.getDay() > 0 ){
-            holder.date.setText(elapsed.getDay() + " days remaining");
+            holder.date.setText(elapsed.getDay() + "");
+            holder.date_measure.setText("days to go");
         }else if(elapsed.getHour() > 0 ){
-            holder.date.setText(elapsed.getHour() + " hours remaining");
+            holder.date.setText(elapsed.getHour() + "");
+            holder.date_measure.setText("hours remaining");
         }else if(elapsed.getMinute() > 0 ){
-            holder.date.setText(elapsed.getMinute() + " minutes remaining");
+            holder.date.setText(elapsed.getMinute() + "");
+            holder.date_measure.setText("minutes left");
         }else{
-            holder.date.setText("Project is Already Finished");
+            holder.date.setText("0");
+            holder.date_measure.setText("has ended");
         }
 
 

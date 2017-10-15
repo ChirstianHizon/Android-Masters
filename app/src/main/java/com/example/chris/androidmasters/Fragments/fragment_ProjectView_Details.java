@@ -42,17 +42,7 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
         view = inflater.inflate(R.layout.fragment_projectview_details, container, false);
 
-        Button btndonate = (Button)view.findViewById(R.id.btn_donate);
-        btndonate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent(getContext(), DonateActivity.class);
-                intent.putExtra("id",id);
-                startActivity(intent);
-
-            }
-        });
         return view;
     }
 
@@ -106,12 +96,13 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
             if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
                 ImageView myImage = new ImageView(getContext());
+                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 myImage.setImageResource(R.mipmap.ic_launcher);
                 llimagedisplay.addView(myImage);
 
                 Picasso.with(getContext())
                         .load(details.getSelectedImages(x))
-                        .resize(800,800)
+                        .resize(0,500)
                         .error(R.mipmap.ic_launcher)
                         .into(myImage);
             }
