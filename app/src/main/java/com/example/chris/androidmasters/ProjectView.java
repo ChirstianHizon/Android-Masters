@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.chris.androidmasters.Adapters.TabsPageAdapter;
@@ -69,6 +70,18 @@ public class ProjectView extends AppCompatActivity {
         });
 
         toolbar.setVisibility(View.GONE);
+
+        Button btndonate = (Button)findViewById(R.id.btn_donate);
+        btndonate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(ProjectView.this, DonateActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+
+            }
+        });
     }
 
 
