@@ -3,28 +3,30 @@ package com.example.chris.androidmasters;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.chris.androidmasters.Adapters.TabsPageAdapter;
-import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Contact;
-import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Details;
-import com.example.chris.androidmasters.Fragments.fragment_ProjectView_Progress;
+import com.example.chris.androidmasters.Objects.Details;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 public class ProjectView extends AppCompatActivity {
 
     private static String id;
     private Activity context = this;
-    private TabsPageAdapter mTabsPageAdapter;
-    private ViewPager mViewPager;
+    private FirebaseFirestore db;
+    private String TAG = "PROJECT_VIEW";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +52,6 @@ public class ProjectView extends AppCompatActivity {
 //        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
 
-//        ------------ INSTANTIATE TABS ADAPTER AND PAGER ------
-
-        mTabsPageAdapter = new TabsPageAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        setupViewPager(mViewPager);
-        mViewPager.setCurrentItem(1);
-        mViewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mViewPager.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
         toolbar.setVisibility(View.GONE);
 
         Button btndonate = (Button)findViewById(R.id.btn_donate);
@@ -82,15 +65,9 @@ public class ProjectView extends AppCompatActivity {
 
             }
         });
-    }
 
-
-    private void setupViewPager(ViewPager viewPager) {
-        TabsPageAdapter adapter = new TabsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new fragment_ProjectView_Progress(), "Progress");
-        adapter.addFragment(new fragment_ProjectView_Details(), "Details");
-        adapter.addFragment(new fragment_ProjectView_Contact(), "Contacts");
-        viewPager.setAdapter(adapter);
+        db = FirebaseFirestore.getInstance();
+        getProjectDetails();
     }
 
     @Override
@@ -117,6 +94,69 @@ public class ProjectView extends AppCompatActivity {
                     .error(R.mipmap.ic_launcher)
                     .into(display);
         }
+    }
+
+    private void getProjectDetails(){
+        Log.d(TAG,"ID: "+id);
+        DocumentReference docRef = db.collection("Details").document(id);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+
+                    // GETS AND TRANSFER DATA TO CLASS
+                    //TODO: CREATE VALIDATION TO CHECK IF FIELDS ARE PRESENT
+                    Details details = snapshot.toObject(Details.class);
+                    setDetails(details);
+
+                }else{
+                    Log.d(TAG, "Current data: null");
+                }
+
+
+            }
+        });
+
+    }
+
+    private void setDetails(Details details){
+
+        TextView Title = (TextView)findViewById(R.id.tv_project_title);
+        TextView Organization = (TextView)findViewById(R.id.tv_organization);
+        TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
+
+        LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
+
+        Title.setText(details.getTitle());
+        Organization.setText("by " + details.getOrganization());
+        shortdesc.setText(details.getShort_description());
+
+        llimagedisplay.removeAllViews();
+
+        changeDisplayImage(details.getDisplay_image());
+
+        int size = details.getImagesSize();
+        for(int x = 0;x < size;x++){
+
+            if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
+                ImageView myImage = new ImageView(this);
+                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                myImage.setImageResource(R.mipmap.ic_launcher);
+                llimagedisplay.addView(myImage);
+
+                Picasso.with(this)
+                        .load(details.getSelectedImages(x))
+                        .resize(0,500)
+                        .error(R.mipmap.ic_launcher)
+                        .into(myImage);
+            }
+        }
+
     }
 
 }
