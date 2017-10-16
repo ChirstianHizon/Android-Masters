@@ -40,10 +40,18 @@ public class ProjectView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_view);
 
+//        --------------- SETS STATUS BAR TRANSPARENCY -------
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        }
+
 //        ----------- CREATE A BACK BUTTON ------------------
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
@@ -59,7 +67,7 @@ public class ProjectView extends AppCompatActivity {
 //        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
 
-        toolbar.setVisibility(View.GONE);
+//        toolbar.setVisibility(View.GONE);
 
         Button btndonate = (Button)findViewById(R.id.btn_donate);
         btndonate.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +82,23 @@ public class ProjectView extends AppCompatActivity {
         });
 
         db = FirebaseFirestore.getInstance();
-        
+
         getProjectDetails();
         getProjectProgress();
+
+//        --------- CLick to Share ----------
+        Button btnshare = (Button)findViewById(R.id.btn_share);
+        btnshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "Text I want to share.";
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message);
+
+                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+            }
+        });
     }
 
     @Override
@@ -140,6 +162,8 @@ public class ProjectView extends AppCompatActivity {
         TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
 
         LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
+
+        setTitle(details.getTitle());
 
         Title.setText(details.getTitle());
         Organization.setText("by " + details.getOrganization());
