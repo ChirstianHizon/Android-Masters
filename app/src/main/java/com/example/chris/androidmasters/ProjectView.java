@@ -7,7 +7,12 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
+import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +32,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
 
@@ -34,18 +48,15 @@ public class ProjectView extends AppCompatActivity {
     private Activity context = this;
     private FirebaseFirestore db;
     private String TAG = "PROJECT_VIEW";
+    private String title;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private boolean isShow = false;
+    private int scrollRange = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_view);
-
-//        --------------- SETS STATUS BAR TRANSPARENCY -------
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Window w = getWindow(); // in Activity's onCreate() for instance
-//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        }
 
 //        ----------- CREATE A BACK BUTTON ------------------
 
@@ -53,7 +64,7 @@ public class ProjectView extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        // add back arrow to toolbar
+//        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -64,10 +75,6 @@ public class ProjectView extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-//        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
-
-
-//        toolbar.setVisibility(View.GONE);
 
         Button btndonate = (Button)findViewById(R.id.btn_donate);
         btndonate.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +90,14 @@ public class ProjectView extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+//        --------- GETS AND SETS ALL DATA NEEDED -----------
+
         getProjectDetails();
         getProjectProgress();
+        getProjectContacts();
 
-//        --------- CLick to Share ----------
+
+//        ----------- Click to Share ------------------------
         Button btnshare = (Button)findViewById(R.id.btn_share);
         btnshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +107,15 @@ public class ProjectView extends AppCompatActivity {
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, message);
 
-                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+                startActivity(Intent.createChooser(share, "Choose Where to Share the Project"));
             }
         });
+
+
+//        ------ REMOVES TEXT WHEN COLLAPSE BAR IS COLLAPSED --------
+        setTextVisibility();
+
+
     }
 
     @Override
@@ -115,7 +132,44 @@ public class ProjectView extends AppCompatActivity {
         return id;
     }
 
-    public void changeDisplayImage(String image){
+    private void setDetails(Details details){
+
+        TextView Title = (TextView)findViewById(R.id.tv_project_title);
+        TextView Organization = (TextView)findViewById(R.id.tv_organization);
+        TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
+
+        LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
+
+        title = details.getTitle();
+
+        Title.setText(details.getTitle());
+        Organization.setText("by " + details.getOrganization());
+        shortdesc.setText(details.getShort_description());
+
+        llimagedisplay.removeAllViews();
+
+        changeDisplayImage(details.getDisplay_image());
+
+        int size = details.getImagesSize();
+        for(int x = 0;x < size;x++){
+
+            if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
+                ImageView myImage = new ImageView(this);
+                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                myImage.setImageResource(R.mipmap.ic_launcher);
+                llimagedisplay.addView(myImage);
+
+                Picasso.with(this)
+                        .load(details.getSelectedImages(x))
+                        .resize(0,500)
+                        .error(R.mipmap.ic_launcher)
+                        .into(myImage);
+            }
+        }
+
+    }
+
+    private void changeDisplayImage(String image){
         ImageView display = (ImageView)findViewById(R.id.app_bar_image);
 
         if(image != null && !image.equals("")){
@@ -152,43 +206,6 @@ public class ProjectView extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void setDetails(Details details){
-
-        TextView Title = (TextView)findViewById(R.id.tv_project_title);
-        TextView Organization = (TextView)findViewById(R.id.tv_organization);
-        TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
-
-        LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
-
-        setTitle(details.getTitle());
-
-        Title.setText(details.getTitle());
-        Organization.setText("by " + details.getOrganization());
-        shortdesc.setText(details.getShort_description());
-
-        llimagedisplay.removeAllViews();
-
-        changeDisplayImage(details.getDisplay_image());
-
-        int size = details.getImagesSize();
-        for(int x = 0;x < size;x++){
-
-            if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
-                ImageView myImage = new ImageView(this);
-                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                myImage.setImageResource(R.mipmap.ic_launcher);
-                llimagedisplay.addView(myImage);
-
-                Picasso.with(this)
-                        .load(details.getSelectedImages(x))
-                        .resize(0,500)
-                        .error(R.mipmap.ic_launcher)
-                        .into(myImage);
-            }
-        }
 
     }
 
@@ -243,4 +260,89 @@ public class ProjectView extends AppCompatActivity {
 
     }
 
+    private void getProjectContacts(){
+
+        RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
+        final List<Contacts> contactList = new ArrayList<Contacts>();
+        final ProjectContactsAdapter adapter = new ProjectContactsAdapter(context, contactList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recmain.setHasFixedSize(true);
+        recmain.setLayoutManager(layoutManager);
+        recmain.setItemAnimator(new DefaultItemAnimator());
+        recmain.setAdapter(adapter);
+
+        DocumentReference docRef = db.collection("Contacts").document(id);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+
+            @Override
+            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+
+                    Log.d(TAG,snapshot.getData().toString());
+                    Log.d(TAG, String.valueOf(snapshot.getData().size()));
+
+                    int size = snapshot.getData().size();
+
+                    JSONObject obj = new JSONObject(snapshot.getData());
+
+                    try {
+                        JSONArray names = new JSONArray(obj.getString("Names"));
+                        JSONArray contacts = new JSONArray(obj.getString("Contacts"));
+                        JSONArray positions = new JSONArray(obj.getString("Positions"));
+
+                        adapter.clear();
+                        for(int x = 0;x<size;x++){
+                            Log.d(TAG,names.getString(x));
+                            contactList.add(
+                                    new Contacts(
+                                            names.getString(x),
+                                            positions.getString(x),
+                                            contacts.getString(x)
+                                    )
+                            );
+
+                        }
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+
+
+                }
+
+            }
+        });
+    }
+
+    private void setTextVisibility(){
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.ctl_main);
+        collapsingToolbarLayout.setTitle(" ");
+        AppBarLayout appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(title);
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbarLayout.setTitle(" ");
+                    isShow = false;
+                }
+
+
+            }
+        });
+
+    }
 }

@@ -83,8 +83,8 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
 
         llimagedisplay.removeAllViews();
 
-        ProjectView projectview = (ProjectView)getActivity();
-        projectview.changeDisplayImage(details.getDisplay_image());
+//        ProjectView projectview = (ProjectView)getActivity();
+//        projectview.changeDisplayImage(details.getDisplay_image());
 
         int size = details.getImagesSize();
         for(int x = 0;x < size;x++){
