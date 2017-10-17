@@ -252,7 +252,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif"
                             android:includeFontPadding="false"
-                            android:text="Donations"
+                            android:text="Contact Persons"
                             android:textColor="#444"
                             android:textSize="18sp" />
 
