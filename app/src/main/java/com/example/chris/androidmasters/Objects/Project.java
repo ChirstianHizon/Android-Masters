@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class Project {
 
-    private String id,name,description,date,organization,image,logo,current,goal;
-    private Date completion_date;
+    private String id,name,description,organization,image,logo,current,goal;
+    private Date completion_date,insert_date;
 
     public Project(){
 
@@ -18,7 +18,6 @@ public class Project {
         this.id = id;
         this.name = name;
         this.description = desc;
-        this.date = date;
         this.organization = organization;
         this.image = image;
         this.logo = logo;
@@ -67,14 +66,6 @@ public class Project {
         this.organization = organization;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getId() {
         return id;
     }
@@ -105,5 +96,13 @@ public class Project {
 
     public void setCompletion_date(Date completion_date) {
         this.completion_date = completion_date;
+    }
+
+    public Date getInsert_date() {
+        return insert_date;
+    }
+
+    public void setInsert_date(Date insert_date) {
+        this.insert_date = insert_date;
     }
 }
