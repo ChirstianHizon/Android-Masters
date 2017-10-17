@@ -111,7 +111,7 @@
                         android:layout_marginTop="26dp"
                         android:layout_weight="1"
                         android:elevation="1dp"
-                        android:progress="100" />
+                        android:progress="50" />
 
                     <TextView
                         android:id="@+id/tv_desc"

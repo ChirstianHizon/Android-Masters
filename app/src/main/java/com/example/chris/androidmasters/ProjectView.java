@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -98,7 +99,8 @@ public class ProjectView extends AppCompatActivity {
 
 
 //        ----------- Click to Share ------------------------
-        Button btnshare = (Button)findViewById(R.id.btn_share);
+        ImageButton btnshare =
+                (ImageButton)findViewById(R.id.btn_share);
         btnshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,11 +240,13 @@ public class ProjectView extends AppCompatActivity {
                     tvcurrent.setText(currency+" "+snapshot.getString("current"));
 
                     if(current > goal){
-                        pbprogress.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
                     }else if(current.equals(goal)){
-                        pbprogress.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+                    }else if(current.equals(0)){
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
                     }else{
-                        pbprogress.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
                     }
 
 
