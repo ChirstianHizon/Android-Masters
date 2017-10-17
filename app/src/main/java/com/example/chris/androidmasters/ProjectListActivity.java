@@ -8,6 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
 import com.example.chris.androidmasters.Objects.Project;
@@ -51,10 +55,10 @@ public class ProjectListActivity extends AppCompatActivity {
         recmain.setAdapter(adapter);
 
 
+
         CollectionReference colRef = db.collection("Projects");
-        colRef
-//                .whereEqualTo("state", "CA")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
                                         @Nullable FirebaseFirestoreException e) {
@@ -63,19 +67,19 @@ public class ProjectListActivity extends AppCompatActivity {
                             return;
                         }
 
+                        Toast.makeText(context, "Projects Updated", Toast.LENGTH_SHORT).show();
+
                         adapter.clear();
                         for (DocumentSnapshot doc : value) {
 
                             Log.d("DOCUMENT", String.valueOf(doc.getData()));
 //                          Project(String name,String desc,String date,String organization,String image,String logo)
-                            if(doc.getString("name") != null && doc.getString("description") != null
-                                    && doc.getString("date") != null && doc.getString("organization") != null
+                            if(doc.getString("name") != null && doc.getString("organization") != null
                                     && doc.getString("image") != null && doc.getString("logo") != null
                                     && doc.getString("goal") != null && doc.getString("current") != null
                                     && doc.getDate("completion_date") != null){
 
-                                if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("description").equalsIgnoreCase("")
-                                        && !doc.getString("date").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
+                                if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
                                         && !doc.getString("image").equalsIgnoreCase("") && !doc.getString("logo").equalsIgnoreCase("")
                                         && !doc.getString("goal").equalsIgnoreCase("") && !doc.getString("current").equalsIgnoreCase("")){
 
@@ -101,6 +105,28 @@ public class ProjectListActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_aboutus:
+                Toast.makeText(context, "About Us", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_settings:
+                Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

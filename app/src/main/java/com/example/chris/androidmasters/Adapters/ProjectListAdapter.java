@@ -21,13 +21,9 @@ import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
-
-import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
 
 /**
  * Created by chris on 08/10/2017.
@@ -98,8 +94,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.name.setText(project.getName());
         holder.description.setText(project.getDescription());
 
-
-        holder.date.setText(project.getDate());
         holder.organization.setText(project.getOrganization());
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
