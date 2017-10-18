@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -93,9 +94,10 @@ public class ProjectView extends AppCompatActivity {
 
 //        --------- GETS AND SETS ALL DATA NEEDED -----------
 
+        getProjectContacts();
         getProjectDetails();
         getProjectProgress();
-        getProjectContacts();
+
 
 
 //        ----------- Click to Share ------------------------
@@ -156,16 +158,31 @@ public class ProjectView extends AppCompatActivity {
         for(int x = 0;x < size;x++){
 
             if(details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")){
-                ImageView myImage = new ImageView(this);
+                final ImageView myImage = new ImageView(this);
                 myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 myImage.setImageResource(R.mipmap.ic_launcher);
                 llimagedisplay.addView(myImage);
 
-                Picasso.with(this)
-                        .load(details.getSelectedImages(x))
-                        .resize(0,500)
-                        .error(R.mipmap.ic_launcher)
-                        .into(myImage);
+                if(!details.getSelectedImages(x).equals("") && details.getSelectedImages(x) != null){
+
+                    Picasso.Builder builder = new Picasso.Builder(this);
+                    builder.listener(new Picasso.Listener() {
+                        @Override
+                        public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                            myImage.setVisibility(View.GONE);
+                        }
+                    });
+                    // Set to False to remove indicators on upper Left
+                    builder.indicatorsEnabled(true);
+                    builder.build()
+                            .load(details.getSelectedImages(x))
+                            .resize(0,500)
+                            .error(R.mipmap.ic_launcher)
+                            .into(myImage);
+                }else{
+                    myImage.setVisibility(View.GONE);
+                }
+
             }
         }
 
