@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.chris.androidmasters.SplashActivity">
+        <activity
+            android:name="com.example.chris.androidmasters.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.example.chris.androidmasters.Samples.SampleCheckout" />
         <activity android:name="com.example.chris.androidmasters.ProjectListActivity" />
         <activity
             android:name="com.example.chris.androidmasters.ProjectView"
