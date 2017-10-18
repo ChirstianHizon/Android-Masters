@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vector_logo"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <target
+        android:name="logo_o1_1"
+        android:animation="@anim/logo_offset_trim_o1"/>
+
+    <target
+        android:name="logo_o1_2"
+        android:animation="@anim/logo_offset_trim_o1"/>
+
+    <target
+        android:name="logo_o1_3"
+        android:animation="@anim/logo_offset_trim_o1"/>
+
+    <target
+        android:name="logo_o1_4"
+        android:animation="@anim/logo_offset_trim_o1"/>
+
+    <target
+        android:name="logo_o2_1"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_o2_2"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_o2_3"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_o2_4"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+</animated-vector>
