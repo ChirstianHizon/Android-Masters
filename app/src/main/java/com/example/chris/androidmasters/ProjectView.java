@@ -96,7 +96,7 @@ public class ProjectView extends AppCompatActivity {
 
         getProjectContacts();
         getProjectDetails();
-        getProjectProgress();
+        getProjectInfo();
 
 
 
@@ -228,7 +228,7 @@ public class ProjectView extends AppCompatActivity {
 
     }
 
-    private void getProjectProgress(){
+    private void getProjectInfo(){
 
         final ProgressBar pbprogress = (ProgressBar) findViewById(R.id.pb_progress);
         final TextView tvcurrent = (TextView) findViewById(R.id.tv_current);

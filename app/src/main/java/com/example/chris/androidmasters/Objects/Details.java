@@ -10,7 +10,7 @@ import java.util.List;
 public class Details {
 
     private String display_image,display_video,full_description,organization,short_description,title,logo;
-    private List<String>images;
+    private List<String>images,objectives;
 
     public Details(){}
 
@@ -88,5 +88,13 @@ public class Details {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public List<String> getObjectives() {
+        return objectives;
+    }
+
+    public void setObjectives(List<String> objectives) {
+        this.objectives = objectives;
     }
 }
