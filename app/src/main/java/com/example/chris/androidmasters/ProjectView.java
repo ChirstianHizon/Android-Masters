@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
+import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
@@ -54,6 +57,7 @@ public class ProjectView extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private boolean isShow = false;
     private int scrollRange = -1;
+    private Button btndonate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class ProjectView extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        Button btndonate = (Button)findViewById(R.id.btn_donate);
+        btndonate = (Button)findViewById(R.id.btn_donate);
         btndonate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +100,7 @@ public class ProjectView extends AppCompatActivity {
 
         getProjectContacts();
         getProjectDetails();
-        getProjectProgress();
+        getProjectInfo();
 
 
 
@@ -106,7 +110,7 @@ public class ProjectView extends AppCompatActivity {
         btnshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = "Text I want to share.";
+                String message = "Help us in this Project";
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, message);
@@ -141,6 +145,7 @@ public class ProjectView extends AppCompatActivity {
         TextView Title = (TextView)findViewById(R.id.tv_project_title);
         TextView Organization = (TextView)findViewById(R.id.tv_organization);
         TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
+
 
         LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
 
@@ -228,11 +233,13 @@ public class ProjectView extends AppCompatActivity {
 
     }
 
-    private void getProjectProgress(){
+    private void getProjectInfo(){
 
         final ProgressBar pbprogress = (ProgressBar) findViewById(R.id.pb_progress);
         final TextView tvcurrent = (TextView) findViewById(R.id.tv_current);
         final TextView tvgoal = (TextView) findViewById(R.id.tv_goal);
+        final TextView compDate = (TextView)findViewById(R.id.tv_completion_date);
+        final TextView dateRemain = (TextView)findViewById(R.id.tv_days_remain);
 
         DocumentReference docRef = db.collection("Projects").document(id);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -246,6 +253,31 @@ public class ProjectView extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d(TAG, "Current data: " + snapshot.getData());
+
+                    Date now = new Date();
+                    Date completion = snapshot.getDate("completion_date");
+
+                    ElapsedTime elapsed = new ElapsedTime(now,completion);
+
+                    String dayOfTheWeek = (String) DateFormat.format("EEEE", completion);
+                    String day          = (String) DateFormat.format("dd",   completion);
+                    String monthString  = (String) DateFormat.format("MMM",  completion);
+                    String monthNumber  = (String) DateFormat.format("MM",   completion);
+                    String year         = (String) DateFormat.format("yyyy", completion);
+
+                    compDate.setText(monthString +" "+day+", "+year);
+
+                    if(elapsed.getDay() > 0 ){
+                        dateRemain.setText(elapsed.getDay() + " days remaining");
+                    }else if(elapsed.getHour() > 0 ){
+                        dateRemain.setText(elapsed.getHour() + "hours remaining");
+                    }else if(elapsed.getMinute() > 0 ){
+                        dateRemain.setText(elapsed.getMinute() + "minutes remaining");
+                    }else{
+                        dateRemain.setText("Project has Already Ended");
+                        btndonate.setVisibility(View.GONE);
+                    }
+
 
                     Double goal = Double.valueOf(snapshot.getString("goal"));
                     Double current = Double.valueOf(snapshot.getString("current"));

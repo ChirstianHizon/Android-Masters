@@ -2,7 +2,7 @@ package com.example.chris.androidmasters;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,10 +15,9 @@ import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
 import com.example.chris.androidmasters.Objects.Project;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,8 +37,8 @@ public class ProjectListActivity extends AppCompatActivity {
     private int visibleItemCount,notvisibleItemCount,totalItemCount;
     private boolean isloading = true;
     private FirebaseFirestore db;
-    private String lastKey = "";
-    private int page = 1;
+    private DocumentSnapshot lastDocument;
+    private int page = 2;
     private LinearLayoutManager layoutManager;
     private ListenerRegistration firestoreListener;
 
@@ -69,6 +68,66 @@ public class ProjectListActivity extends AppCompatActivity {
 //        ------------------------------------------------------------------------------------- //
 
 
+
+    }
+
+    private void getProjects(Query queryRef){
+
+        Log.d("isLoading_Stat", String.valueOf(isloading));
+        queryRef.get()
+        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
+            @Override
+            public void onSuccess(QuerySnapshot documentSnapshots) {
+
+                // Get the last visible document
+//                Log.d("isLoading_Size", String.valueOf(documentSnapshots.size()));
+                if(documentSnapshots.size() == 0){
+                    isloading = false;
+                }else{
+                    DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
+                            .get(documentSnapshots.size() -1);
+
+                    addScrollListener(lastVisible);
+                    pullToRefresh(lastVisible);
+
+                    createRecyclerView(documentSnapshots,lastVisible);
+
+                }
+
+            }
+        });
+
+    }
+
+    private void createRecyclerView( QuerySnapshot documentSnapshots,DocumentSnapshot lastVisible){
+        int counter = 0;
+        for (DocumentSnapshot doc : documentSnapshots) {
+            if(doc.getString("name") != null && doc.getString("organization") != null
+                    && doc.getString("image") != null && doc.getString("logo") != null
+                    && doc.getString("goal") != null && doc.getString("current") != null
+                    && doc.getDate("completion_date") != null){
+
+                if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
+                        && !doc.getString("image").equalsIgnoreCase("") && !doc.getString("logo").equalsIgnoreCase("")
+                        && !doc.getString("goal").equalsIgnoreCase("") && !doc.getString("current").equalsIgnoreCase("")){
+
+                    Date date = doc.getDate("completion_date");
+
+                    Project project = doc.toObject(Project.class);
+                    project.setId(doc.getId());
+                    projectlist.add(project);
+                }
+            }
+            counter++;
+        }
+        adapter.notifyDataSetChanged();
+
+        Log.d("isLoading_counter", String.valueOf(counter));
+        if(counter < page){
+            isloading = false;
+        }
+
     }
 
     private void addScrollListener(final DocumentSnapshot lastVisible){
@@ -87,76 +146,31 @@ public class ProjectListActivity extends AppCompatActivity {
 
                         if((visibleItemCount + notvisibleItemCount) >= totalItemCount){
 
-                            isloading = false;
                             Toast.makeText(context, "Last Item", Toast.LENGTH_SHORT).show();
                             Log.d("RECSCORLL","Last Item");
 
-                            firestoreListener.remove();
-                            Query queryRef = db.collection("Projects").limit(page*2);
+                            Query queryRef = db.collection("Projects").startAfter(lastVisible).limit(page);
                             getProjects(queryRef);
                         }
-
                     }
-
                 }
-
-                Log.d("RECSCORLL","DX:"+dx+" | "+"DY:"+dy);
-
             }
         });
     }
 
-    private void getProjects(Query queryRef){
-        firestoreListener = queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-    @Override
-    public void onEvent(@Nullable QuerySnapshot value,
-                        @Nullable FirebaseFirestoreException e) {
-        if (e != null) {
-            Log.w(TAG, "Listen failed.", e);
-            return;
-        }
+    private void pullToRefresh(final DocumentSnapshot lastVisible){
+        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.clear();
 
-        Toast.makeText(context, "Projects Updated", Toast.LENGTH_SHORT).show();
-
-        DocumentSnapshot lastVisible = value.getDocuments()
-                .get(value.size() - 1);
-
-        Log.d("LAST KEY", String.valueOf(lastVisible));
-
-        adapter.clear();
-        for (DocumentSnapshot doc : value) {
-
-            lastKey = doc.getId();
-            Log.d("DOCUMENT", String.valueOf(doc.getData()));
-            //              Project(String name,String desc,String date,String organization,String image,String logo)
-            if(doc.getString("name") != null && doc.getString("organization") != null
-                    && doc.getString("image") != null && doc.getString("logo") != null
-                    && doc.getString("goal") != null && doc.getString("current") != null
-                    && doc.getDate("completion_date") != null){
-
-                if(!doc.getString("name").equalsIgnoreCase("") && !doc.getString("organization").equalsIgnoreCase("")
-                        && !doc.getString("image").equalsIgnoreCase("") && !doc.getString("logo").equalsIgnoreCase("")
-                        && !doc.getString("goal").equalsIgnoreCase("") && !doc.getString("current").equalsIgnoreCase("")){
-
-                    Date date = doc.getDate("completion_date");
-                    Log.d("DATE_COMPLETION",date.toString());
-
-                    Project project = doc.toObject(Project.class);
-                    project.setId(doc.getId());
-                    projectlist.add(project);
-                    adapter.notifyDataSetChanged();
-
-                    addScrollListener(lastVisible);
-
-
-                }
-
+                Query queryRef = db.collection("Projects").startAfter(lastVisible).limit(page);
+                getProjects(queryRef);
+                isloading = true;
+                mSwipeRefreshLayout.setRefreshing(false);
             }
-
-        }
-    }
-});
-
+        });
     }
 
     @Override
