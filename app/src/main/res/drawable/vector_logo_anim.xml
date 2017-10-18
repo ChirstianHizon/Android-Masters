@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/vector_logo"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:drawable="@drawable/vector_logo">
 
     <target
         android:name="logo_o1_1"
@@ -34,6 +33,57 @@
 
     <target
         android:name="logo_o2_4"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+
+    <target
+        android:name="logo_b_1"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_b_2"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_b_3"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_b_4"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+
+    <target
+        android:name="logo_s_1"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_s_2"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_s_3"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_s_4"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+
+    <target
+        android:name="logo_t_1"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_t_2"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_t_3"
+        android:animation="@anim/logo_offset_trim_o2"/>
+
+    <target
+        android:name="logo_t_4"
         android:animation="@anim/logo_offset_trim_o2"/>
 
 </animated-vector>

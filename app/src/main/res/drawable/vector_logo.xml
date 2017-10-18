@@ -1,98 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="2550.000000dp"
-    android:height="768.000000dp"
-    android:viewportWidth="2550.000000"
-    android:viewportHeight="768.000000">
+    android:width="2500dp"
+    android:height="1500dp"
+    android:viewportWidth="2500"
+    android:viewportHeight="1500">
 
-    <group
-        android:translateY="768.000000"
-        android:scaleX="0.100000"
-        android:scaleY="-0.100000">
+        <!--sneaky letter stuff-->
+        <path
+            android:name="logo_b_1"
+            android:pathData="@string/path_logo_b"
+            android:strokeColor="@color/primaryBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.25"
+            android:trimPathStart="0" />
+        <path
+            android:name="logo_b_2"
+            android:pathData="@string/path_logo_b"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.5"
+            android:trimPathStart="0.25" />
+        <path
+            android:name="logo_b_3"
+            android:pathData="@string/path_logo_b"
+            android:strokeColor="@color/darkBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.75"
+            android:trimPathStart="0.5" />
+        <path
+            android:name="logo_b_4"
+            android:pathData="@string/path_logo_b"
+            android:strokeColor="@color/lightBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0"
+            android:trimPathStart="0.75" />
+
 
         <path
-            android:name="logo_b"
-            android:fillColor="#000000"
-            android:strokeWidth="1"
-            android:pathData="M732 6909 c-28 -14 -51 -36 -67 -64 l-25 -42 0 -2933 0 -2933 25 -43 c16 -28 39
--49 68 -63 42 -20 58 -21 435 -21 252 0 401 4 419 11 38 14 83 57 99 96 10 23 14
-79 14 193 0 88 3 160 6 160 4 0 33 -25 66 -55 299 -278 699 -464 1138 -532 161 -25
-538 -24 700 1 592 92 1095 404 1480 917 260 347 419 726 487 1159 23 146 25 595 5
-735 -74 493 -241 877 -545 1255 -330 410 -729 679 -1181 795 -180 46 -311 64 -511
-72 -623 22 -1197 -181 -1597 -566 l-48 -45 0 892 c0 736 -2 898 -14 925 -16 39 -61
-82 -99 96 -18 7 -168 11 -420 11 -379 0 -393 -1 -435 -21z m800 -1259 l3 -1110 70
-93 c135 179 359 386 550 510 567 365 1393 408 2013 105 525 -256 986 -820 1166
--1428 139 -466 124 -1016 -39 -1491 -155 -448 -527 -923 -930 -1185 -370 -240 -845
--350 -1321 -303 -472 46 -869 229 -1208 558 -95 93 -240 258 -289 331 -16 23 -17 3
--17 -363 l0 -387 -360 0 -360 0 0 2890 0 2890 360 0 360 0 2 -1110z" />
+            android:name="logo_s_1"
+            android:pathData="@string/path_logo_s"
+            android:strokeColor="@color/darkBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.25"
+            android:trimPathStart="0" />
+        <path
+            android:name="logo_s_2"
+            android:pathData="@string/path_logo_s"
+            android:strokeColor="@color/slightDarkBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.5"
+            android:trimPathStart="0.25" />
+        <path
+            android:name="logo_s_3"
+            android:pathData="@string/path_logo_s"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.75"
+            android:trimPathStart="0.5" />
+        <path
+            android:name="logo_s_4"
+            android:pathData="@string/path_logo_s"
+            android:strokeColor="@color/primaryBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0"
+            android:trimPathStart="0.75" />
+
 
         <path
-            android:name="logo_s"
-            android:fillColor="#000000"
-            android:strokeWidth="1"
-            android:pathData="M19495 5609 c-518 -53 -975 -261 -1285 -586 -250 -261 -360 -539 -360 -912 0 -409
-115 -711 364 -956 113 -112 203 -176 354 -252 120 -60 70 -48 897 -218 762 -157
-720 -147 826 -181 286 -90 407 -236 355 -427 -53 -197 -261 -302 -666 -338 -163
--14 -451 -6 -600 16 -200 31 -386 113 -464 206 -42 49 -76 127 -76 174 0 89 -42
-164 -107 191 -25 11 -116 14 -428 14 -374 0 -398 -1 -434 -20 -90 -45 -109 -104
--92 -281 48 -514 325 -873 885 -1145 211 -103 439 -170 711 -210 172 -26 571 -26
-750 -1 253 36 503 112 710 214 510 254 800 605 871 1054 22 138 15 422 -14 554 -88
-402 -318 688 -700 872 -111 53 -197 73 -1413 327 -118 25 -251 57 -295 71 -176 58
--297 139 -344 231 -36 72 -35 168 3 246 98 200 460 324 888 305 370 -17 645 -134
-722 -307 14 -30 28 -84 32 -120 8 -81 38 -130 97 -159 43 -20 57 -21 442 -21 370 0
-399 1 434 19 84 43 107 99 98 236 -22 319 -138 582 -354 807 -159 165 -307 270
--537 383 -213 104 -398 161 -645 200 -125 19 -494 28 -625 14z m600 -184 c510 -79
-975 -342 1202 -680 113 -168 183 -382 183 -561 l0 -64 -358 0 -358 0 -12 72 c-32
-212 -194 366 -482 462 -171 56 -274 70 -520 70 -240 0 -344 -13 -510 -66 -281 -90
--447 -234 -490 -429 -7 -33 -11 -93 -8 -142 4 -73 10 -96 41 -160 78 -158 263 -280
-527 -347 44 -11 331 -72 638 -136 932 -193 935 -194 1128 -318 324 -211 492 -570
-471 -1011 -13 -273 -90 -472 -268 -685 -234 -281 -718 -514 -1209 -582 -145 -20
--527 -16 -675 6 -567 86 -1060 362 -1284 721 -94 151 -161 366 -161 523 l0 72 354
-0 355 0 7 -57 c9 -77 36 -153 73 -205 132 -190 397 -305 781 -339 163 -14 482 -6
-625 16 360 55 576 185 656 393 30 79 38 237 15 314 -36 126 -146 241 -300 317 -133
-66 -242 95 -708 191 -1048 216 -1039 214 -1174 280 -365 178 -556 453 -605 871 -44
-385 64 714 320 969 283 282 710 473 1161 519 128 13 462 5 585 -14z" />
-
+            android:name="logo_t_1"
+            android:pathData="@string/path_logo_t"
+            android:strokeColor="@color/primaryBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.25"
+            android:trimPathStart="0" />
         <path
-            android:name="logo_t"
-            android:fillColor="#000000"
-            android:strokeWidth="1"
-            android:pathData="M23150 6872 c-19 -11 -45 -34 -57 -52 -23 -33 -23 -35 -23 -421 l0 -388 -327 -3
--328 -3 -34 -24 c-68 -48 -71 -67 -71 -436 0 -369 3 -388 71 -436 l34 -24 327 -3
-328 -3 2 -2154 3 -2154 30 -31 c58 -61 52 -60 433 -60 346 0 349 0 383 23 18 12 44
-38 56 56 l23 34 0 2143 0 2143 328 3 c462 4 427 -33 427 463 0 389 0 389 -67 437
--33 23 -36 23 -360 26 l-328 3 0 380 c0 421 -1 427 -64 472 -30 22 -37 22 -391 25
--336 2 -362 1 -395 -16z m700 -572 l0 -440 375 0 375 0 0 -315 0 -315 -375 0 -375
-0 0 -2200 0 -2200 -315 0 -315 0 0 2200 0 2200 -375 0 -375 0 0 315 0 315 375 0
-375 0 0 440 0 440 315 0 315 0 0 -440z" />
+            android:name="logo_t_2"
+            android:pathData="@string/path_logo_t"
+            android:strokeColor="@color/darkBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.5"
+            android:trimPathStart="0.25" />
+        <path
+            android:name="logo_t_3"
+            android:pathData="@string/path_logo_t"
+            android:strokeColor="@color/lightBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0.75"
+            android:trimPathStart="0.5" />
+        <path
+            android:name="logo_t_4"
+            android:pathData="@string/path_logo_t"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
+            android:trimPathEnd="0"
+            android:trimPathStart="0.75"/>
 
-        <!--sneaky stuff-->
+        <!--sneaky o stuff-->
         <path
             android:name="logo_o1_1"
             android:pathData="@string/path_logo_o1"
-            android:fillColor="@color/ceruleanBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.25"
             android:trimPathStart="0" />
         <path
             android:name="logo_o1_2"
             android:pathData="@string/path_logo_o1"
-            android:fillColor="@color/lightGray"
-            android:strokeWidth="1"
+            android:strokeColor="@color/darkBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
         <path
             android:name="logo_o1_3"
             android:pathData="@string/path_logo_o1"
-            android:fillColor="@color/primaryBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/primaryBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.75"
             android:trimPathStart="0.5" />
         <path
             android:name="logo_o1_4"
             android:pathData="@string/path_logo_o1"
-            android:fillColor="@color/lightBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0"
             android:trimPathStart="0.75" />
 
@@ -100,30 +129,29 @@
         <path
             android:name="logo_o2_1"
             android:pathData="@string/path_logo_o2"
-            android:fillColor="@color/ceruleanBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/darkBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.25"
             android:trimPathStart="0" />
         <path
             android:name="logo_o2_2"
             android:pathData="@string/path_logo_o2"
-            android:fillColor="@color/lightGray"
-            android:strokeWidth="1"
+            android:strokeColor="@color/ceruleanBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
         <path
             android:name="logo_o2_3"
             android:pathData="@string/path_logo_o2"
-            android:fillColor="@color/primaryBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/primaryBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0.75"
             android:trimPathStart="0.5" />
         <path
             android:name="logo_o2_4"
             android:pathData="@string/path_logo_o2"
-            android:fillColor="@color/lightBlue"
-            android:strokeWidth="1"
+            android:strokeColor="@color/lightBlue"
+            android:strokeWidth="20"
             android:trimPathEnd="0"
             android:trimPathStart="0.75" />
-    </group>
 </vector>
