@@ -185,8 +185,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.date.setText(elapsed.getMinute() + "");
             holder.date_measure.setText("minutes left");
         }else{
-            holder.date.setText("Project Has Ended");
-            holder.date_measure.setVisibility(View.GONE);
+            holder.date.setText("");
+            holder.date_measure.setText("Finished");
         }
 
 

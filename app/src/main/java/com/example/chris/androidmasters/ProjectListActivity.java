@@ -146,7 +146,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
                         if((visibleItemCount + notvisibleItemCount) >= totalItemCount){
 
-                            Toast.makeText(context, "Last Item", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "Last Item", Toast.LENGTH_SHORT).show();
                             Log.d("RECSCORLL","Last Item");
 
                             Query queryRef = db.collection("Projects").startAfter(lastVisible).limit(page);
