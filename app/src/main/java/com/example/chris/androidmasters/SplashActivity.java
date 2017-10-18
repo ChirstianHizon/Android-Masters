@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     int waited = 0;
-                    while(waited < 4500){
+                    while(waited < 2500){
                         sleep(100);
                         waited += 100;
                     }
@@ -38,11 +38,6 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         splashThread.start();
-
-        //Splash Page
-
-        //startActivity(new Intent(constant,ProjectListActivity.class));
-        //finish();
     }
 
 }
