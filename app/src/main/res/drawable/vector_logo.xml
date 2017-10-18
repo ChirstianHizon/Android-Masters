@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="2500dp"
-    android:height="1500dp"
-    android:viewportWidth="2500"
-    android:viewportHeight="1500">
+    android:width="2000dp"
+    android:height="150dp"
+    android:viewportWidth="1500"
+    android:viewportHeight="500">
 
         <!--sneaky letter stuff-->
         <path
@@ -12,18 +12,18 @@
             android:strokeColor="@color/primaryBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.25"
-            android:trimPathStart="0" />
+            android:trimPathStart="0" />-->
         <path
             android:name="logo_b_2"
             android:pathData="@string/path_logo_b"
             android:strokeColor="@color/ceruleanBlue"
-            android:strokeWidth="20"
+            android:strokeWidth="25"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
         <path
             android:name="logo_b_3"
             android:pathData="@string/path_logo_b"
-            android:strokeColor="@color/darkBlue"
+            android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.75"
             android:trimPathStart="0.5" />
@@ -39,14 +39,14 @@
         <path
             android:name="logo_s_1"
             android:pathData="@string/path_logo_s"
-            android:strokeColor="@color/darkBlue"
+            android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.25"
             android:trimPathStart="0" />
         <path
             android:name="logo_s_2"
             android:pathData="@string/path_logo_s"
-            android:strokeColor="@color/slightDarkBlue"
+            android:strokeColor="@color/ceruleanBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
@@ -54,7 +54,7 @@
             android:name="logo_s_3"
             android:pathData="@string/path_logo_s"
             android:strokeColor="@color/ceruleanBlue"
-            android:strokeWidth="20"
+            android:strokeWidth="25"
             android:trimPathEnd="0.75"
             android:trimPathStart="0.5" />
         <path
@@ -76,7 +76,7 @@
         <path
             android:name="logo_t_2"
             android:pathData="@string/path_logo_t"
-            android:strokeColor="@color/darkBlue"
+            android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
@@ -91,7 +91,7 @@
             android:name="logo_t_4"
             android:pathData="@string/path_logo_t"
             android:strokeColor="@color/ceruleanBlue"
-            android:strokeWidth="20"
+            android:strokeWidth="25"
             android:trimPathEnd="0"
             android:trimPathStart="0.75"/>
 
@@ -100,13 +100,13 @@
             android:name="logo_o1_1"
             android:pathData="@string/path_logo_o1"
             android:strokeColor="@color/ceruleanBlue"
-            android:strokeWidth="20"
+            android:strokeWidth="25"
             android:trimPathEnd="0.25"
             android:trimPathStart="0" />
         <path
             android:name="logo_o1_2"
             android:pathData="@string/path_logo_o1"
-            android:strokeColor="@color/darkBlue"
+            android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
@@ -129,7 +129,7 @@
         <path
             android:name="logo_o2_1"
             android:pathData="@string/path_logo_o2"
-            android:strokeColor="@color/darkBlue"
+            android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.25"
             android:trimPathStart="0" />
@@ -137,7 +137,7 @@
             android:name="logo_o2_2"
             android:pathData="@string/path_logo_o2"
             android:strokeColor="@color/ceruleanBlue"
-            android:strokeWidth="20"
+            android:strokeWidth="25"
             android:trimPathEnd="0.5"
             android:trimPathStart="0.25" />
         <path

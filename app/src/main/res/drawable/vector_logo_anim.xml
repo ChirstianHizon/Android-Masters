@@ -69,7 +69,6 @@
         android:name="logo_s_4"
         android:animation="@anim/logo_offset_trim_o2"/>
 
-
     <target
         android:name="logo_t_1"
         android:animation="@anim/logo_offset_trim_o2"/>
