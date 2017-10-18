@@ -4,62 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chris.androidmasters.SplashActivity"
-    android:background="@color/darkGray">
+    android:background="@color/white"
+    tools:context="com.example.chris.androidmasters.SplashActivity">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="128dp"
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:weightSum="1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp">
+        app:layout_constraintVertical_bias="0.0">
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="50dp">
 
             <ImageView
-                android:id="@+id/img_rocket"
+                android:id="@+id/img_project"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="68dp"
-                android:layout_marginRight="68dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="0.76"
-                android:tint="@color/white"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/vector_rocket"
-                tools:layout_editor_absoluteY="164dp"/>
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:scaleType="fitStart"
+                android:tint="@color/colorAccent"
+                android:layout_marginTop="-5dp"
+                app:srcCompat="@drawable/vector_project" />
+        </RelativeLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@+id/img_rocket">
+
+            <ImageView
+                android:id="@+id/img_project"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:scaleType="fitStart"
+                android:tint="@color/colorAccent"
+                android:layout_marginTop="-5dp"
+                app:srcCompat="@drawable/vector_project" />
+
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="-10dp"
+                android:layout_below="@+id/img_project"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/vector_logo"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/img_logo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="0dp"
-            android:tint="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/img_rocket"
-            app:srcCompat="@drawable/vector_logo" />
+            android:layout_height="100dp">
 
+        </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
