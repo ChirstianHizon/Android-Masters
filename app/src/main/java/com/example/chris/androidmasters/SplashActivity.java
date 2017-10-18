@@ -16,8 +16,8 @@ public class SplashActivity extends AppCompatActivity {
 
         //Splash Page
 
-        startActivity(new Intent(constant,ProjectListActivity.class));
-        finish();
+        //startActivity(new Intent(constant,ProjectListActivity.class));
+        //finish();
     }
 
 }
