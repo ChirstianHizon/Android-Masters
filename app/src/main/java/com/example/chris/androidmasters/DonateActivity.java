@@ -70,7 +70,7 @@ public class DonateActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
         btnamount.setOnClickListener(new View.OnClickListener() {
             @Override

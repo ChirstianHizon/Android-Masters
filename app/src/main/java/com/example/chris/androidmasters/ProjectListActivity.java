@@ -38,7 +38,7 @@ public class ProjectListActivity extends AppCompatActivity {
     private boolean isloading = true;
     private FirebaseFirestore db;
     private DocumentSnapshot lastDocument;
-    private int page = 2;
+    private int page = 1;
     private LinearLayoutManager layoutManager;
     private ListenerRegistration firestoreListener;
 
@@ -67,8 +67,6 @@ public class ProjectListActivity extends AppCompatActivity {
 
 //        ------------------------------------------------------------------------------------- //
 
-
-
     }
 
     private void getProjects(Query queryRef){
@@ -88,10 +86,12 @@ public class ProjectListActivity extends AppCompatActivity {
                     DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
                             .get(documentSnapshots.size() -1);
 
-                    addScrollListener(lastVisible);
-                    pullToRefresh(lastVisible);
+                    lastDocument = lastVisible;
 
                     createRecyclerView(documentSnapshots,lastVisible);
+
+                    addScrollListener(lastDocument);
+                    pullToRefresh(lastDocument);
 
                 }
 
@@ -151,6 +151,8 @@ public class ProjectListActivity extends AppCompatActivity {
 
                             Query queryRef = db.collection("Projects").startAfter(lastVisible).limit(page);
                             getProjects(queryRef);
+
+                            isloading = false;
                         }
                     }
                 }
