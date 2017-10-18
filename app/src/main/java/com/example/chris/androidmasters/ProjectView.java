@@ -45,8 +45,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.chris.androidmasters.Objects.Constants.getCurrencySymbol;
-
 public class ProjectView extends AppCompatActivity {
 
     private static String id;
@@ -284,7 +282,7 @@ public class ProjectView extends AppCompatActivity {
 
                     Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
 
-                    String currency = getCurrencySymbol("PHP");
+                    String currency = "₱ ";
                     tvgoal.setText(currency+" "+snapshot.getString("goal"));
                     tvcurrent.setText(currency+" "+snapshot.getString("current"));
 

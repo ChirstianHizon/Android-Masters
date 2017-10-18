@@ -99,7 +99,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         Double current = Double.valueOf(project.getCurrent());
 
         Double progress = Double.valueOf(project.getCurrent()) / Double.valueOf(project.getGoal()) * 100;
-        String currency = "₱";
+        String currency = "₱ ";
 
         holder.current.setText(progress.intValue() + "%");
         holder.donated.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
@@ -185,8 +185,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.date.setText(elapsed.getMinute() + "");
             holder.date_measure.setText("minutes left");
         }else{
-            holder.date.setText("0");
-            holder.date_measure.setText("has ended");
+            holder.date.setText("");
+            holder.date_measure.setText("Project has ended");
         }
 
 
