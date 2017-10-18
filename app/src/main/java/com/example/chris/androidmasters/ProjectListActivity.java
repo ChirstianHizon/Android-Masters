@@ -101,13 +101,8 @@ public class ProjectListActivity extends AppCompatActivity {
     }
 
     private void createRecyclerView( QuerySnapshot documentSnapshots,DocumentSnapshot lastVisible){
-
         int counter = 0;
-        String lastid = "";
         for (DocumentSnapshot doc : documentSnapshots) {
-
-            lastid = doc.getId();
-
             if(doc.getString("name") != null && doc.getString("organization") != null
                     && doc.getString("image") != null && doc.getString("logo") != null
                     && doc.getString("goal") != null && doc.getString("current") != null
@@ -128,13 +123,7 @@ public class ProjectListActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
 
-        Log.d("isLoading_lastid", lastid);
-        Log.d("isLoading_lastvisible", lastVisible.getId());
-
-        if(lastid == lastVisible.getId()){
-            isloading = false;
-        }
-
+        Log.d("isLoading_counter", String.valueOf(counter));
         if(counter < page){
             isloading = false;
         }
