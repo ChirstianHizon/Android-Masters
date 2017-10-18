@@ -57,6 +57,7 @@ public class ProjectView extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private boolean isShow = false;
     private int scrollRange = -1;
+    private Button btndonate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class ProjectView extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        Button btndonate = (Button)findViewById(R.id.btn_donate);
+        btndonate = (Button)findViewById(R.id.btn_donate);
         btndonate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +110,7 @@ public class ProjectView extends AppCompatActivity {
         btnshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = "Text I want to share.";
+                String message = "Help us in this Project";
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, message);
@@ -272,6 +273,9 @@ public class ProjectView extends AppCompatActivity {
                         dateRemain.setText(elapsed.getHour() + "hours remaining");
                     }else if(elapsed.getMinute() > 0 ){
                         dateRemain.setText(elapsed.getMinute() + "minutes remaining");
+                    }else{
+                        dateRemain.setText("Project has Already Ended");
+                        btndonate.setVisibility(View.GONE);
                     }
 
 
