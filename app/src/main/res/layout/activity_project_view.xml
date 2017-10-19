@@ -237,16 +237,25 @@
                     </HorizontalScrollView>
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
-                        android:lineSpacingExtra="3dp"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus accumsan purus, sed ultricies lectus mollis non. Aenean ut rhoncus metus. Aenean sed maximus turpis, eu ullamcorper felis."
-                        android:textAlignment="viewStart"
-                        android:textColor="#333"
-                        android:textSize="14sp" />
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:text="Objectives"
+                        android:textColor="#444"
+                        android:textSize="18sp" />
+
+                    <ListView
+                        android:id="@+id/lv_objectives"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@null"
+                        android:dividerHeight="0dp" />
 
                     <View
                         android:id="@+id/view"

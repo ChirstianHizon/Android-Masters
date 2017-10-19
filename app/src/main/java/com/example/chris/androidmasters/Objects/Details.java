@@ -91,10 +91,19 @@ public class Details {
     }
 
     public List<String> getObjectives() {
-        return objectives;
+
+        if(objectives == null){
+            return  null;
+        } else if(objectives.isEmpty()){
+            return null;
+        }else{
+            return objectives;
+        }
     }
 
     public void setObjectives(List<String> objectives) {
+
+        this.objectives = new ArrayList<String>();
         this.objectives = objectives;
     }
 }

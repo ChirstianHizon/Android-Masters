@@ -19,10 +19,12 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -287,7 +289,22 @@ public class ProjectView extends AppCompatActivity {
 
 
         LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
+        ListView lvobjectives = (ListView)findViewById(R.id.lv_objectives);
 
+        List<String> objectives = new ArrayList<>();
+
+        if( details.getObjectives() == null){
+            objectives.add("No Objective Set");
+        }else{
+            objectives = details.getObjectives();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, objectives);
+
+        lvobjectives.setAdapter(adapter);
+
+        Log.d("DETAILS", String.valueOf(details.getObjectives()));
         title = details.getTitle();
 
         Title.setText(details.getTitle());
