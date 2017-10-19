@@ -35,7 +35,7 @@
             android:backgroundTint="@color/white"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
-            android:src="@drawable/colored_logo_rocket" />
+            android:src="@drawable/logo_rocket_white" />
     </LinearLayout>
 
     <TextView

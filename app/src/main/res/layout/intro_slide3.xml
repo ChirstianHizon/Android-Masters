@@ -49,7 +49,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Donating is secured. Log in to PayPal"
+        android:text="Donate confidently with Project Boost. Log in to PayPal to ensure protection of payment details."
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
