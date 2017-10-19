@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity {
                         " (NGO). Simple and easy to use, Project Donate is a platform " +
                         "for helping others at the comfort of one's phone.")
                 .isRTL(false)
-                .setImage(R.drawable.display_app_logo)
+                .setImage(R.drawable.icon)
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addGroup("Connect with us")
                 .addEmail("codeislife@gmail.com")
