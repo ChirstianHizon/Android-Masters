@@ -38,11 +38,11 @@ public class IntroActivity extends AppIntro {
         showSkipButton(true);
 
         //Choose your animation
-        setFadeAnimation();
-        setZoomAnimation();
+//        setFadeAnimation();
+//        setZoomAnimation();
         setFlowAnimation();
-        setSlideOverAnimation();
-        setDepthAnimation();
+//        setSlideOverAnimation();
+//        setDepthAnimation();
     }
 
     @Override

@@ -42,6 +42,7 @@ public class ProjectListActivity extends AppCompatActivity {
     private int page = 1;
     private LinearLayoutManager layoutManager;
     private ListenerRegistration firestoreListener;
+    private ListenerRegistration listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
     private void getInitialProjects(Query queryRef){
 
-        queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        listener = queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot value, FirebaseFirestoreException e) {
@@ -118,7 +119,10 @@ public class ProjectListActivity extends AppCompatActivity {
             public void onRefresh() {
                 adapter.clear();
 
-                Query queryRef = db.collection("Projects").limit(page);
+                if(listener != null){
+                    listener.remove();
+                }
+                Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
                 getInitialProjects(queryRef);
                 isloading = true;
                 mSwipeRefreshLayout.setRefreshing(false);
