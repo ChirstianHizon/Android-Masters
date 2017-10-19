@@ -46,7 +46,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO). Simple and easy to use, Project Donate is a platform for helping others at the comfort of one's phone."
+        android:text="Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO). It's simple and easy to use platform to help others."
         android:textColor="@color/white"
         android:textSize="14sp" />
 
