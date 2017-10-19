@@ -5,14 +5,49 @@
     android:viewportWidth="1200"
     android:viewportHeight="500">
 
-        <!--sneaky letter stuff-->
+    <path
+        android:name="logo_b"
+        android:pathData="@string/path_logo_b"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="logo_o1"
+        android:pathData="@string/path_logo_o1"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="logo_o2"
+        android:pathData="@string/path_logo_o2"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="logo_s"
+        android:pathData="@string/path_logo_s"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="logo_t"
+        android:pathData="@string/path_logo_t"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+        <!--sneaky letter stuff
         <path
             android:name="logo_b_1"
             android:pathData="@string/path_logo_b"
             android:strokeColor="@color/primaryBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0.25"
-            android:trimPathStart="0" />-->
+            android:trimPathStart="0" />
         <path
             android:name="logo_b_2"
             android:pathData="@string/path_logo_b"
@@ -95,7 +130,6 @@
             android:trimPathEnd="0"
             android:trimPathStart="0.75"/>
 
-        <!--sneaky o stuff-->
         <path
             android:name="logo_o1_1"
             android:pathData="@string/path_logo_o1"
@@ -153,5 +187,5 @@
             android:strokeColor="@color/lightBlue"
             android:strokeWidth="20"
             android:trimPathEnd="0"
-            android:trimPathStart="0.75" />
+            android:trimPathStart="0.75" />-->
 </vector>

@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
         ImageView imgLogo = (ImageView)findViewById(R.id.img_logo);
 
-        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.vector_logo_anim); // Insert your AnimatedVectorDrawable resource identifier
+        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_logo); // Insert your AnimatedVectorDrawable resource identifier
         imgLogo.setImageDrawable(d);
         d.start();
 
@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     int waited = 0;
-                    while(waited < 2000){
+                    while(waited < 3500){
                         sleep(100);
                         waited += 100;
                     }

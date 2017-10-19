@@ -1,0 +1,24 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vector_logo">
+
+    <target
+        android:name="logo_b"
+        android:animation="@anim/logo_anim_b" />
+
+    <target
+        android:name="logo_o1"
+        android:animation="@anim/logo_anim_o" />
+
+    <target
+        android:name="logo_o2"
+        android:animation="@anim/logo_anim_o2" />
+
+    <target
+        android:name="logo_s"
+        android:animation="@anim/logo_anim_s" />
+
+    <target
+        android:name="logo_t"
+        android:animation="@anim/logo_anim_t"/>
+
+</animated-vector>
