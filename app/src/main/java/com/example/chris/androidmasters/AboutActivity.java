@@ -25,7 +25,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Element adsElement = new Element();
+//        Element adsElement = new Element();
 
         View aboutPage = new AboutPage(this)
                 .setDescription("Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO). Simple and easy to use, Project Donate is a platform for helping others at the comfort of one's phone.")
