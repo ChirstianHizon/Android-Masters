@@ -300,7 +300,7 @@ public class ProjectView extends AppCompatActivity {
 
             for(int x=0;x<objectives.size();x++){
                 TextView textview = new TextView(this);
-                textview.setText(objectives.get(x));
+                textview.setText("\u2022 "+objectives.get(x));
                 llobjectives.addView(textview);
             }
 
