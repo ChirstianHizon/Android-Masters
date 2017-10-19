@@ -26,21 +26,20 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Element adsElement = new Element();
-        adsElement.setTitle("Advertise with us");
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.images)
-                .addItem(new Element().setTitle("Version 6.2"))
+                .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(adsElement)
                 .addGroup("Connect with us")
-                .addEmail("elmehdi.sakout@gmail.com")
-                .addWebsite("http://medyo.github.io/")
-                .addFacebook("the.medy")
-                .addTwitter("medyo80")
-                .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
+                .addEmail("codeislife@gmail.com")
+//                .addWebsite("http://medyo.github.io/")
+//                .addFacebook("the.medy")
+//                .addTwitter("medyo80")
+//                .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
                 .addPlayStore("com.ideashower.readitlater.pro")
-                .addInstagram("medyo80")
+//                .addInstagram("medyo80")
                 .addGitHub("medyo")
                 .addItem(getCopyRightsElement())
                 .create();
@@ -53,7 +52,7 @@ public class AboutActivity extends AppCompatActivity {
         Element copyRightsElement = new Element();
         final String copyrights = String.format("copyright", Calendar.getInstance().get(Calendar.YEAR));
         copyRightsElement.setTitle(copyrights);
-        copyRightsElement.setIconDrawable(R.drawable.images);
+        copyRightsElement.setIconDrawable(R.drawable.copyright);
         copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);
         copyRightsElement.setIconNightTint(android.R.color.white);
         copyRightsElement.setGravity(Gravity.CENTER);
