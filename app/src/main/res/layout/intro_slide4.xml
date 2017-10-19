@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="10"
-    android:background="@color/lightBlue"
+    android:background="@color/slightDarkBlue"
     android:orientation="vertical">
 
     <TextView
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Accessibility"
+        android:text="It's Free"
         android:textColor="#ffffff"
         android:textSize="28sp"
         android:textStyle="bold"/>
@@ -37,7 +37,7 @@
             android:paddingRight="64dp"
             android:scaleType="fitCenter"
             android:tint="@color/white"
-            app:srcCompat="@drawable/vd_wifi" />
+            app:srcCompat="@drawable/vd_free" />
     </LinearLayout>
 
     <TextView
@@ -48,7 +48,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Go online and access the application. Users have the freedom to donate whenever at wherever (and it's free!)."
+        android:text="Project Boost does not require payments. Just a generous heart and the passion to help others for a good cause."
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
