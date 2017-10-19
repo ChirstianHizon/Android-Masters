@@ -195,7 +195,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
                 Query queryRef = db.collection("Projects").limit(page);
                 getInitialProjects(queryRef);
-
+                isloading = true;
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });

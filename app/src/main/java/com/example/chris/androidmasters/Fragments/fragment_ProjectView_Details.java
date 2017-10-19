@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.chris.androidmasters.Objects.Details;
-import com.example.chris.androidmasters.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,7 +33,7 @@ public class fragment_ProjectView_Details extends android.support.v4.app.Fragmen
         view = inflater.inflate(R.layout.fragment_projectview_details, container, false);
 
         db = FirebaseFirestore.getInstance();
-        id = ProjectView.getProjectId();
+//        id = ProjectView.getProjectId();
 
         getProjectDetails();
 
