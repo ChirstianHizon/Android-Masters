@@ -3,7 +3,6 @@ package com.example.chris.androidmasters;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -33,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     int waited = 0;
-                    while(waited < 30000){
+                    while(waited < 2000){
                         sleep(100);
                         waited += 100;
                     }
