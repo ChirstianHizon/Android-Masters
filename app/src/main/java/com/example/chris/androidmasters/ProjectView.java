@@ -19,12 +19,10 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -287,22 +285,27 @@ public class ProjectView extends AppCompatActivity {
         TextView Organization = (TextView)findViewById(R.id.tv_organization);
         TextView shortdesc = (TextView)findViewById(R.id.tv_project_description);
 
-
         LinearLayout llimagedisplay = (LinearLayout)findViewById(R.id.ll_image_display);
-        ListView lvobjectives = (ListView)findViewById(R.id.lv_objectives);
+        LinearLayout llobjectives = (LinearLayout)findViewById(R.id.ll_objectives);
 
-        List<String> objectives = new ArrayList<>();
+
+        List<String> objectives;
 
         if( details.getObjectives() == null){
-            objectives.add("No Objective Set");
+            TextView textview = new TextView(this);
+            textview.setText("No Objective Set");
+            llobjectives.addView(textview);
         }else{
             objectives = details.getObjectives();
+
+            for(int x=0;x<objectives.size();x++){
+                TextView textview = new TextView(this);
+                textview.setText(objectives.get(x));
+                llobjectives.addView(textview);
+            }
+
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, objectives);
-
-        lvobjectives.setAdapter(adapter);
 
         Log.d("DETAILS", String.valueOf(details.getObjectives()));
         title = details.getTitle();

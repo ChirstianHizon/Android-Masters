@@ -26,6 +26,9 @@
         <activity
             android:name="com.example.chris.androidmasters.DonateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.chris.androidmasters.AboutActivity"
+            />
     </application>
 
 </manifest>

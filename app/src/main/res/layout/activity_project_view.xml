@@ -250,12 +250,13 @@
                         android:textColor="#444"
                         android:textSize="18sp" />
 
-                    <ListView
-                        android:id="@+id/lv_objectives"
+                    <LinearLayout
+                        android:id="@+id/ll_objectives"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:divider="@null"
-                        android:dividerHeight="0dp" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                     <View
                         android:id="@+id/view"
