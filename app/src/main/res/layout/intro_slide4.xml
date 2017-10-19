@@ -17,7 +17,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Accessibility"
+        android:text="It's Free"
         android:textColor="#ffffff"
         android:textSize="28sp"
         android:textStyle="bold"/>
@@ -48,7 +48,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Go online and access the application. Users have the freedom to donate whenever at wherever (and it's free!)."
+        android:text="Project Boost does not require payments. Just a generous heart and the passion to help."
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
