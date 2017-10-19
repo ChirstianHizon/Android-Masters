@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="10"
-    android:background="@color/white"
+    android:background="@color/ceruleanBlue"
     android:orientation="vertical">
 
     <TextView
@@ -17,7 +17,7 @@
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         android:text="Welcome"
-        android:textColor="@color/darkGray"
+        android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"/>
 
@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="@color/white"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
             android:src="@drawable/colored_logo_rocket" />
@@ -46,7 +47,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:text="Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO). Simple and easy to use, Project Donate is a platform for helping others at the comfort of one's phone."
-        android:textColor="@color/darkGray"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
