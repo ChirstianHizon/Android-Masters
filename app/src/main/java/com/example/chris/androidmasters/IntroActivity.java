@@ -36,7 +36,13 @@ public class IntroActivity extends AppIntro {
 //        setCustomTransformer(new ZoomOutPageTransformer());
 
         showSkipButton(true);
+
+        //Choose your animation
+        setFadeAnimation();
+        setZoomAnimation();
+        setFlowAnimation();
         setSlideOverAnimation();
+        setDepthAnimation();
     }
 
     @Override
