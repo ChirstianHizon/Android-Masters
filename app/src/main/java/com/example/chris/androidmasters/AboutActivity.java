@@ -28,7 +28,10 @@ public class AboutActivity extends AppCompatActivity {
 //        Element adsElement = new Element();
 
         View aboutPage = new AboutPage(this)
-                .setDescription("Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO). Simple and easy to use, Project Donate is a platform for helping others at the comfort of one's phone.")
+                .setDescription("Project Donate is an app that aims to fund the " +
+                        "different projects presented by a Non-Profit Organization" +
+                        " (NGO). Simple and easy to use, Project Donate is a platform " +
+                        "for helping others at the comfort of one's phone.")
                 .isRTL(false)
                 .setImage(R.drawable.images)
                 .addItem(new Element().setTitle("Version 1.0"))
