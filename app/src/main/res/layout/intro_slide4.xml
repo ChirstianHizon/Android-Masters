@@ -49,7 +49,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Project Boost does not require payments. Just a generous heart and the passion to help others for a good cause."
+        android:text="Project Boost does not require payments. Just a generous heart and the passion to help others for a good cause. Not only are you boosting others but also yourself."
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
