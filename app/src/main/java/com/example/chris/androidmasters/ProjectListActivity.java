@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -213,7 +214,8 @@ public class ProjectListActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_aboutus:
-                Toast.makeText(context, "About Us", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ProjectListActivity.this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.menu_settings:
                 Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show();
