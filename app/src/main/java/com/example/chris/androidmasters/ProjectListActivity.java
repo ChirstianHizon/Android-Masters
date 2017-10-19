@@ -16,15 +16,15 @@ import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
 import com.example.chris.androidmasters.Objects.Project;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProjectListActivity extends AppCompatActivity {
@@ -63,7 +63,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
 //        ------------------------------------------------------------------------------------- //
 
-        Query queryRef = db.collection("Projects").limit(page);
+        Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
         getInitialProjects(queryRef);
 
 //        ------------------------------------------------------------------------------------- //
@@ -74,64 +74,24 @@ public class ProjectListActivity extends AppCompatActivity {
 
     private void getInitialProjects(Query queryRef){
 
-        queryRef.get()
-            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-
-                @Override
-                public void onSuccess(QuerySnapshot documentSnapshots) {
-
-                if(documentSnapshots.size() != 0){
-                    DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
-                            .get(documentSnapshots.size() -1);
-
-                    createRecyclerView(documentSnapshots);
-
-                    if(documentSnapshots.size() < page ){
-                        isloading = false;
-                    }else{
-                        // This Function gets the very first document but does not display it
-                        lastDocument = lastVisible;
-                        Log.d("isLoading_LastDocument", lastDocument.getId());
-                        addScrollListener(lastDocument);
-                    }
-                }
-
-                }
-            });
-
-    }
-
-    private void getProjects(Query queryRef){
-
-        queryRef.get()
-        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
-            public void onSuccess(QuerySnapshot documentSnapshots) {
+            public void onEvent(QuerySnapshot value, FirebaseFirestoreException e) {
 
-                if(documentSnapshots.isEmpty()){
-
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
                     return;
                 }
-                DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
-                        .get(documentSnapshots.size() -1);
 
-                Log.d("isLoading_last", lastDocument.getId());
-                Log.d("isLoading_visible", lastVisible.getId());
-                isloading = false;
-
-                if(!lastDocument.getId().equals(lastVisible.getId()) ){
-                    createRecyclerView(documentSnapshots);
-                    lastDocument = lastVisible;
-                    isloading = true;
-                }
+                adapter.clear();
+                createRecyclerView(value);
             }
         });
 
     }
 
     private void createRecyclerView( QuerySnapshot documentSnap){
-        int counter = 0;
         for (DocumentSnapshot docx : documentSnap) {
             if(docx.getString("name") != null && docx.getString("organization") != null
                     && docx.getString("image") != null && docx.getString("logo") != null
@@ -142,50 +102,13 @@ public class ProjectListActivity extends AppCompatActivity {
                         && !docx.getString("image").equalsIgnoreCase("") && !docx.getString("logo").equalsIgnoreCase("")
                         && !docx.getString("goal").equalsIgnoreCase("") && !docx.getString("current").equalsIgnoreCase("")){
 
-                    Date date = docx.getDate("completion_date");
-
                     Project project = docx.toObject(Project.class);
                     project.setId(docx.getId());
                     projectlist.add(project);
                 }
             }
-            counter++;
         }
         adapter.notifyDataSetChanged();
-
-//        Log.d("isLoading_counter", String.valueOf(counter));
-        if(counter < page){
-            isloading = false;
-        }
-
-    }
-
-    private void addScrollListener(final DocumentSnapshot lastVisible){
-        recmain.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if(dy > 0){
-
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    notvisibleItemCount = layoutManager.findFirstVisibleItemPosition();
-
-                    if(isloading){
-
-                        if((visibleItemCount + notvisibleItemCount) >= totalItemCount){
-                            Log.d("RECSCORLL","Last Item");
-
-                            Query queryRef = db.collection("Projects").startAfter(lastVisible).limit(page);
-                            getProjects(queryRef);
-                            isloading = false;
-
-                        }
-                    }
-                }
-            }
-        });
     }
 
     private void pullToRefresh(){
