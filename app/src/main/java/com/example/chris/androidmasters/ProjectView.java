@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -386,6 +387,21 @@ public class ProjectView extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    private void isLoading(boolean status){
+        ProgressBar pbmain = (ProgressBar)findViewById(R.id.pb_main);
+        CardView cvmain = (CardView)findViewById(R.id.cv_main);
+        AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar_layout);
+
+        if(status){
+            pbmain.setVisibility(View.VISIBLE);
+            cvmain.setVisibility(View.GONE);
+            appbar.setExpanded(false);
+        }else{
+
+        }
 
     }
 
