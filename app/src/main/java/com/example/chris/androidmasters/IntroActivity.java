@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.example.chris.androidmasters.Introduction.FirstSlide;
+import com.example.chris.androidmasters.Introduction.FourthSlide;
+import com.example.chris.androidmasters.Introduction.SecondSlide;
+import com.example.chris.androidmasters.Introduction.ThirdSlide;
 import com.github.paolorotolo.appintro.AppIntro;
 
 /**
@@ -24,8 +27,9 @@ public class IntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
 
         addSlide(new FirstSlide());
-        addSlide(new FirstSlide());
-        addSlide(new FirstSlide());
+        addSlide(new SecondSlide());
+        addSlide(new ThirdSlide());
+        addSlide(new FourthSlide());
 
 //        setBarColor(Color.parseColor("#222222"));
 //        setSeparatorColor(Color.parseColor("#FFFFFF"));
