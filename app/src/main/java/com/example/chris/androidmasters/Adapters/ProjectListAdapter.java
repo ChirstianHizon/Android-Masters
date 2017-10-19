@@ -94,7 +94,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.name.setText(project.getName());
         holder.description.setText(project.getDescription());
 
-        holder.organization.setText(project.getOrganization());
+        holder.organization.setText("by "+project.getOrganization());
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
 
