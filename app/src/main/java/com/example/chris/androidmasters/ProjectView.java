@@ -7,7 +7,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +30,8 @@ import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -124,18 +126,157 @@ public class ProjectView extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
 
-        return super.onOptionsItemSelected(item);
+    private void getProjectDetails(){
+        DocumentReference docRef = db.collection("Details").document(id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot != null) {
+
+                        Details details = snapshot.toObject(Details.class);
+                        setDetails(details);
+
+                    }
+                }
+            }
+        });
     }
 
-    public static String getProjectId(){
-        return id;
+    private void getProjectInfo(){
+
+        final ProgressBar pbprogress = (ProgressBar) findViewById(R.id.pb_progress);
+        final TextView tvcurrent = (TextView) findViewById(R.id.tv_current);
+        final TextView tvgoal = (TextView) findViewById(R.id.tv_goal);
+        final TextView compDate = (TextView)findViewById(R.id.tv_completion_date);
+        final TextView dateRemain = (TextView)findViewById(R.id.tv_days_remain);
+
+        DocumentReference docRef = db.collection("Projects").document(id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot != null) {
+
+                        Date now = new Date();
+                        Date completion = snapshot.getDate("completion_date");
+
+                        ElapsedTime elapsed = new ElapsedTime(now,completion);
+
+                        String dayOfTheWeek = (String) DateFormat.format("EEEE", completion);
+                        String day          = (String) DateFormat.format("dd",   completion);
+                        String monthString  = (String) DateFormat.format("MMM",  completion);
+                        String year         = (String) DateFormat.format("yyyy", completion);
+
+                        compDate.setText(monthString +" "+day+", "+year);
+
+                        if(elapsed.getDay() > 0 ){
+                            dateRemain.setText(elapsed.getDay() + " days remaining");
+                        }else if(elapsed.getHour() > 0 ){
+                            dateRemain.setText(elapsed.getHour() + "hours remaining");
+                        }else if(elapsed.getMinute() > 0 ){
+                            dateRemain.setText(elapsed.getMinute() + "minutes remaining");
+                        }else{
+                            dateRemain.setText("Project has Already Ended");
+                            btndonate.setVisibility(View.GONE);
+                        }
+
+
+                        Double goal = Double.valueOf(snapshot.getString("goal"));
+                        Double current = Double.valueOf(snapshot.getString("current"));
+
+                        Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
+
+                        String currency = "₱ ";
+                        tvgoal.setText(currency+" "+snapshot.getString("goal"));
+                        tvcurrent.setText(currency+" "+snapshot.getString("current"));
+
+                        if(current > goal){
+                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+                        }else if(current.equals(goal)){
+                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+                        }else if(current.equals(0)){
+                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
+                        }else{
+                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
+                        }
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            pbprogress.setProgress(progress.intValue(),true);
+                        }else{
+                            pbprogress.setProgress(progress.intValue());
+                        }
+
+                    } else {
+                        Log.d(TAG, "Current data: null");
+                    }
+                }
+            }
+        });
+    }
+
+    private void getProjectContacts(){
+
+        RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
+        final List<Contacts> contactList = new ArrayList<Contacts>();
+        final ProjectContactsAdapter adapter = new ProjectContactsAdapter(context, contactList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recmain.setHasFixedSize(true);
+        recmain.setLayoutManager(layoutManager);
+        recmain.setItemAnimator(new DefaultItemAnimator());
+        recmain.setAdapter(adapter);
+
+        DocumentReference docRef = db.collection("Contacts").document(id);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+
+            @Override
+            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+
+                    Log.d(TAG,snapshot.getData().toString());
+                    Log.d(TAG, String.valueOf(snapshot.getData().size()));
+
+                    int size = snapshot.getData().size();
+
+                    JSONObject obj = new JSONObject(snapshot.getData());
+
+                    try {
+                        JSONArray names = new JSONArray(obj.getString("Names"));
+                        JSONArray contacts = new JSONArray(obj.getString("Contacts"));
+                        JSONArray positions = new JSONArray(obj.getString("Positions"));
+
+                        adapter.clear();
+                        for(int x = 0;x<size;x++){
+                            Log.d(TAG,names.getString(x));
+                            contactList.add(
+                                    new Contacts(
+                                            names.getString(x),
+                                            positions.getString(x),
+                                            contacts.getString(x)
+                                    )
+                            );
+
+                        }
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+
+
+                }
+
+            }
+        });
     }
 
     private void setDetails(Details details){
@@ -203,174 +344,6 @@ public class ProjectView extends AppCompatActivity {
         }
     }
 
-    private void getProjectDetails(){
-        Log.d(TAG,"ID: "+id);
-        DocumentReference docRef = db.collection("Details").document(id);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-
-                    // GETS AND TRANSFER DATA TO CLASS
-                    //TODO: CREATE VALIDATION TO CHECK IF FIELDS ARE PRESENT
-                    Details details = snapshot.toObject(Details.class);
-                    setDetails(details);
-
-                }else{
-                    Log.d(TAG, "Current data: null");
-                }
-
-
-            }
-        });
-
-    }
-
-    private void getProjectInfo(){
-
-        final ProgressBar pbprogress = (ProgressBar) findViewById(R.id.pb_progress);
-        final TextView tvcurrent = (TextView) findViewById(R.id.tv_current);
-        final TextView tvgoal = (TextView) findViewById(R.id.tv_goal);
-        final TextView compDate = (TextView)findViewById(R.id.tv_completion_date);
-        final TextView dateRemain = (TextView)findViewById(R.id.tv_days_remain);
-
-        DocumentReference docRef = db.collection("Projects").document(id);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-
-                    Date now = new Date();
-                    Date completion = snapshot.getDate("completion_date");
-
-                    ElapsedTime elapsed = new ElapsedTime(now,completion);
-
-                    String dayOfTheWeek = (String) DateFormat.format("EEEE", completion);
-                    String day          = (String) DateFormat.format("dd",   completion);
-                    String monthString  = (String) DateFormat.format("MMM",  completion);
-                    String monthNumber  = (String) DateFormat.format("MM",   completion);
-                    String year         = (String) DateFormat.format("yyyy", completion);
-
-                    compDate.setText(monthString +" "+day+", "+year);
-
-                    if(elapsed.getDay() > 0 ){
-                        dateRemain.setText(elapsed.getDay() + " days remaining");
-                    }else if(elapsed.getHour() > 0 ){
-                        dateRemain.setText(elapsed.getHour() + "hours remaining");
-                    }else if(elapsed.getMinute() > 0 ){
-                        dateRemain.setText(elapsed.getMinute() + "minutes remaining");
-                    }else{
-                        dateRemain.setText("Project has Already Ended");
-                        btndonate.setVisibility(View.GONE);
-                    }
-
-
-                    Double goal = Double.valueOf(snapshot.getString("goal"));
-                    Double current = Double.valueOf(snapshot.getString("current"));
-
-                    Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
-
-                    String currency = "₱ ";
-                    tvgoal.setText(currency+" "+snapshot.getString("goal"));
-                    tvcurrent.setText(currency+" "+snapshot.getString("current"));
-
-                    if(current > goal){
-                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
-                    }else if(current.equals(goal)){
-                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
-                    }else if(current.equals(0)){
-                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
-                    }else{
-                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
-                    }
-
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        pbprogress.setProgress(progress.intValue(),true);
-                    }else{
-                        pbprogress.setProgress(progress.intValue());
-                    }
-
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-            }
-        });
-
-    }
-
-    private void getProjectContacts(){
-
-        RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
-        final List<Contacts> contactList = new ArrayList<Contacts>();
-        final ProjectContactsAdapter adapter = new ProjectContactsAdapter(context, contactList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        recmain.setHasFixedSize(true);
-        recmain.setLayoutManager(layoutManager);
-        recmain.setItemAnimator(new DefaultItemAnimator());
-        recmain.setAdapter(adapter);
-
-        DocumentReference docRef = db.collection("Contacts").document(id);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-
-            @Override
-            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-
-                    Log.d(TAG,snapshot.getData().toString());
-                    Log.d(TAG, String.valueOf(snapshot.getData().size()));
-
-                    int size = snapshot.getData().size();
-
-                    JSONObject obj = new JSONObject(snapshot.getData());
-
-                    try {
-                        JSONArray names = new JSONArray(obj.getString("Names"));
-                        JSONArray contacts = new JSONArray(obj.getString("Contacts"));
-                        JSONArray positions = new JSONArray(obj.getString("Positions"));
-
-                        adapter.clear();
-                        for(int x = 0;x<size;x++){
-                            Log.d(TAG,names.getString(x));
-                            contactList.add(
-                                    new Contacts(
-                                            names.getString(x),
-                                            positions.getString(x),
-                                            contacts.getString(x)
-                                    )
-                            );
-
-                        }
-                        adapter.notifyDataSetChanged();
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
-
-
-                }
-
-            }
-        });
-    }
-
     private void setTextVisibility(){
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.ctl_main);
@@ -390,10 +363,18 @@ public class ProjectView extends AppCompatActivity {
                     collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
-
-
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
