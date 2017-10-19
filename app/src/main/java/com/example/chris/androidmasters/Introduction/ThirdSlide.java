@@ -11,19 +11,19 @@ import com.example.chris.androidmasters.IntroActivity;
 import com.example.chris.androidmasters.R;
 
 /**
- * Created by chris on 19/10/2017.
+ * Created by Lenovo on 19/10/2017.
  */
 
-public class FirstSlide extends Fragment {
+public class ThirdSlide extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.intro_slide1, container, false);
+        View v = inflater.inflate(R.layout.intro_slide2, container, false);
 
         IntroActivity activity =(IntroActivity)getActivity();
 
-        activity.setBarColor(Color.parseColor("#FFFFFF"));
-        activity.setSeparatorColor(Color.parseColor("#FFFFFF"));
+        activity.setBarColor(Color.parseColor("#304b78"));
+        activity.setSeparatorColor(Color.parseColor("#304b78"));
 
         return v;
     }
