@@ -24,18 +24,12 @@ public class FirstSlide extends Fragment implements ISlideBackgroundColorHolder 
 
 
         v = inflater.inflate(R.layout.intro_slide1, container, false);
-
-        IntroActivity activity =(IntroActivity)getActivity();
-
-//        IntroActivity activity =(IntroActivity)getActivity();
-//        activity.setBarColor(Color.parseColor("#FFFFFF"));
-//        activity.setSeparatorColor(Color.parseColor("#FFFFFF"));
         return v;
     }
 
     @Override
     public int getDefaultBackgroundColor() {
-        return Color.parseColor("#FFFFFF");
+        return Color.parseColor("#56bda2");
     }
 
     @Override
