@@ -75,28 +75,29 @@ public class ProjectListActivity extends AppCompatActivity {
     private void getInitialProjects(Query queryRef){
 
         queryRef.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 
-                    @Override
-                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                @Override
+                public void onSuccess(QuerySnapshot documentSnapshots) {
 
+                if(documentSnapshots.size() != 0){
+                    DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
+                            .get(documentSnapshots.size() -1);
 
-                        DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
-                                .get(documentSnapshots.size() -1);
+                    createRecyclerView(documentSnapshots);
 
-                        createRecyclerView(documentSnapshots);
-
-                        if(documentSnapshots.size() < page ){
-                            isloading = false;
-                        }else{
-                            // This Function gets the very first document but does not display it
-                            lastDocument = lastVisible;
-                            Log.d("isLoading_LastDocument", lastDocument.getId());
-                            addScrollListener(lastDocument);
-
-                        }
+                    if(documentSnapshots.size() < page ){
+                        isloading = false;
+                    }else{
+                        // This Function gets the very first document but does not display it
+                        lastDocument = lastVisible;
+                        Log.d("isLoading_LastDocument", lastDocument.getId());
+                        addScrollListener(lastDocument);
                     }
-                });
+                }
+
+                }
+            });
 
     }
 

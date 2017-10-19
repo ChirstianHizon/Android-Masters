@@ -25,6 +25,8 @@ public class FirstSlide extends Fragment {
         activity.setBarColor(Color.parseColor("#FFFFFF"));
         activity.setSeparatorColor(Color.parseColor("#FFFFFF"));
 
+
+
         return v;
     }
 }

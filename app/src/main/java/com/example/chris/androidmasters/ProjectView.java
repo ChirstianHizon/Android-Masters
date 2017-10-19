@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -166,7 +165,6 @@ public class ProjectView extends AppCompatActivity {
 
                         ElapsedTime elapsed = new ElapsedTime(now,completion);
 
-                        String dayOfTheWeek = (String) DateFormat.format("EEEE", completion);
                         String day          = (String) DateFormat.format("dd",   completion);
                         String monthString  = (String) DateFormat.format("MMM",  completion);
                         String year         = (String) DateFormat.format("yyyy", completion);
@@ -231,50 +229,45 @@ public class ProjectView extends AppCompatActivity {
         recmain.setAdapter(adapter);
 
         DocumentReference docRef = db.collection("Contacts").document(id);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
 
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot != null) {
 
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
+                        Log.d(TAG,snapshot.getData().toString());
+                        Log.d(TAG, String.valueOf(snapshot.getData().size()));
 
-                if (snapshot != null && snapshot.exists()) {
 
-                    Log.d(TAG,snapshot.getData().toString());
-                    Log.d(TAG, String.valueOf(snapshot.getData().size()));
+                        try {
+                            JSONObject obj = new JSONObject(snapshot.getData());
+                            JSONArray names = new JSONArray(obj.getString("Names"));
+                            JSONArray contacts = new JSONArray(obj.getString("Contacts"));
+                            JSONArray positions = new JSONArray(obj.getString("Positions"));
 
-                    int size = snapshot.getData().size();
+                            int size = names.length();
 
-                    JSONObject obj = new JSONObject(snapshot.getData());
+                            adapter.clear();
+                            for(int x = 0;x<size;x++){
+                                Log.d(TAG,names.getString(x));
+                                contactList.add(
+                                        new Contacts(
+                                                names.getString(x),
+                                                positions.getString(x),
+                                                contacts.getString(x)
+                                        )
+                                );
 
-                    try {
-                        JSONArray names = new JSONArray(obj.getString("Names"));
-                        JSONArray contacts = new JSONArray(obj.getString("Contacts"));
-                        JSONArray positions = new JSONArray(obj.getString("Positions"));
-
-                        adapter.clear();
-                        for(int x = 0;x<size;x++){
-                            Log.d(TAG,names.getString(x));
-                            contactList.add(
-                                    new Contacts(
-                                            names.getString(x),
-                                            positions.getString(x),
-                                            contacts.getString(x)
-                                    )
-                            );
-
+                            }
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
                         }
-                        adapter.notifyDataSetChanged();
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
+
                     }
-
-
                 }
-
             }
         });
     }
@@ -394,6 +387,21 @@ public class ProjectView extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    private void isLoading(boolean status){
+        ProgressBar pbmain = (ProgressBar)findViewById(R.id.pb_main);
+        CardView cvmain = (CardView)findViewById(R.id.cv_main);
+        AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar_layout);
+
+        if(status){
+            pbmain.setVisibility(View.VISIBLE);
+            cvmain.setVisibility(View.GONE);
+            appbar.setExpanded(false);
+        }else{
+
+        }
 
     }
 
