@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +34,7 @@ public class AboutActivity extends AppCompatActivity {
                         " (NGO). Simple and easy to use, Project Donate is a platform " +
                         "for helping others at the comfort of one's phone.")
                 .isRTL(false)
-                .setImage(R.drawable.images)
+                .setImage(R.drawable.display_app_logo)
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addGroup("Connect with us")
                 .addEmail("codeislife@gmail.com")

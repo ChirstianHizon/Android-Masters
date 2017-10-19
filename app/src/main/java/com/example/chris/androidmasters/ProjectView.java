@@ -406,6 +406,12 @@ public class ProjectView extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getProjectInfo();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
