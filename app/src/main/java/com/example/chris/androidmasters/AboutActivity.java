@@ -53,10 +53,10 @@ public class AboutActivity extends AppCompatActivity {
 
         //        ----------- CREATE A BACK BUTTON ------------------
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-
+        getSupportActionBar().setTitle("About");
 //        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
