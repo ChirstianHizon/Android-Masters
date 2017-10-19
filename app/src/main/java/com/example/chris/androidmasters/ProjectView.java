@@ -42,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -178,7 +179,7 @@ public class ProjectView extends AppCompatActivity {
                         }else if(elapsed.getMinute() > 0 ){
                             dateRemain.setText(elapsed.getMinute() + "minutes remaining");
                         }else{
-                            dateRemain.setText("Project has Already Ended");
+                            dateRemain.setText("Project has Ended");
                             btndonate.setVisibility(View.GONE);
                         }
 
@@ -188,9 +189,9 @@ public class ProjectView extends AppCompatActivity {
 
                         Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
 
-                        String currency = "₱ ";
-                        tvgoal.setText(currency+" "+snapshot.getString("goal"));
-                        tvcurrent.setText(currency+" "+snapshot.getString("current"));
+                        String currency = "₱";
+                        tvgoal.setText(currency+""+NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("goal"))));
+                        tvcurrent.setText(currency+""+NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("current"))));
 
                         if(current > goal){
                             pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
