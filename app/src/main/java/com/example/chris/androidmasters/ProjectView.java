@@ -299,9 +299,18 @@ public class ProjectView extends AppCompatActivity {
             objectives = details.getObjectives();
 
             for(int x=0;x<objectives.size();x++){
+                LinearLayout linearLayout = new LinearLayout(this);
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+                TextView bullet = new TextView(this);
+                bullet.setText("\u2022"+ "  ");
+                linearLayout.addView(bullet);
+
                 TextView textview = new TextView(this);
-                textview.setText("\u2022 "+objectives.get(x));
-                llobjectives.addView(textview);
+                textview.setText(objectives.get(x));
+
+                linearLayout.addView(textview);
+                llobjectives.addView(linearLayout);
             }
 
         }
