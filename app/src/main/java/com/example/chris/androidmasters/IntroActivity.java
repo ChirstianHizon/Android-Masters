@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.example.chris.androidmasters.Introduction.FirstSlide;
 import com.example.chris.androidmasters.Introduction.FourthSlide;
@@ -58,5 +59,25 @@ public class IntroActivity extends AppIntro {
 
         startActivity(new Intent(context,ProjectListActivity.class));
         finish();
+    }
+
+    @Override
+    public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
+        super.onSlideChanged(oldFragment, newFragment);
+
+        Log.d("INTRO", String.valueOf(oldFragment));
+        Log.d("INTRO", String.valueOf(newFragment.getTag()));
+
+        switch (newFragment.getTag()){
+            case "android:switcher:2131558592:0":
+                break;
+            case "android:switcher:2131558592:1":
+                break;
+            case "android:switcher:2131558592:2":
+                break;
+            case "android:switcher:2131558592:3":
+                break;
+
+        }
     }
 }
