@@ -118,7 +118,7 @@ public class ProjectListActivity extends AppCompatActivity {
             public void onRefresh() {
                 adapter.clear();
 
-                Query queryRef = db.collection("Projects").limit(page);
+                Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
                 getInitialProjects(queryRef);
                 isloading = true;
                 mSwipeRefreshLayout.setRefreshing(false);
