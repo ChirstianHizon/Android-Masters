@@ -18,7 +18,7 @@ public class FourthSlide extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.intro_slide2, container, false);
+        View v = inflater.inflate(R.layout.intro_slide4, container, false);
 
         IntroActivity activity =(IntroActivity)getActivity();
 
