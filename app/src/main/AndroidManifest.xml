@@ -45,9 +45,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Administrator.Add.Project_Information" />
-        <activity android:name=".CRUD.AddProjectActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".CRUD.Create.AddProjectActivity" />
+        <activity android:name=".CRUD.Create.AddProjectObjectivesActivity"></activity>
     </application>
 
 </manifest>

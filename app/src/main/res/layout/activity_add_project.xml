@@ -4,19 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chris.androidmasters.CRUD.AddProjectActivity">
+    tools:context="com.example.chris.androidmasters.CRUD.Create.AddProjectActivity">
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="8dp"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,6 +43,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
+            android:paddingBottom="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -48,15 +65,33 @@
                 android:inputType="textMultiLine" />
 
             <EditText
+                android:id="@+id/edt_org"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Organization"
+                android:inputType="textPersonName" />
+
+            <EditText
                 android:id="@+id/edt_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Date"
-                android:inputType="textMultiLine" />
+                android:focusable="false"
+                android:hint="Target Date"
+                android:inputType="none" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/edt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Target Time"
+                android:inputType="none" />
+
+            <EditText
+                android:id="@+id/edt_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -64,7 +99,7 @@
                 android:inputType="numberSigned" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/iv_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minWidth="200dp"
@@ -78,19 +113,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="8dp"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
