@@ -89,9 +89,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void splashpageCounter(){
-        ImageView imgLogo = (ImageView)findViewById(R.id.img_logo);
 
-        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_logo); // Insert your AnimatedVectorDrawable resource identifier
+        ImageView imgLogo = (ImageView)findViewById(R.id.img_logo);
+        // Insert your AnimatedVectorDrawable resource identifier
+        AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_logo);
         imgLogo.setImageDrawable(d);
         d.start();
 
@@ -100,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     int waited = 0;
-                    while(waited < 3500){
+                    while(waited < 2900){
                         sleep(100);
                         waited += 100;
                     }
