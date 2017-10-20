@@ -18,6 +18,8 @@ import com.example.chris.androidmasters.Objects.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -159,11 +161,18 @@ public class DonateActivity extends AppCompatActivity {
                             String time = response.getString("create_time");
                             String trans_id = response.getString("id");
 
+                            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                            FirebaseUser User = mAuth.getCurrentUser();
+                            String key = "";
+                            if(User != null) {
+                                key = User.getUid();
+                            }
 
                             Map<String, Object> transactions = new HashMap<>();
                             transactions.put("id", trans_id);
                             transactions.put("date", new Date());
                             transactions.put("amount", amount);
+                            transactions.put("user",key);
 
                             Map<String, Object> docData = new HashMap<>();
                             docData.put(String.valueOf(new Date()), transactions);
