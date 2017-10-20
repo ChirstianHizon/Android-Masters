@@ -34,7 +34,6 @@ public class ProjectListActivity extends AppCompatActivity{
     private Activity context = this;
     private RecyclerView recmain;
     private List<Project> projectlist;
-    private List<String> projectnames;
     private ProjectListAdapter adapter;
     private String TAG = "PROJECT_LIST";
     private FirebaseFirestore db;
@@ -98,7 +97,6 @@ public class ProjectListActivity extends AppCompatActivity{
 
     private void createRecyclerView( QuerySnapshot documentSnap){
         adapter.clear();
-        projectnames = new ArrayList<>();
         for (DocumentSnapshot docx : documentSnap) {
             if(docx.getString("name") != null && docx.getString("organization") != null
                     && docx.getString("image") != null && docx.getString("logo") != null
@@ -112,7 +110,6 @@ public class ProjectListActivity extends AppCompatActivity{
                     Project project = docx.toObject(Project.class);
                     project.setId(docx.getId());
                     projectlist.add(project);
-                    projectnames.add(docx.getString("name").toLowerCase());
                 }
             }
         }
@@ -157,21 +154,9 @@ public class ProjectListActivity extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                boolean isThere = projectnames.contains(query.toLowerCase());
-                if(isThere){
-                    for(int x=0;x<projectnames.size();x++){
-                        if(projectnames.get(x).equals(query.toLowerCase())){
-                            query = projectnames.get(x);
-
-                            Query queryRef = db.collection("Projects")
-                                    .whereEqualTo("name",query);
-                            getInitialProjects(queryRef);
-                        }
-                    }
-                }else{
-                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
-                }
+                Query queryRef = db.collection("Projects")
+                        .whereEqualTo("search",query);
+                getInitialProjects(queryRef);
 
                 searchView.clearFocus();
 
