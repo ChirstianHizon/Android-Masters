@@ -371,7 +371,7 @@ public class ProjectView extends AppCompatActivity {
         if(image != null && !image.equals("")){
             Picasso.with(this)
                     .load(image)
-                    .resize(800,800)
+                    .resize(0,800)
                     .error(R.mipmap.ic_launcher)
                     .into(display);
         }
