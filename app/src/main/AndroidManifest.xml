@@ -9,49 +9,45 @@
         android:roundIcon="@mipmap/boost_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name="com.example.chris.androidmasters.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ProjectListActivity" />
         <activity
-            android:name="com.example.chris.androidmasters.ProjectListActivity" />
-        <activity
-            android:name="com.example.chris.androidmasters.ProjectView"
+            android:name=".ProjectView"
             android:theme="@style/AppTheme.NoActionBarTransparent" />
         <activity
-            android:name="com.example.chris.androidmasters.DonateActivity"
+            android:name=".DonateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AboutActivity" />
         <activity
-            android:name="com.example.chris.androidmasters.AboutActivity" />
-        <activity
-            android:name="com.example.chris.androidmasters.IntroActivity"
+            android:name=".IntroActivity"
             android:theme="@style/AppTheme.Fullscreen" />
 
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
 
-        <service
-            android:name="com.example.chris.androidmasters.Notifications.FirebaseNotifications">
+        <service android:name=".Notifications.FirebaseNotifications">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Notifications.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name="com.example.chris.androidmasters.Notifications.FirebaseIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
+        <activity android:name=".Administrator.Add.Project_Information" />
+        <activity android:name=".AddProjectActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
-
-
 
 </manifest>
