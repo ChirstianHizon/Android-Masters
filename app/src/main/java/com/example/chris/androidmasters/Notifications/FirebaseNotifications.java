@@ -6,9 +6,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -37,7 +34,7 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         Log.d(TAG, "Included Data: " + remoteMessage.getData());
         Log.d(TAG, "Key Data: " + remoteMessage.getData().get("key"));
 
-        NewProject("new project",remoteMessage.getNotification().getBody());
+        NewProject("Project Boost",remoteMessage.getNotification().getBody());
     }
 
     public void NewProject(String title,String message){
@@ -52,14 +49,14 @@ public class FirebaseNotifications extends FirebaseMessagingService {
                 .setTicker(title)
                 .setContentTitle("A Project has been Added")
                 .setContentText(message)
-//                .setSmallIcon(R.drawable.notification)
-                .setLargeIcon(icon)
-                .setColor(Color.parseColor("sasdasda"))
+                .setSmallIcon(R.drawable.notification)
+//                .setLargeIcon(icon)
+
                 .setContentIntent(pIntent)
                 .setAutoCancel(true);
 
-        Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        builder.setSound(notificationSound);
+//        Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        builder.setSound(notificationSound);
         Notification notification = builder.build();
 
 //        notification.flags = Notification.FLAG_ONGOING_EVENT;
