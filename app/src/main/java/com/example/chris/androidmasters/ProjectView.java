@@ -236,6 +236,7 @@ public class ProjectView extends AppCompatActivity {
         recmain.setHasFixedSize(true);
         recmain.setLayoutManager(layoutManager);
         recmain.setItemAnimator(new DefaultItemAnimator());
+        recmain.setNestedScrollingEnabled(false);
         recmain.setAdapter(adapter);
 
         DocumentReference docRef = db.collection("Contacts").document(id);
