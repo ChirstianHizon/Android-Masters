@@ -329,7 +329,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:lineSpacingExtra="3dp"
-                        android:text="Lorem ipsum dolor sit amet churvalu eklabu lodi petmalu werpa plaridel stamina mina eh eh waka wakadori and boots dori and nemo sad la"
+                        android:text="This Project is in cooperation with the University of Saint Lasalle Bayan. All money collected through this app will be used to funds talks, seminar and other activites which will be planned"
                         android:textAlignment="viewStart"
                         android:textColor="#777"
                         android:textSize="11sp" />

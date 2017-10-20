@@ -57,12 +57,11 @@ public class ProjectListActivity extends AppCompatActivity{
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser User = mAuth.getCurrentUser();
-        if(User != null){
-            Toast.makeText(context, "Userid: "+User.getUid(), Toast.LENGTH_SHORT).show();
-        }else{
 
+        if(User == null){
+            Toast.makeText(context, "Unable to Authenticate User", Toast.LENGTH_LONG).show();
+            finish();
         }
-
 
         recmain = (RecyclerView)findViewById(R.id.rec_main);
 
@@ -92,18 +91,18 @@ public class ProjectListActivity extends AppCompatActivity{
             @Override
             public void onEvent(QuerySnapshot snapshot, FirebaseFirestoreException e) {
 
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e);
+                return;
+            }
 
 
 
-                if(snapshot.isEmpty()){
-                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
-                }else{
-                    createRecyclerView(snapshot);
-                }
+            if(snapshot.isEmpty()){
+                Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+            }else{
+                createRecyclerView(snapshot);
+            }
 
 
             }

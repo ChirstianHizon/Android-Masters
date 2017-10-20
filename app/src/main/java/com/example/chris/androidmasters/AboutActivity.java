@@ -50,7 +50,7 @@ public class AboutActivity extends AppCompatActivity {
 
         setContentView(aboutPage);
 
-        //        ----------- CREATE A BACK BUTTON ------------------
+        // ----------- CREATE A BACK BUTTON ------------------
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);

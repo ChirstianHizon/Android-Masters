@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,21 +61,28 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void signInUser(){
+        final LinearLayout lvprogress = (LinearLayout) findViewById(R.id.lv_progress);
+        final TextView tvstatus = (TextView)findViewById(R.id.tv_status);
+        final ProgressBar pbstatus = (ProgressBar)findViewById(R.id.pb_status);
+        lvprogress.setVisibility(View.VISIBLE);
         mAuth.signInAnonymously()
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (task.isSuccessful()) {
+                        lvprogress.setVisibility(View.GONE);
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInAnonymously:success");
                         User = mAuth.getCurrentUser();
                         splashpageCounter();
+
                     } else {
+                        pbstatus.setVisibility(View.GONE);
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInAnonymously:failure", task.getException());
-                        Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
+                        tvstatus.setText("Unable to Authenticate User");
+
                     }
                 }
             });
