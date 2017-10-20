@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
@@ -35,7 +36,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -154,66 +157,72 @@ public class ProjectView extends AppCompatActivity {
         final TextView dateRemain = (TextView)findViewById(R.id.tv_days_remain);
 
         DocumentReference docRef = db.collection("Projects").document(id);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot snapshot = task.getResult();
-                    if (snapshot != null) {
+            public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
 
-                        Date now = new Date();
-                        Date completion = snapshot.getDate("completion_date");
-
-                        ElapsedTime elapsed = new ElapsedTime(now,completion);
-
-                        String day          = (String) DateFormat.format("dd",   completion);
-                        String monthString  = (String) DateFormat.format("MMM",  completion);
-                        String year         = (String) DateFormat.format("yyyy", completion);
-
-                        compDate.setText(monthString +" "+day+", "+year);
-
-                        if(elapsed.getDay() > 0 ){
-                            dateRemain.setText(elapsed.getDay() + " days remaining");
-                        }else if(elapsed.getHour() > 0 ){
-                            dateRemain.setText(elapsed.getHour() + "hours remaining");
-                        }else if(elapsed.getMinute() > 0 ){
-                            dateRemain.setText(elapsed.getMinute() + "minutes remaining");
-                        }else{
-                            dateRemain.setText("Project has Ended");
-                            btndonate.setVisibility(View.GONE);
-                        }
-
-
-                        Double goal = Double.valueOf(snapshot.getString("goal"));
-                        Double current = Double.valueOf(snapshot.getString("current"));
-
-                        Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
-
-                        String currency = "₱";
-                        tvgoal.setText(currency+""+NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("goal"))));
-                        tvcurrent.setText(currency+""+NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("current"))));
-
-                        if(current > goal){
-                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
-                        }else if(current.equals(goal)){
-                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
-                        }else if(current.equals(0)){
-                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
-                        }else{
-                            pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
-                        }
-
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            pbprogress.setProgress(progress.intValue(),true);
-                        }else{
-                            pbprogress.setProgress(progress.intValue());
-                        }
-
-                    } else {
-                        Log.d(TAG, "Current data: null");
-                    }
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
                 }
+
+                if(snapshot != null){
+
+                    Date now = new Date();
+                    Date completion = snapshot.getDate("completion_date");
+
+                    ElapsedTime elapsed = new ElapsedTime(now,completion);
+
+                    String day          = (String) DateFormat.format("dd",   completion);
+                    String monthString  = (String) DateFormat.format("MMM",  completion);
+                    String year         = (String) DateFormat.format("yyyy", completion);
+
+                    compDate.setText(monthString +" "+day+", "+year);
+
+                    if(elapsed.getDay() > 0 ){
+                        dateRemain.setText(elapsed.getDay() + " days remaining");
+                    }else if(elapsed.getHour() > 0 ){
+                        dateRemain.setText(elapsed.getHour() + "hours remaining");
+                    }else if(elapsed.getMinute() > 0 ){
+                        dateRemain.setText(elapsed.getMinute() + "minutes remaining");
+                    }else{
+                        dateRemain.setText("Project has Ended");
+                        btndonate.setVisibility(View.GONE);
+                    }
+
+
+                    Double goal = Double.valueOf(snapshot.getString("goal"));
+                    Double current = Double.valueOf(snapshot.getString("current"));
+
+                    Double progress = Double.valueOf(snapshot.getString("current")) / Double.valueOf(snapshot.getString("goal")) * 100;
+
+                    String currency = "₱";
+                    tvgoal.setText(currency+""+ NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("goal"))));
+                    tvcurrent.setText(currency+""+NumberFormat.getIntegerInstance().format(Integer.valueOf(snapshot.getString("current"))));
+
+                    if(current > goal){
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+                    }else if(current.equals(goal)){
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
+                    }else if(current.equals(0)){
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
+                    }else{
+                        pbprogress.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
+                    }
+
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        pbprogress.setProgress(progress.intValue(),true);
+                    }else{
+                        pbprogress.setProgress(progress.intValue());
+                    }
+
+                }else{
+                    Toast.makeText(context, "Can't Find Project", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
             }
         });
     }
@@ -227,6 +236,7 @@ public class ProjectView extends AppCompatActivity {
         recmain.setHasFixedSize(true);
         recmain.setLayoutManager(layoutManager);
         recmain.setItemAnimator(new DefaultItemAnimator());
+        recmain.setNestedScrollingEnabled(false);
         recmain.setAdapter(adapter);
 
         DocumentReference docRef = db.collection("Contacts").document(id);
@@ -254,11 +264,11 @@ public class ProjectView extends AppCompatActivity {
                             for(int x = 0;x<size;x++){
                                 Log.d(TAG,names.getString(x));
                                 contactList.add(
-                                        new Contacts(
-                                                names.getString(x),
-                                                positions.getString(x),
-                                                contacts.getString(x)
-                                        )
+                                    new Contacts(
+                                        names.getString(x),
+                                        positions.getString(x),
+                                        contacts.getString(x)
+                                    )
                                 );
 
                             }
@@ -361,7 +371,7 @@ public class ProjectView extends AppCompatActivity {
         if(image != null && !image.equals("")){
             Picasso.with(this)
                     .load(image)
-                    .resize(800,800)
+                    .resize(0,800)
                     .error(R.mipmap.ic_launcher)
                     .into(display);
         }

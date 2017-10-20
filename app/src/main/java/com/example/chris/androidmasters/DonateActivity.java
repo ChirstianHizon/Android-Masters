@@ -198,6 +198,7 @@ public class DonateActivity extends AppCompatActivity {
                 pbloading.setVisibility(View.GONE);
                 edtamount.setVisibility(View.VISIBLE);
                 btnamount.setVisibility(View.VISIBLE);
+
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
                 pbloading.setVisibility(View.GONE);
