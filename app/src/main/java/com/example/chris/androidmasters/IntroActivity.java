@@ -29,6 +29,8 @@ public class IntroActivity extends AppIntro {
         addSlide(new ThirdSlide());
         addSlide(new FourthSlide());
 
+        setColorTransitionsEnabled(true);
+
 //        setBarColor(Color.TRANSPARENT);
 //        setSeparatorColor(Color.TRANSPARENT);
 
@@ -40,8 +42,8 @@ public class IntroActivity extends AppIntro {
         //Choose your animation
 //        setFadeAnimation();
 //        setZoomAnimation();
-        setFlowAnimation();
-//        setSlideOverAnimation();
+//        setFlowAnimation();
+        setSlideOverAnimation();
 //        setDepthAnimation();
     }
 
