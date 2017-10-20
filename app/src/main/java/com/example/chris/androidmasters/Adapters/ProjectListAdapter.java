@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by chris on 08/10/2017.
@@ -84,6 +87,19 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         return new ViewHolder(itemView);
     }
 
+    public ColorDrawable getRandomDrawbleColor() {
+        int idx = new Random().nextInt(vibrantLightColorList.length);
+        return vibrantLightColorList[idx];
+    }
+
+    private ColorDrawable[] vibrantLightColorList =
+            {
+                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
+                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
+                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
+                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
+            };
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Project project = projectlist.get(position);
@@ -138,15 +154,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         Picasso.with(context)
                 .load(project.getImage())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(getRandomDrawbleColor())
+                .error(getRandomDrawbleColor())
                 .into(holder.image);
 
         Picasso.with(context)
                 .load(project.getLogo())
                 .resize(30,30)
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(getRandomDrawbleColor())
+                .error(getRandomDrawbleColor())
                 .centerCrop()
                 .into(holder.logo);
 
