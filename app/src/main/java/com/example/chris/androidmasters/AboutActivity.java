@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
@@ -66,7 +67,10 @@ public class AboutActivity extends AppCompatActivity {
 
     Element getCopyRightsElement() {
         Element copyRightsElement = new Element();
-        final String copyrights = String.format("copyright", Calendar.getInstance().get(Calendar.YEAR));
+        Date date = new Date();
+        String year = (String) DateFormat.format("yyyy", date);
+
+        final String copyrights ="Copyright "+year;
         copyRightsElement.setTitle(copyrights);
         copyRightsElement.setIconDrawable(R.drawable.copyright);
         copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);

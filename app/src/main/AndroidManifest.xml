@@ -46,7 +46,7 @@
         </service>
 
         <activity android:name=".Administrator.Add.Project_Information" />
-        <activity android:name=".AddProjectActivity" />
+        <activity android:name=".CRUD.AddProjectActivity" />
         <activity android:name=".SettingsActivity"></activity>
     </application>
 

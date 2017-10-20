@@ -189,13 +189,15 @@ public class ProjectListActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.menu_aboutus:
-                Intent intent = new Intent(ProjectListActivity.this, AboutActivity.class);
+                intent = new Intent(ProjectListActivity.this, AboutActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_settings:
-                Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show();
+                intent = new Intent(ProjectListActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
