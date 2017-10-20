@@ -3,6 +3,8 @@
 
     <string name="menu_settings">Settings</string>
     <string name="menu_aboutus">About</string>
+    <string name="search_hint">Search a Project</string>
+
 
     <string name="path_logo_b">M 10 300 v -300 h 50 v 110 c 46 -52 174 -14 176 82 c 2 110 -130 142 -184 79 v 31 z</string>
     <string name="path_logo_o1">M 262 194 a 50 50 0 1 1 234 0 a 50 50 0 1 1 -234 0 z</string>

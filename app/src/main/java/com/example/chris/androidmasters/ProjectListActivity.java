@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,22 +29,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectListActivity extends AppCompatActivity {
+public class ProjectListActivity extends AppCompatActivity{
 
     private Activity context = this;
     private RecyclerView recmain;
     private List<Project> projectlist;
+    private List<String> projectnames;
     private ProjectListAdapter adapter;
-    private RecyclerView recyclerView;
     private String TAG = "PROJECT_LIST";
-    private int visibleItemCount,notvisibleItemCount,totalItemCount;
-    private boolean isloading = true;
     private FirebaseFirestore db;
-    private DocumentSnapshot lastDocument;
-    private int page = 1;
     private LinearLayoutManager layoutManager;
-    private ListenerRegistration firestoreListener;
     private ListenerRegistration listener;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +72,33 @@ public class ProjectListActivity extends AppCompatActivity {
     }
 
     private void getInitialProjects(Query queryRef){
-
         listener = queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
-            public void onEvent(QuerySnapshot value, FirebaseFirestoreException e) {
+            public void onEvent(QuerySnapshot snapshot, FirebaseFirestoreException e) {
 
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e);
                     return;
                 }
 
-                adapter.clear();
-                createRecyclerView(value);
+
+
+                if(snapshot.isEmpty()){
+                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+                }else{
+                    createRecyclerView(snapshot);
+                }
+
+
             }
         });
 
     }
 
     private void createRecyclerView( QuerySnapshot documentSnap){
+        adapter.clear();
+        projectnames = new ArrayList<>();
         for (DocumentSnapshot docx : documentSnap) {
             if(docx.getString("name") != null && docx.getString("organization") != null
                     && docx.getString("image") != null && docx.getString("logo") != null
@@ -106,6 +112,7 @@ public class ProjectListActivity extends AppCompatActivity {
                     Project project = docx.toObject(Project.class);
                     project.setId(docx.getId());
                     projectlist.add(project);
+                    projectnames.add(docx.getString("name").toLowerCase());
                 }
             }
         }
@@ -124,7 +131,7 @@ public class ProjectListActivity extends AppCompatActivity {
                 }
                 Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
                 getInitialProjects(queryRef);
-                isloading = true;
+
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -134,6 +141,48 @@ public class ProjectListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) context.getSystemService(SEARCH_SERVICE);
+
+        searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(context.getComponentName()));
+        }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                boolean isThere = projectnames.contains(query.toLowerCase());
+                if(isThere){
+                    for(int x=0;x<projectnames.size();x++){
+                        if(projectnames.get(x).equals(query.toLowerCase())){
+                            query = projectnames.get(x);
+
+                            Query queryRef = db.collection("Projects")
+                                    .whereEqualTo("name",query);
+                            getInitialProjects(queryRef);
+                        }
+                    }
+                }else{
+                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+                }
+
+                searchView.clearFocus();
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -153,5 +202,13 @@ public class ProjectListActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 }

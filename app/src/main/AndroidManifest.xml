@@ -32,6 +32,10 @@
         <activity
             android:name="com.example.chris.androidmasters.IntroActivity"
             android:theme="@style/AppTheme.Fullscreen" />
+
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
     </application>
 
 </manifest>
