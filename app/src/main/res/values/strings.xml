@@ -8,7 +8,6 @@
     <string name="default_notification_channel_id">Notif123</string>
 
 
-
     <string name="path_logo_b">M 10 300 v -300 h 50 v 110 c 46 -52 174 -14 176 82 c 2 110 -130 142 -184 79 v 31 z</string>
     <string name="path_logo_o1">M 262 194 a 50 50 0 1 1 234 0 a 50 50 0 1 1 -234 0 z</string>
     <string name="path_logo_o2">M 524 194 a 50 50 0 1 1 232 0 a 50 50 0 1 1 -232 0 z</string>

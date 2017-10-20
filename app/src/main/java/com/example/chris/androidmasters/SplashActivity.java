@@ -16,12 +16,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String TAG = "SPLASH_PAGE";
     private FirebaseUser User;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +49,19 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+        db = FirebaseFirestore.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         User = mAuth.getCurrentUser();
 
+//        mAuth.signOut();
         if(User == null){
             signInUser();
         }else{
             splashpageCounter();
         }
+
+
     }
 
     private void setPersistence(){
@@ -65,17 +79,38 @@ public class SplashActivity extends AppCompatActivity {
         final TextView tvstatus = (TextView)findViewById(R.id.tv_status);
         final ProgressBar pbstatus = (ProgressBar)findViewById(R.id.pb_status);
         lvprogress.setVisibility(View.VISIBLE);
+
         mAuth.signInAnonymously()
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
-                        lvprogress.setVisibility(View.GONE);
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInAnonymously:success");
                         User = mAuth.getCurrentUser();
-                        splashpageCounter();
+
+                        Map<String, Object> devices = new HashMap<>();
+                        devices.put("ID", User.getUid());
+                        devices.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
+                        devices.put("date",new Date());
+
+                        db.collection("Devices").add(devices).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.w(TAG,documentReference.getId());
+                                lvprogress.setVisibility(View.GONE);
+                                splashpageCounter();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                                pbstatus.setVisibility(View.GONE);
+                                tvstatus.setText("Server Error");
+                            }
+                        });
+
 
                     } else {
                         pbstatus.setVisibility(View.GONE);
@@ -101,7 +136,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     int waited = 0;
-                    while(waited < 2900){
+                    while(waited < 2850){
                         sleep(100);
                         waited += 100;
                     }
