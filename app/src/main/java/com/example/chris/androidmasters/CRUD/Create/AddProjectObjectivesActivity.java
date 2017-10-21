@@ -13,11 +13,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.chris.androidmasters.R;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddProjectObjectivesActivity extends AppCompatActivity {
     private Activity context = this;
@@ -96,12 +93,12 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
                 intent.putStringArrayListExtra("objectives",  values);
                 startActivity(intent);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                Map<String, Object> devices = new HashMap<>();
-                devices.put("objectives", objectives);
-
-                db.collection("Sample").add(devices);
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//                Map<String, Object> devices = new HashMap<>();
+//                devices.put("objectives", objectives);
+//
+//                db.collection("Sample").add(devices);
 
             }
         });

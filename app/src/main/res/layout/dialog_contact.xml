@@ -10,16 +10,21 @@
         android:id="@+id/edt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Name"
         android:inputType="text" />
+
     <EditText
         android:id="@+id/edt_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Contact"
         android:inputType="text" />
+
     <EditText
         android:id="@+id/edt_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Position"
         android:inputType="text" />
 
 </LinearLayout>
