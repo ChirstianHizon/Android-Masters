@@ -167,7 +167,7 @@
         android:id="@+id/btn_next"
         style="@android:style/Widget.DeviceDefault.Button"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:background="@color/colorAccent"
         android:text="Next"
         android:textColor="#fff"
