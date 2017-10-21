@@ -25,10 +25,13 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> values;
 
+    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_objectives);
+
+        act = this;
 
         getSupportActionBar().setTitle("Add Objectives");
 //        -----------  add back arrow to toolbar ------------
@@ -88,7 +91,7 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
                     intent.putExtra("date",  date);
                     intent.putExtra("goal",  goal);
                     intent.putExtra("image",  image);
-                    intent.putStringArrayListExtra("objectives",  values);
+                    intent.putStringArrayListExtra("objectives", objectives);
                     startActivity(intent);
                 }else{
 

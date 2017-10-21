@@ -31,10 +31,14 @@ public class AddProjectContactsActivity extends AppCompatActivity {
     private ArrayList<String> position;
     private ArrayList<String> contacts;
 
+
+    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_contacts);
+
+        act = this;
 
         getSupportActionBar().setTitle("Add Contact Persons");
 //        -----------  add back arrow to toolbar ------------

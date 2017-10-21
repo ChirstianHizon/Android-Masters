@@ -128,7 +128,7 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 project.put("goal", goal);
                 project.put("search", name.toLowerCase());
                 project.put("name", name);
-                project.put("organiztaion", org);
+                project.put("organization", org);
                 project.put("visible",false);
 
 
@@ -151,9 +151,6 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                         progress.dismiss();
                     }
                 });
-
-                Toast.makeText(context, "Toast with me :)", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -170,14 +167,13 @@ public class AddProjectReviewActivity extends AppCompatActivity {
         progress.show();
 
         Uri file = Uri.parse(image);
-        StorageReference imageRef = storageRef.child(id+"/display_image/"+file.getLastPathSegment());
+        StorageReference imageRef = storageRef.child(id+"/display_image/"+id+file.getLastPathSegment());
         UploadTask uploadTask = imageRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 Toast.makeText(context, "Failed to Upload Display Image", Toast.LENGTH_SHORT).show();
-//                TODO: CHANGE TO PROJECTS WHEN DONE
                 db.collection("Projects").document(id).delete();
 
             }
@@ -216,14 +212,14 @@ public class AddProjectReviewActivity extends AppCompatActivity {
 
             for (int x=0;x<imageList.size();x++) {
                 Uri file = Uri.parse(imageList.get(x));
-                StorageReference imageRef = storageRef.child("/display_image/"+id+file.getLastPathSegment());
+                StorageReference imageRef = storageRef.child(id+"/images/"+id+file.getLastPathSegment());
                 UploadTask uploadTask = imageRef.putFile(file);
 
+                final int finalX = x;
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         Toast.makeText(context, "Failed to Upload Display Image", Toast.LENGTH_SHORT).show();
-//                TODO: CHANGE TO PROJECTS WHEN DONE
                         imageUrlList.clear();
                         db.collection("Details").document(id).delete();
                         progress.dismiss();
@@ -241,11 +237,20 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(context, "Upload Complete", Toast.LENGTH_SHORT).show();
                                         Map<String, Object> project = new HashMap<>();
                                         project.put("visible", true);
                                         db.collection("Projects").document(id).set(project ,SetOptions.merge());
-                                        progress.dismiss();
+                                        if(finalX == (imageList.size()-1)){
+                                            Toast.makeText(context, "Upload Complete", Toast.LENGTH_SHORT).show();
+                                            progress.dismiss();
+
+                                            AddProjectContactsActivity.act.finish();
+                                            AddProjectDetailsActivity.act.finish();
+                                            AddProjectImagesActivity.act.finish();
+                                            AddProjectObjectivesActivity.act.finish();
+                                            finish();
+                                        }
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override

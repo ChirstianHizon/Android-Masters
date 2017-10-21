@@ -25,10 +25,13 @@ public class AddProjectImagesActivity extends AppCompatActivity {
     private ProjectCRUDImageAdapter adapter;
     public static final int PICK_IMAGE = 1;
 
+    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_images);
+
+        act = this;
 
         getSupportActionBar().setTitle("Add Images");
 //        -----------  add back arrow to toolbar ------------

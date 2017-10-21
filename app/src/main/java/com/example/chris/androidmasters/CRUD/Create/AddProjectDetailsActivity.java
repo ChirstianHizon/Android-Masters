@@ -36,11 +36,13 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
     private int selectedyear, selectedmonth, selectedday;
     private int selectedHour, selectedMinute;
 
-
+    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_details);
+
+        act = this;
 
         getSupportActionBar().setTitle("Add New Project");
 //        -----------  add back arrow to toolbar ------------
