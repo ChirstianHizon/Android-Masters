@@ -95,18 +95,24 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,AddProjectImagesActivity.class);
-                intent.putExtra("name",  name);
-                intent.putExtra("desc",  desc);
-                intent.putExtra("org",  org);
-                intent.putExtra("date",  date);
-                intent.putExtra("goal",  goal);
-                intent.putExtra("image",  image);
-                intent.putStringArrayListExtra("objectives",  objectives);
-                intent.putStringArrayListExtra("person",  person);
-                intent.putStringArrayListExtra("position",  position);
-                intent.putStringArrayListExtra("contact",  contacts);
-                startActivity(intent);
+
+                if(contacts.size() > 0){
+                    Intent intent = new Intent(context,AddProjectImagesActivity.class);
+                    intent.putExtra("name",  name);
+                    intent.putExtra("desc",  desc);
+                    intent.putExtra("org",  org);
+                    intent.putExtra("date",  date);
+                    intent.putExtra("goal",  goal);
+                    intent.putExtra("image",  image);
+                    intent.putStringArrayListExtra("objectives",  objectives);
+                    intent.putStringArrayListExtra("person",  person);
+                    intent.putStringArrayListExtra("position",  position);
+                    intent.putStringArrayListExtra("contact",  contacts);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(context, "Select atleast 1 Contact Person", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

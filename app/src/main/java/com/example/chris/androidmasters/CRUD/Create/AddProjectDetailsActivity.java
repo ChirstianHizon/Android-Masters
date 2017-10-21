@@ -162,13 +162,13 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
 //                    e.printStackTrace();
 //                }
 
-                if(name.getText().toString().equals("")){
+                if((name.getText().toString().replace(" ", "")).equals("")){
                     Toast.makeText(context, "Fill in Name", Toast.LENGTH_SHORT).show();
 
-                }else if (desc.getText().toString().equals("")){
+                }else if ((desc.getText().toString().replace(" ", "")).equals("")){
                     Toast.makeText(context, "Fill in Description", Toast.LENGTH_SHORT).show();
 
-                }else if (org.getText().toString().equals("")){
+                }else if ((org.getText().toString().replace(" ", "")).equals("")){
                     Toast.makeText(context, "Organization", Toast.LENGTH_SHORT).show();
                 }else if (goal.getText().toString().equals("")){
                     Toast.makeText(context, "Goal", Toast.LENGTH_SHORT).show();
