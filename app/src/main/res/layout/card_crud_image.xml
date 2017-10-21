@@ -42,11 +42,11 @@
                     <ImageView
                         android:id="@+id/iv_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="200dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:maxHeight="200dp"
-                        app:srcCompat="@drawable/images" />
+                        app:srcCompat="@color/colorAccent" />
 
                 </RelativeLayout>
 

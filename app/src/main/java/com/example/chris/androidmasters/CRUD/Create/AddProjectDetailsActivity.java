@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.R;
@@ -39,7 +40,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_project);
+        setContentView(R.layout.activity_add_project_details);
 
         getSupportActionBar().setTitle("Add New Project");
 //        -----------  add back arrow to toolbar ------------
@@ -161,15 +162,38 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
 //                    e.printStackTrace();
 //                }
 
+                if(name.getText().toString().equals("")){
+                    Toast.makeText(context, "Fill in Name", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(context,AddProjectObjectivesActivity.class);
-                intent.putExtra("name",  name.getText().toString());
-                intent.putExtra("desc",  desc.getText().toString());
-                intent.putExtra("org",  org.getText().toString());
-                intent.putExtra("date",  datef);
-                intent.putExtra("goal",  goal.getText().toString());
-                intent.putExtra("image",  imageUri.toString());
-                startActivity(intent);
+                }else if (desc.getText().toString().equals("")){
+                    Toast.makeText(context, "Fill in Description", Toast.LENGTH_SHORT).show();
+
+                }else if (org.getText().toString().equals("")){
+                    Toast.makeText(context, "Organization", Toast.LENGTH_SHORT).show();
+                }else if (goal.getText().toString().equals("")){
+                    Toast.makeText(context, "Goal", Toast.LENGTH_SHORT).show();
+                }else if (date.getText().toString().equals("")){
+                    Toast.makeText(context, "Set a Target Date", Toast.LENGTH_SHORT).show();
+                }else if (time.getText().toString().equals("")){
+                    Toast.makeText(context, "Set a Target Time", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    if(imageUri != null){
+                        Intent intent = new Intent(context,AddProjectObjectivesActivity.class);
+                        intent.putExtra("name",  name.getText().toString());
+                        intent.putExtra("desc",  desc.getText().toString());
+                        intent.putExtra("org",  org.getText().toString());
+                        intent.putExtra("date",  datef);
+                        intent.putExtra("goal",  goal.getText().toString());
+                        intent.putExtra("image",  imageUri.toString());
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(context, "Set an Image", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
             }
         });
     }

@@ -46,7 +46,7 @@ public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDIma
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_image, parent, false);
+                .inflate(R.layout.card_crud_image, parent, false);
         return new ViewHolder(itemView);
     }
 

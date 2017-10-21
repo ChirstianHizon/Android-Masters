@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class AddProjectImagesActivity extends AppCompatActivity {
     private Activity context = this;
     private ArrayList<Uri> imageList;
+    private ArrayList<String> stringimageList;
     private ProjectCRUDImageAdapter adapter;
     public static final int PICK_IMAGE = 1;
 
@@ -44,6 +46,19 @@ public class AddProjectImagesActivity extends AppCompatActivity {
         recmain.setNestedScrollingEnabled(false);
         recmain.setAdapter(adapter);
 
+        stringimageList = new ArrayList<>();
+
+        Intent intent = getIntent();
+        final String name = intent.getStringExtra("name");
+        final String desc = intent.getStringExtra("desc");
+        final String org =  intent.getStringExtra("org");
+        final String date = intent.getStringExtra("date");
+        final String goal = intent.getStringExtra("goal");
+        final String image =  intent.getStringExtra("image");
+        final ArrayList objectives = intent.getStringArrayListExtra("objectives");
+        final ArrayList person = intent.getStringArrayListExtra("person");
+        final ArrayList contacts = intent.getStringArrayListExtra("contact");
+        final ArrayList position = intent.getStringArrayListExtra("position");
 
         Button btnclear = (Button)findViewById(R.id.btn_clear);
         btnclear.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +66,8 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 adapter.clear();
                 adapter.notifyDataSetChanged();
+
+                stringimageList = new ArrayList<>();
 
             }
         });
@@ -74,11 +91,39 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             }
         });
 
+        Button btnnext = (Button)findViewById(R.id.btn_next);
+        btnnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context,AddProjectReviewActivity.class);
+                intent.putExtra("name",  name);
+                intent.putExtra("desc",  desc);
+                intent.putExtra("org",  org);
+                intent.putExtra("date",  date);
+                intent.putExtra("goal",  goal);
+                intent.putExtra("image",  image);
+                intent.putStringArrayListExtra("objectives",  objectives);
+                intent.putStringArrayListExtra("person",  person);
+                intent.putStringArrayListExtra("position",  position);
+                intent.putStringArrayListExtra("contact",  contacts);
+                intent.putStringArrayListExtra("images",  stringimageList);
+                startActivity(intent);
+
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//                Map<String, Object> devices = new HashMap<>();
+//                devices.put("objectives", objectives);
+//
+//                db.collection("Sample").add(devices);
+
+            }
+        });
+
 
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             //TODO: action
             if (data != null){
@@ -87,9 +132,20 @@ public class AddProjectImagesActivity extends AppCompatActivity {
                 if(imageUri != null){
                     imageList.add(imageUri);
                     adapter.notifyDataSetChanged();
+
+                    stringimageList.add(imageUri.toString());
                 }
             }
 
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

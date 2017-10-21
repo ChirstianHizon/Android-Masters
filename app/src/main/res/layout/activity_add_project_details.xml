@@ -101,7 +101,7 @@
             <ImageView
                 android:id="@+id/iv_display"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:minWidth="200dp"
                 app:srcCompat="@color/about_background_color" />
 
