@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.CRUD.Create;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -32,34 +38,45 @@ public class AddProjectReviewActivity extends AppCompatActivity {
     private Activity context = this;
     private FirebaseFirestore db;
     private Date fbdate;
+    private String TAG = "PROJECT_CRUD",name,desc,org,date,goal,image;
+    private ProgressDialog progress;
+    private FirebaseStorage sb;
+    private StorageReference storageRef;
+    private ArrayList<String> imageUrlList,imageArray,position,contacts,person,objectives;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_review);
 
+//        ------------- Firebase Stuff -----------------
 
         db = FirebaseFirestore.getInstance();
+        sb = FirebaseStorage.getInstance();
 
-        getSupportActionBar().setTitle("Add Images");
+        storageRef = sb.getReference();
+
+
 //        -----------  add back arrow to toolbar ------------
+        getSupportActionBar().setTitle("Add Images");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra("name");
-        final String desc = intent.getStringExtra("desc");
-        final String org =  intent.getStringExtra("org");
-        final String date = intent.getStringExtra("date");
-        final String goal = intent.getStringExtra("goal");
-        final String image =  intent.getStringExtra("image");
-        final ArrayList objectives = intent.getStringArrayListExtra("objectives");
-        final ArrayList person = intent.getStringArrayListExtra("person");
-        final ArrayList contacts = intent.getStringArrayListExtra("contact");
-        final ArrayList position = intent.getStringArrayListExtra("position");
-        final ArrayList imageArray =intent.getStringArrayListExtra("imagesArray");
+        name = intent.getStringExtra("name");
+        desc = intent.getStringExtra("desc");
+        org =  intent.getStringExtra("org");
+        date = intent.getStringExtra("date");
+        goal = intent.getStringExtra("goal");
+        image =  intent.getStringExtra("image");
+        objectives = intent.getStringArrayListExtra("objectives");
+        person = intent.getStringArrayListExtra("person");
+        contacts = intent.getStringArrayListExtra("contact");
+        position = intent.getStringArrayListExtra("position");
+        imageArray = intent.getStringArrayListExtra("imagesArray");
 
 
         TextView tvname = (TextView)findViewById(R.id.tv_name);
@@ -76,49 +93,66 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 .error(R.color.colorAccent)
                 .into(ivimage);
 
-                fbdate = new Date();
-                try {
+        fbdate = new Date();
+        try {
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-                    fbdate = sdf.parse(date);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+            fbdate = sdf.parse(date);
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        imageUrlList = new ArrayList<>();
 
         Button btnsubmit = (Button)findViewById(R.id.btn_submit);
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
-
-                Map<String, Object> details = new HashMap<>();
-//                details.put("added_date", new Date());
-//                details.put("completion_date", fbdate);
-//                details.put("current", "0");
-                details.put("goal", goal);
-//                details.put("search", name.toLowerCase());
-//                details.put("name", name);
-//                details.put("organiztaion", org);
+                progress=new ProgressDialog(context);
+                progress.setMessage("Uploading data to Server... ");
+                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progress.setIndeterminate(true);
+                progress.setCancelable(false);
+                progress.setProgress(0);
+                progress.show();
 
 
 
-                db.collection("Sample")
-                        .add(details)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(context, "SUCAKSESSSS", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("FIREBASE", "Error adding document", e);
-                                Toast.makeText(context, "FAILURE", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//      ---------------- Projects ----------------------
+              final Map<String, Object> project = new HashMap<>();
+                project.put("added_date", new Date());
+                project.put("completion_date", fbdate);
+                project.put("current", "0");
+                project.put("goal", goal);
+                project.put("search", name.toLowerCase());
+                project.put("name", name);
+                project.put("organiztaion", org);
+                project.put("visible",false);
+
+
+               db.collection("Projects")
+                .add(project)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        progress.dismiss();
+                        uploadDisplayImage(image,documentReference.getId());
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                        Toast.makeText(context, "Unable to Upload to Server", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+                    }
+                });
+
+                Toast.makeText(context, "Toast with me :)", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -126,7 +160,178 @@ public class AddProjectReviewActivity extends AppCompatActivity {
 
     }
 
-//    private void G
+    private void uploadDisplayImage(String image, final String id){
+        progress=new ProgressDialog(context);
+        progress.setMessage("Uploading Display Image...");
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.setProgress(0);
+        progress.show();
+
+        Uri file = Uri.parse(image);
+        StorageReference imageRef = storageRef.child(id+"/display_image/"+file.getLastPathSegment());
+        UploadTask uploadTask = imageRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(context, "Failed to Upload Display Image", Toast.LENGTH_SHORT).show();
+//                TODO: CHANGE TO PROJECTS WHEN DONE
+                db.collection("Projects").document(id).delete();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                Map<String, Object> project = new HashMap<>();
+                project.put("image", downloadUrl.toString());
+                db.collection("Projects").document(id).set(project ,SetOptions.merge());
+                progress.dismiss();
+                uploadProjectDetails(id);
+
+
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                Double uploadprog = (100.0 * taskSnapshot.getBytesTransferred());
+                progress.setProgress(uploadprog.intValue());
+            }
+        });
+    }
+
+    private void uploadImageArray(final String id, final ArrayList<String> imageList){
+
+        if(!imageList.isEmpty()){
+            progress=new ProgressDialog(context);
+            progress.setMessage("Uploading " + imageList.size() +" image(s)... ");
+            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+            progress.setProgress(0);
+            progress.show();
+
+            for (int x=0;x<imageList.size();x++) {
+                Uri file = Uri.parse(imageList.get(x));
+                StorageReference imageRef = storageRef.child("/display_image/"+id+file.getLastPathSegment());
+                UploadTask uploadTask = imageRef.putFile(file);
+
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(context, "Failed to Upload Display Image", Toast.LENGTH_SHORT).show();
+//                TODO: CHANGE TO PROJECTS WHEN DONE
+                        imageUrlList.clear();
+                        db.collection("Details").document(id).delete();
+                        progress.dismiss();
+
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                        imageUrlList.add(downloadUrl);
+
+                        final Map<String, Object> project = new HashMap<>();
+                        project.put("images",imageUrlList);
+                        db.collection("Details").document(id).set(project ,SetOptions.merge())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(context, "Upload Complete", Toast.LENGTH_SHORT).show();
+                                        Map<String, Object> project = new HashMap<>();
+                                        project.put("visible", true);
+                                        db.collection("Projects").document(id).set(project ,SetOptions.merge());
+                                        progress.dismiss();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "Upload Error", Toast.LENGTH_SHORT).show();
+                                db.collection("Details").document(id).delete();
+                                db.collection("Contacts").document(id).delete();
+                                progress.dismiss();
+                            }
+                        });
+
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        Double uploadprog = (100.0 * taskSnapshot.getBytesTransferred());
+                        progress.setProgress(uploadprog.intValue());
+                    }
+                });
+            }
+
+        }
+    }
+
+    private void uploadProjectDetails(final String id){
+
+        progress=new ProgressDialog(context);
+        progress.setMessage("Uploading Details to Server... ");
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.setProgress(0);
+        progress.show();
+
+//      ---------------- Details ----------------------
+        Map<String, Object> details = new HashMap<>();
+        details.put("objectives",objectives);
+        details.put("organization",org);
+        details.put("short_description",desc);
+        details.put("title",name);
+
+//      ---------------- Contacts ----------------------
+        final Map<String, Object> contact = new HashMap<>();
+        contact.put("Contacts",contacts);
+        contact.put("Names",person);
+        contact.put("Positions",position);
+
+
+        db.collection("Details").document(id)
+            .set(details)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully written!");
+
+                    db.collection("Contacts").document(id)
+                            .set(contact)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    progress.dismiss();
+                                    uploadImageArray( id, imageArray);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                    progress.dismiss();
+                                }
+                            });
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error writing document", e);
+                }
+            });
+
+
+
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

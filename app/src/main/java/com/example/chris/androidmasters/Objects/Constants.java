@@ -17,7 +17,7 @@ public class Constants {
 
     public static PayPalConfiguration PaypalConfig = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(Constants.PaypalKey);
+            .clientId(PaypalKey);
 
     public static String getCurrencySymbol(String countryCode) {
         // Locale locale = new Locale("", countryCode);

@@ -114,13 +114,12 @@ public class ProjectListActivity extends AppCompatActivity{
         adapter.clear();
         for (DocumentSnapshot docx : documentSnap) {
             if(docx.getString("name") != null && docx.getString("organization") != null
-                    && docx.getString("image") != null && docx.getString("logo") != null
-                    && docx.getString("goal") != null && docx.getString("current") != null
-                    && docx.getDate("completion_date") != null){
+                    && docx.getString("image") != null && docx.getDate("completion_date") != null
+                    && docx.getString("goal") != null && docx.getString("current") != null) {
 
                 if(!docx.getString("name").equalsIgnoreCase("") && !docx.getString("organization").equalsIgnoreCase("")
-                        && !docx.getString("image").equalsIgnoreCase("") && !docx.getString("logo").equalsIgnoreCase("")
-                        && !docx.getString("goal").equalsIgnoreCase("") && !docx.getString("current").equalsIgnoreCase("")){
+                        && !docx.getString("image").equalsIgnoreCase("") && !docx.getString("current").equalsIgnoreCase("")
+                        && !docx.getString("goal").equalsIgnoreCase("") ){
 
                     Project project = docx.toObject(Project.class);
                     project.setId(docx.getId());

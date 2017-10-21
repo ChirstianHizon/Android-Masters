@@ -46,8 +46,6 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         final String goal = intent.getStringExtra("goal");
         final String image =  intent.getStringExtra("image");
 
-        Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
-
         ListView lvobj = (ListView)findViewById(R.id.lv_obj);
 
         values = new ArrayList<>();
