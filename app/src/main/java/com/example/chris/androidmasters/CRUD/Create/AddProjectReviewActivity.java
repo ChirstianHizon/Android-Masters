@@ -7,11 +7,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.chris.androidmasters.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddProjectReviewActivity extends AppCompatActivity {
     private Activity context = this;
@@ -20,6 +27,8 @@ public class AddProjectReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_review);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         getSupportActionBar().setTitle("Add Images");
 //        -----------  add back arrow to toolbar ------------
@@ -41,6 +50,13 @@ public class AddProjectReviewActivity extends AppCompatActivity {
         final ArrayList position = intent.getStringArrayListExtra("position");
         final ArrayList imageArray =intent.getStringArrayListExtra("imagesArray");
 
+
+        TextView tvname = (TextView)findViewById(R.id.tv_name);
+        TextView tvdesc = (TextView)findViewById(R.id.tv_desc);
+        TextView tvgoal = (TextView)findViewById(R.id.tv_goal);
+        TextView tvdate = (TextView)findViewById(R.id.tv_date);
+
+
         ImageView ivimage = (ImageView)findViewById(R.id.iv_image);
 
         Picasso.with(context)
@@ -50,7 +66,30 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 .into(ivimage);
 
 
+                Date fbdate = new Date();
+                try {
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+                    fbdate = sdf.parse(date);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            Map<String, Object> details = new HashMap<>();
+            details.put("added_date", new Date());
+            details.put("completion_date", fbdate);
+            details.put("current", "0");
+            details.put("goal", goal);
+            details.put("search", name.toLowerCase());
+             details.put("name", name);
+            details.put("organiztaion", org);
+
+
+            db.collection("Sample").add(details);
     }
+
+//    private void G
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
