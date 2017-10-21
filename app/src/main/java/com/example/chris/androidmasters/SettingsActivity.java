@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.chris.androidmasters.CRUD.AddProjectActivity;
+import com.example.chris.androidmasters.CRUD.Create.AddProjectDetailsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         copyRightsElement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AddProjectActivity.class);
+                Intent intent = new Intent(context, AddProjectDetailsActivity.class);
                 startActivity(intent);
             }
         });
