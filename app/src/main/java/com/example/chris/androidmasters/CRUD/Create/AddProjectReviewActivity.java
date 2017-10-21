@@ -91,18 +91,21 @@ public class AddProjectReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
+
                 Map<String, Object> details = new HashMap<>();
-                details.put("added_date", new Date());
+//                details.put("added_date", new Date());
 //                details.put("completion_date", fbdate);
 //                details.put("current", "0");
-//                details.put("goal", goal);
+                details.put("goal", goal);
 //                details.put("search", name.toLowerCase());
 //                details.put("name", name);
 //                details.put("organiztaion", org);
 
 
 
-                db.collection("Sample").add(details)
+                db.collection("Sample")
+                        .add(details)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {

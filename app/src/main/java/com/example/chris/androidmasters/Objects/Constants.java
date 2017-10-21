@@ -16,7 +16,7 @@ public class Constants {
     public static String PaypalKey = "AXYYXi1dM2t5X0j1OvdaXjaUwBHCSY10gMYKyFBz6N5qRKEm2x7IlXx9SFNhwYXyqzhsfK8X8oaltmiP";
 
     public static PayPalConfiguration PaypalConfig = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(Constants.PaypalKey);
 
     public static String getCurrencySymbol(String countryCode) {
