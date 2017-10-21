@@ -46,7 +46,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Project Donate is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO)."
+        android:text="Project Boost is an app that aims to fund the different projects presented by a Non-Profit Organization (NGO)."
         android:textColor="@color/white"
         android:textSize="14sp" />
 
