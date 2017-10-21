@@ -6,21 +6,21 @@
         android:animation="@anim/logo_anim_b" />
     <target
         android:name="logo_b_inner"
-        android:animation="@anim/logo_anim_b" />
+        android:animation="@anim/logo_anim_o" />
 
     <target
         android:name="logo_o1"
         android:animation="@anim/logo_anim_o" />
     <target
         android:name="logo_o1_inner"
-        android:animation="@anim/logo_anim_o" />
+        android:animation="@anim/logo_anim_o2" />
 
     <target
         android:name="logo_o2"
         android:animation="@anim/logo_anim_o2" />
     <target
         android:name="logo_o2_inner"
-        android:animation="@anim/logo_anim_o2" />
+        android:animation="@anim/logo_anim_s" />
 
     <target
         android:name="logo_s"
