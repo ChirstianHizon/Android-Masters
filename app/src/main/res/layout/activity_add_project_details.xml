@@ -151,9 +151,12 @@
 
                 <Button
                     android:id="@+id/btn_image"
+                    style="@android:style/Widget.DeviceDefault.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Set Display Image" />
+                    android:background="@color/colorAccent"
+                    android:text="UPLOAD PICTURE"
+                    android:textColor="#fff" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
