@@ -31,20 +31,7 @@ public class IntroActivity extends AppIntro {
 
         setColorTransitionsEnabled(true);
 
-//        setBarColor(Color.TRANSPARENT);
-//        setSeparatorColor(Color.TRANSPARENT);
-
-
-//        setCustomTransformer(new ZoomOutPageTransformer());
-
         showSkipButton(true);
-
-        //Choose your animation
-//        setFadeAnimation();
-//        setZoomAnimation();
-//        setFlowAnimation();
-        setSlideOverAnimation();
-//        setDepthAnimation();
     }
 
     @Override

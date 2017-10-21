@@ -4,12 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chris.androidmasters.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -22,13 +30,16 @@ import java.util.Map;
 
 public class AddProjectReviewActivity extends AppCompatActivity {
     private Activity context = this;
+    private FirebaseFirestore db;
+    private Date fbdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_review);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db = FirebaseFirestore.getInstance();
 
         getSupportActionBar().setTitle("Add Images");
 //        -----------  add back arrow to toolbar ------------
@@ -65,8 +76,7 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 .error(R.color.colorAccent)
                 .into(ivimage);
 
-
-                Date fbdate = new Date();
+                fbdate = new Date();
                 try {
 
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
@@ -76,17 +86,41 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-            Map<String, Object> details = new HashMap<>();
-            details.put("added_date", new Date());
-            details.put("completion_date", fbdate);
-            details.put("current", "0");
-            details.put("goal", goal);
-            details.put("search", name.toLowerCase());
-             details.put("name", name);
-            details.put("organiztaion", org);
+        Button btnsubmit = (Button)findViewById(R.id.btn_submit);
+        btnsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Map<String, Object> details = new HashMap<>();
+                details.put("added_date", new Date());
+//                details.put("completion_date", fbdate);
+//                details.put("current", "0");
+//                details.put("goal", goal);
+//                details.put("search", name.toLowerCase());
+//                details.put("name", name);
+//                details.put("organiztaion", org);
 
 
-            db.collection("Sample").add(details);
+
+                db.collection("Sample").add(details)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(context, "SUCAKSESSSS", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("FIREBASE", "Error adding document", e);
+                                Toast.makeText(context, "FAILURE", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+        });
+
+
     }
 
 //    private void G
