@@ -316,7 +316,6 @@ public class ProjectView extends AppCompatActivity {
                 linearLayout.addView(textview);
                 llobjectives.addView(linearLayout);
             }
-
         }
 
 

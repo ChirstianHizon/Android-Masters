@@ -1,9 +1,12 @@
 package com.example.chris.androidmasters.CRUD.Create;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +22,8 @@ import java.util.ArrayList;
 public class AddProjectObjectivesActivity extends AppCompatActivity {
     private Activity context = this;
     private ArrayList<String> objectives;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> values;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,10 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
 
         ListView lvobj = (ListView)findViewById(R.id.lv_obj);
 
-        final ArrayList<String> values = new ArrayList<>();
+        values = new ArrayList<>();
         objectives = new ArrayList<>();
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         lvobj.setAdapter(adapter);
 
@@ -58,13 +63,7 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText objective = (EditText)findViewById(R.id.edt_objectives);
-                if(!objective.getText().toString().equalsIgnoreCase("")){
-                    adapter.add("\u2022"+ "  "+objective.getText().toString());
-                    objectives.add(objective.getText().toString());
-                    objective.setText("");
-                    Toast.makeText(context, "Objective Added", Toast.LENGTH_SHORT).show();
-                }
+                    showChangeLangDialog();
             }
         });
 
@@ -94,10 +93,10 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
                     intent.putStringArrayListExtra("objectives",  values);
                     startActivity(intent);
                 }else{
+
                     Toast.makeText(context, "Select atleast 1 Objective", Toast.LENGTH_SHORT).show();
+
                 }
-
-
 
 //                FirebaseFirestore db = FirebaseFirestore.getInstance();
 //
@@ -109,6 +108,37 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void showChangeLangDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_objectives, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText objective = (EditText)dialogView.findViewById(R.id.edt_objectives);
+
+        dialogBuilder.setTitle("Add a New Objective");
+        dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                if(!(objective.getText().toString().replace(" ", "")).equals("")){
+                    adapter.add("\u2022"+ "  "+objective.getText().toString());
+                    objectives.add(objective.getText().toString());
+                    objective.setText("");
+                }else{
+                    Toast.makeText(context, "Missing Fields", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
     }
 
     @Override
