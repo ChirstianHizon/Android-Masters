@@ -13,6 +13,13 @@
         android:trimPathEnd="0"/>
 
     <path
+        android:name="logo_b_inner"
+        android:pathData="@string/path_logo_b_inner"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
         android:name="logo_o1"
         android:pathData="@string/path_logo_o1"
         android:strokeColor="@color/white"
@@ -20,8 +27,22 @@
         android:trimPathEnd="0"/>
 
     <path
+        android:name="logo_o1_inner"
+        android:pathData="@string/path_logo_o1_inner"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
         android:name="logo_o2"
         android:pathData="@string/path_logo_o2"
+        android:strokeColor="@color/white"
+        android:strokeWidth="10"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="logo_o2_inner"
+        android:pathData="@string/path_logo_o2_inner"
         android:strokeColor="@color/white"
         android:strokeWidth="10"
         android:trimPathEnd="0"/>
