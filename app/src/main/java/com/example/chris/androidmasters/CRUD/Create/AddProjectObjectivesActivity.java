@@ -83,15 +83,21 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context,AddProjectContactsActivity.class);
-                intent.putExtra("name",  name);
-                intent.putExtra("desc",  desc);
-                intent.putExtra("org",  org);
-                intent.putExtra("date",  date);
-                intent.putExtra("goal",  goal);
-                intent.putExtra("image",  image);
-                intent.putStringArrayListExtra("objectives",  values);
-                startActivity(intent);
+                if(values.size() > 0){
+                    Intent intent = new Intent(context,AddProjectContactsActivity.class);
+                    intent.putExtra("name",  name);
+                    intent.putExtra("desc",  desc);
+                    intent.putExtra("org",  org);
+                    intent.putExtra("date",  date);
+                    intent.putExtra("goal",  goal);
+                    intent.putExtra("image",  image);
+                    intent.putStringArrayListExtra("objectives",  values);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(context, "Select atleast 1 Objective", Toast.LENGTH_SHORT).show();
+                }
+
+
 
 //                FirebaseFirestore db = FirebaseFirestore.getInstance();
 //

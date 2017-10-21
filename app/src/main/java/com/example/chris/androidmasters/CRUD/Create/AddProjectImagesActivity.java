@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectCRUDImageAdapter;
 import com.example.chris.androidmasters.R;
@@ -96,19 +97,25 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context,AddProjectReviewActivity.class);
-                intent.putExtra("name",  name);
-                intent.putExtra("desc",  desc);
-                intent.putExtra("org",  org);
-                intent.putExtra("date",  date);
-                intent.putExtra("goal",  goal);
-                intent.putExtra("image",  image);
-                intent.putStringArrayListExtra("objectives",  objectives);
-                intent.putStringArrayListExtra("person",  person);
-                intent.putStringArrayListExtra("position",  position);
-                intent.putStringArrayListExtra("contact",  contacts);
-                intent.putStringArrayListExtra("images",  stringimageList);
-                startActivity(intent);
+                if(stringimageList.size() > 0){
+                    Intent intent = new Intent(context,AddProjectReviewActivity.class);
+                    intent.putExtra("name",  name);
+                    intent.putExtra("desc",  desc);
+                    intent.putExtra("org",  org);
+                    intent.putExtra("date",  date);
+                    intent.putExtra("goal",  goal);
+                    intent.putExtra("image",  image);
+                    intent.putStringArrayListExtra("objectives",  objectives);
+                    intent.putStringArrayListExtra("person",  person);
+                    intent.putStringArrayListExtra("position",  position);
+                    intent.putStringArrayListExtra("contact",  contacts);
+                    intent.putStringArrayListExtra("imagesArray",  stringimageList);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(context, "Select atleast 1 image", Toast.LENGTH_SHORT).show();
+                }
+
+
 
 //                FirebaseFirestore db = FirebaseFirestore.getInstance();
 //
