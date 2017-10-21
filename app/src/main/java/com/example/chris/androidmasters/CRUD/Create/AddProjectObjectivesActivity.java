@@ -113,7 +113,7 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
     public void showChangeLangDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.dialog_objectives, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_objective, null);
         dialogBuilder.setView(dialogView);
 
         final EditText objective = (EditText)dialogView.findViewById(R.id.edt_objectives);
