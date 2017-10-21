@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-public class AddProjectActivity extends AppCompatActivity{
+public class AddProjectDetailsActivity extends AppCompatActivity{
 
     private Activity context = this;
     private Uri imageUri;

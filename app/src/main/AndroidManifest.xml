@@ -46,8 +46,9 @@
         </service>
 
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".CRUD.Create.AddProjectActivity" />
-        <activity android:name=".CRUD.Create.AddProjectObjectivesActivity"></activity>
+        <activity android:name=".CRUD.Create.AddProjectDetailsActivity" />
+        <activity android:name=".CRUD.Create.AddProjectObjectivesActivity" />
+        <activity android:name=".CRUD.Create.AddProjectContactsActivity"></activity>
     </application>
 
 </manifest>
