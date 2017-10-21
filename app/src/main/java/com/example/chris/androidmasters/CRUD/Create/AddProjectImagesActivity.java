@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.chris.androidmasters.Adapters.ProjectCRUDImageAdapter;
 import com.example.chris.androidmasters.R;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 
 public class AddProjectImagesActivity extends AppCompatActivity {
     private Activity context = this;
-    private ArrayList<String> imageList;
+    private ArrayList<Uri> imageList;
     private ProjectCRUDImageAdapter adapter;
     public static final int PICK_IMAGE = 1;
 
@@ -28,7 +27,7 @@ public class AddProjectImagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project_images);
 
-        getSupportActionBar().setTitle("Add Contact Persons");
+        getSupportActionBar().setTitle("Add Images");
 //        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,7 +35,7 @@ public class AddProjectImagesActivity extends AppCompatActivity {
         }
 
         RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
-        imageList = new ArrayList<String>();
+        imageList = new ArrayList<Uri>();
         adapter = new ProjectCRUDImageAdapter(context, imageList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recmain.setHasFixedSize(true);
@@ -85,10 +84,9 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             if (data != null){
 
                 Uri imageUri = data.getData();
-                final ImageView ivdisplay = (ImageView)findViewById(R.id.iv_display);
-
                 if(imageUri != null){
-                    imageList.add(imageUri.toString());
+                    imageList.add(imageUri);
+                    adapter.notifyDataSetChanged();
                 }
             }
 

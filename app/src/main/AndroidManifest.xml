@@ -49,7 +49,8 @@
         <activity android:name=".CRUD.Create.AddProjectDetailsActivity" />
         <activity android:name=".CRUD.Create.AddProjectObjectivesActivity" />
         <activity android:name=".CRUD.Create.AddProjectContactsActivity" />
-        <activity android:name=".CRUD.Create.AddProjectImagesActivity"></activity>
+        <activity android:name=".CRUD.Create.AddProjectImagesActivity" />
+        <activity android:name=".CRUD.Create.AddProjectReviewActivity"></activity>
     </application>
 
 </manifest>

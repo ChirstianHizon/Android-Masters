@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDImageAdapter.ViewHolder> {
 
-    private final List<String> imageList;
+    private final List<Uri> imageList;
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +38,7 @@ public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDIma
         }
     }
 
-    public ProjectCRUDImageAdapter(Context context, ArrayList<String> contactsList){
+    public ProjectCRUDImageAdapter(Context context, ArrayList<Uri> contactsList){
         this.context = context;
         this.imageList = contactsList;
     }
@@ -54,13 +54,10 @@ public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDIma
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         Picasso.with(context)
-                .load(Uri.parse(imageList.get(position)))
-                .resize(30,30)
+                .load(imageList.get(position))
                 .placeholder(R.color.white)
                 .error(R.color.colorAccent)
-                .centerCrop()
                 .into(holder.image);
-
     }
 
     @Override

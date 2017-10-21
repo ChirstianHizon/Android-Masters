@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
+import com.example.chris.androidmasters.Adapters.ProjectCRUDContactsAdapter;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.R;
 
@@ -26,7 +26,7 @@ import java.util.List;
 public class AddProjectContactsActivity extends AppCompatActivity {
     private Activity context = this;
     private List<Contacts> contactList;
-    private ProjectContactsAdapter adapter;
+    private ProjectCRUDContactsAdapter adapter;
     private ArrayList<String> person;
     private ArrayList<String> position;
     private ArrayList<String> contacts;
@@ -60,7 +60,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
 
         RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
         contactList = new ArrayList<Contacts>();
-        adapter = new ProjectContactsAdapter(context, contactList);
+        adapter = new ProjectCRUDContactsAdapter(context, contactList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recmain.setHasFixedSize(true);
         recmain.setLayoutManager(layoutManager);
@@ -95,7 +95,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,AddProjectContactsActivity.class);
+                Intent intent = new Intent(context,AddProjectImagesActivity.class);
                 intent.putExtra("name",  name);
                 intent.putExtra("desc",  desc);
                 intent.putExtra("org",  org);
