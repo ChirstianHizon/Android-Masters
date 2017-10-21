@@ -20,7 +20,7 @@
         android:animation="@anim/logo_anim_o2" />
     <target
         android:name="logo_o2_inner"
-        android:animation="@anim/logo_anim_o" />
+        android:animation="@anim/logo_anim_o2" />
 
     <target
         android:name="logo_s"
