@@ -19,7 +19,6 @@
             android:id="@+id/ctl_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="false"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
@@ -45,6 +44,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -206,6 +206,21 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/tv_viewevents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:text="View Events"
+                        android:textAlignment="center"
+                        android:textColor="#444"
+                        android:textSize="18sp" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -215,7 +230,7 @@
                         android:minHeight="1dp" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/textView5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"

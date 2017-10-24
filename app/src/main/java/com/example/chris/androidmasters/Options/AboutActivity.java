@@ -1,4 +1,4 @@
-package com.example.chris.androidmasters;
+package com.example.chris.androidmasters.Options;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.chris.androidmasters.R;
 
 import java.util.Date;
 

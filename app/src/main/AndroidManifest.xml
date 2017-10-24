@@ -25,7 +25,7 @@
         <activity
             android:name=".DonateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AboutActivity" />
+        <activity android:name=".Options.AboutActivity" />
         <activity
             android:name=".IntroActivity"
             android:theme="@style/AppTheme.Fullscreen" />
@@ -45,12 +45,14 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Options.SettingsActivity" />
         <activity android:name=".CRUD.Create.AddProjectDetailsActivity" />
         <activity android:name=".CRUD.Create.AddProjectObjectivesActivity" />
         <activity android:name=".CRUD.Create.AddProjectContactsActivity" />
         <activity android:name=".CRUD.Create.AddProjectImagesActivity" />
-        <activity android:name=".CRUD.Create.AddProjectReviewActivity"></activity>
+        <activity android:name=".CRUD.Create.AddProjectReviewActivity" />
+        <activity android:name=".Events.EventListActivity" />
+        <activity android:name=".Options.NewSettings"></activity>
     </application>
 
 </manifest>

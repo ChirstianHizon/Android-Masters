@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -61,6 +62,7 @@ public class ProjectView extends AppCompatActivity {
     private boolean isShow = false;
     private int scrollRange = -1;
     private Button btndonate;
+    private TextView tvviewevents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,13 @@ public class ProjectView extends AppCompatActivity {
                 intent.putExtra("id",id);
                 startActivity(intent);
 
+            }
+        });
+        tvviewevents = (TextView)findViewById(R.id.tv_viewevents);
+        tvviewevents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -404,13 +413,16 @@ public class ProjectView extends AppCompatActivity {
         ProgressBar pbmain = (ProgressBar)findViewById(R.id.pb_main);
         CardView cvmain = (CardView)findViewById(R.id.cv_main);
         AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar_layout);
+        NestedScrollView nsvmain = (NestedScrollView)findViewById(R.id.nsv_main);
 
         if(status){
             pbmain.setVisibility(View.VISIBLE);
             cvmain.setVisibility(View.GONE);
             appbar.setExpanded(false);
         }else{
-
+            pbmain.setVisibility(View.GONE);
+            cvmain.setVisibility(View.VISIBLE);
+            appbar.setExpanded(true);
         }
 
     }

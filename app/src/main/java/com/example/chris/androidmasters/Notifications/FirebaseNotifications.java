@@ -45,9 +45,8 @@ public class FirebaseNotifications extends FirebaseMessagingService {
                 .setTicker(title)
                 .setContentTitle("A Project has been Added")
                 .setContentText(message)
-                .setSmallIcon(R.drawable.notification)
-//                .setLargeIcon(icon)
-
+                .setSmallIcon(R.drawable.vector_rocket)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true);
 
