@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.Options;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -88,6 +89,13 @@ public class NewSettings extends AppCompatActivity {
         btnsignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final ProgressDialog progress = new ProgressDialog(context);
+                progress.setMessage("Signing you out... ");
+                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progress.setIndeterminate(true);
+                progress.setCancelable(false);
+                progress.setProgress(0);
+                progress.show();
                 mAuth.signInAnonymously()
                         .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -97,6 +105,7 @@ public class NewSettings extends AppCompatActivity {
                                     Log.d(TAG, "signInAnonymously:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
+                                    progress.dismiss();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInAnonymously:failure", task.getException());
@@ -170,7 +179,7 @@ public class NewSettings extends AppCompatActivity {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.getCurrentUser().linkWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

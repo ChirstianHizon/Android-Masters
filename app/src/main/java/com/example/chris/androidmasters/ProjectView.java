@@ -358,7 +358,7 @@ public class ProjectView extends AppCompatActivity {
                         }
                     });
                     // Set to False to remove indicators on upper Left
-                    builder.indicatorsEnabled(true);
+//                    builder.indicatorsEnabled(true);
                     builder.build()
                             .load(details.getSelectedImages(x))
                             .resize(0,500)

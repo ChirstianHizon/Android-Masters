@@ -276,7 +276,7 @@ public class AddProjectReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProjectDetails(final String id,String image){
+    private void uploadProjectDetails(final String id,Uri image){
 
         progress=new ProgressDialog(context);
         progress.setMessage("Uploading Details to Server... ");
@@ -288,7 +288,7 @@ public class AddProjectReviewActivity extends AppCompatActivity {
 
 //      ---------------- Details ----------------------
         Map<String, Object> details = new HashMap<>();
-        details.put("display_image",image);
+        details.put("display_image",image.toString());
         details.put("objectives",objectives);
         details.put("organization",org);
         details.put("short_description",desc);
