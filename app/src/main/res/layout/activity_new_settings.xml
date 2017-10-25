@@ -8,17 +8,18 @@
 
     <ImageView
         android:id="@+id/iv_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="71dp"
+        android:maxHeight="200dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/about_description_text_color"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:srcCompat="@color/about_description_text_color" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"
@@ -90,7 +91,8 @@
                             android:id="@+id/btn_admin_add"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Add New Project" />
+                            android:text="Add New Project"
+                            android:visibility="gone" />
 
                     </LinearLayout>
                 </LinearLayout>

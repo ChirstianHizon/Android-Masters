@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewSettings extends AppCompatActivity {
 
@@ -43,6 +51,7 @@ public class NewSettings extends AppCompatActivity {
     private View btnsignin;
     private Button btnsignout;
     private Activity context = this;
+    private Button btnadminadd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,9 @@ public class NewSettings extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         User = mAuth.getCurrentUser();
+
+
+        btnadminadd = (Button)findViewById(R.id.btn_admin_add);
 
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -91,10 +103,9 @@ public class NewSettings extends AppCompatActivity {
             public void onClick(View view) {
                 final ProgressDialog progress = new ProgressDialog(context);
                 progress.setMessage("Signing you out... ");
-                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.setIndeterminate(true);
                 progress.setCancelable(false);
-                progress.setProgress(0);
                 progress.show();
                 mAuth.signInAnonymously()
                         .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
@@ -132,14 +143,26 @@ public class NewSettings extends AppCompatActivity {
             TextView tvkey = (TextView)findViewById(R.id.tv_key);
 
             tvkey.setText(user.getUid());
+            ImageView ivimage = (ImageView)findViewById(R.id.iv_user);
 
             if(user.isAnonymous()){
                 tvusername.setText(user.getDisplayName());
                 tvemail.setText(user.getEmail());
 
+                Picasso.with(context)
+                        .load(R.drawable.app_logo)
+                        .error(R.mipmap.ic_launcher)
+                        .into(ivimage);
+
+                btnadminadd.setVisibility(View.GONE);
                 btnsignin.setVisibility(View.VISIBLE);
                 btnsignout.setVisibility(View.GONE);
             }else{
+                Picasso.with(context)
+                        .load(user.getPhotoUrl().toString())
+                        .error(R.mipmap.ic_launcher)
+                        .into(ivimage);
+
                 tvusername.setText(user.getDisplayName());
                 tvemail.setText(user.getEmail());
 
@@ -151,6 +174,7 @@ public class NewSettings extends AppCompatActivity {
     }
 
     private void signGoogleIn() {
+
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -188,17 +212,18 @@ public class NewSettings extends AppCompatActivity {
                             User = mAuth.getCurrentUser();
 
                             if(User != null) {
-//                                Map<String, Object> admin = new HashMap<>();
-//                                admin.put("ID", User.getUid());
-//                                admin.put("Name", User.getDisplayName());
-//                                admin.put("Phone", User.getPhoneNumber());
-//                                admin.put("Email", User.getEmail());
-//                                admin.put("Provider", User.getProviderId());
-//                                admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
-//                                admin.put("date", new Date());
-//                                admin.put("status", true);
-//
-//                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
+                                Map<String, Object> admin = new HashMap<>();
+                                admin.put("ID", User.getUid());
+                                admin.put("Name", User.getDisplayName());
+                                admin.put("Phone", User.getPhoneNumber());
+                                admin.put("Email", User.getEmail());
+                                admin.put("Provider", User.getProviderId());
+                                admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
+                                admin.put("date", new Date());
+                                admin.put("status", true);
+                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
+
+
 
                                 db.collection("Administrators").document(User.getEmail())
                                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -218,6 +243,7 @@ public class NewSettings extends AppCompatActivity {
                                     }
                                 });
 
+                                updateUI(User);
                             }
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -229,8 +255,15 @@ public class NewSettings extends AppCompatActivity {
     }
 
     private void enterAdmin(){
-        Intent intent = new Intent(context, AddProjectDetailsActivity.class);
-        startActivity(intent);
+        btnadminadd.setVisibility(View.VISIBLE);
+        btnadminadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddProjectDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
