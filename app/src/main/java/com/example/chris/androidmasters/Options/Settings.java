@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,15 +32,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-public class NewSettings extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 800 ;
     private static final String TAG = "SETTINGS_ACT";
@@ -52,11 +47,12 @@ public class NewSettings extends AppCompatActivity {
     private Button btnsignout;
     private Activity context = this;
     private Button btnadminadd;
+    private ProgressDialog loginprogress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_settings);
+        setContentView(R.layout.activity_option_settings);
 
         getSupportActionBar().setTitle("Settings");
 //        -----------  add back arrow to toolbar ------------
@@ -79,12 +75,7 @@ public class NewSettings extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-
+        buildGoogleApiClient();
 
         btnsignin = findViewById(R.id.btn_signin);
         btnsignout = (Button)findViewById(R.id.btn_signout);
@@ -94,6 +85,13 @@ public class NewSettings extends AppCompatActivity {
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.d("GOOGLEAPI", String.valueOf(mGoogleApiClient.isConnecting()));
+                Log.d("GOOGLEAPI", String.valueOf(mGoogleApiClient.isConnected()));
+
+                if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                    mGoogleApiClient.clearDefaultAccountAndReconnect();
+                }
                 signGoogleIn();
             }
         });
@@ -116,21 +114,28 @@ public class NewSettings extends AppCompatActivity {
                                     Log.d(TAG, "signInAnonymously:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
-                                    progress.dismiss();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInAnonymously:failure", task.getException());
                                     Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                     updateUI(null);
                                 }
-
-                                // ...
+                                progress.dismiss();
                             }
                         });
 
             }
         });
     }
+
+    public synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getBaseContext())
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
+    }
+
 
     private void updateUI(FirebaseUser user){
 
@@ -141,6 +146,9 @@ public class NewSettings extends AppCompatActivity {
             TextView tvusername = (TextView)findViewById(R.id.tv_username);
             TextView tvemail = (TextView)findViewById(R.id.tv_email);
             TextView tvkey = (TextView)findViewById(R.id.tv_key);
+            CardView cvadmin = (CardView)findViewById(R.id.cv_admin);
+            CardView cvname = (CardView)findViewById(R.id.cv_name);
+            CardView cvemail = (CardView)findViewById(R.id.cv_email);
 
             tvkey.setText(user.getUid());
             ImageView ivimage = (ImageView)findViewById(R.id.iv_user);
@@ -154,7 +162,9 @@ public class NewSettings extends AppCompatActivity {
                         .error(R.mipmap.ic_launcher)
                         .into(ivimage);
 
-                btnadminadd.setVisibility(View.GONE);
+                cvadmin.setVisibility(View.GONE);
+                cvemail.setVisibility(View.GONE);
+                cvname.setVisibility(View.GONE);
                 btnsignin.setVisibility(View.VISIBLE);
                 btnsignout.setVisibility(View.GONE);
             }else{
@@ -166,6 +176,9 @@ public class NewSettings extends AppCompatActivity {
                 tvusername.setText(user.getDisplayName());
                 tvemail.setText(user.getEmail());
 
+                cvname.setVisibility(View.VISIBLE);
+                cvemail.setVisibility(View.VISIBLE);
+                cvadmin.setVisibility(View.GONE);
                 btnsignin.setVisibility(View.GONE);
                 btnsignout.setVisibility(View.VISIBLE);
             }
@@ -174,8 +187,15 @@ public class NewSettings extends AppCompatActivity {
     }
 
     private void signGoogleIn() {
-
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+
+        loginprogress = new ProgressDialog(context);
+        loginprogress.setMessage("Signing you in... ");
+        loginprogress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loginprogress.setIndeterminate(true);
+        loginprogress.setCancelable(false);
+        loginprogress.show();
+
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -193,8 +213,8 @@ public class NewSettings extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
 
             } else {
-                // Google Sign In failed, updateUI UI appropriately
-                // ...
+                Log.d("GOOGLEAPI",mAuth.getCurrentUser().toString());
+                loginprogress.dismiss();
             }
         }
     }
@@ -212,16 +232,20 @@ public class NewSettings extends AppCompatActivity {
                             User = mAuth.getCurrentUser();
 
                             if(User != null) {
-                                Map<String, Object> admin = new HashMap<>();
-                                admin.put("ID", User.getUid());
-                                admin.put("Name", User.getDisplayName());
-                                admin.put("Phone", User.getPhoneNumber());
-                                admin.put("Email", User.getEmail());
-                                admin.put("Provider", User.getProviderId());
-                                admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
-                                admin.put("date", new Date());
-                                admin.put("status", true);
-                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
+
+                                Toast.makeText(context, "Authentication Complete.",
+                                        Toast.LENGTH_SHORT).show();
+
+//                                Map<String, Object> admin = new HashMap<>();
+//                                admin.put("ID", User.getUid());
+//                                admin.put("Name", User.getDisplayName());
+//                                admin.put("Phone", User.getPhoneNumber());
+//                                admin.put("Email", User.getEmail());
+//                                admin.put("Provider", User.getProviderId());
+//                                admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
+//                                admin.put("date", new Date());
+//                                admin.put("status", true);
+//                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
 
 
 
@@ -244,6 +268,7 @@ public class NewSettings extends AppCompatActivity {
                                 });
 
                                 updateUI(User);
+                                loginprogress.dismiss();
                             }
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

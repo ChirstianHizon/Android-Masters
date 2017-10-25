@@ -10,6 +10,7 @@ import com.example.chris.androidmasters.Introduction.FirstSlide;
 import com.example.chris.androidmasters.Introduction.FourthSlide;
 import com.example.chris.androidmasters.Introduction.SecondSlide;
 import com.example.chris.androidmasters.Introduction.ThirdSlide;
+import com.example.chris.androidmasters.Projects.ProjectListActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 /**

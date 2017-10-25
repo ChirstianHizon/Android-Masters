@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Project;
-import com.example.chris.androidmasters.ProjectView;
+import com.example.chris.androidmasters.Projects.ProjectView;
 import com.example.chris.androidmasters.R;
 import com.squareup.picasso.Picasso;
 

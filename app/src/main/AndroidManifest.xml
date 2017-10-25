@@ -18,12 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProjectListActivity" />
+        <activity android:name=".Projects.ProjectListActivity" />
         <activity
-            android:name=".ProjectView"
+            android:name=".Projects.ProjectView"
             android:theme="@style/AppTheme.NoActionBarTransparent" />
         <activity
-            android:name=".DonateActivity"
+            android:name=".Projects.DonateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Options.AboutActivity" />
         <activity
@@ -45,14 +45,13 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Options.SettingsActivity" />
         <activity android:name=".CRUD.Create.AddProjectDetailsActivity" />
         <activity android:name=".CRUD.Create.AddProjectObjectivesActivity" />
         <activity android:name=".CRUD.Create.AddProjectContactsActivity" />
         <activity android:name=".CRUD.Create.AddProjectImagesActivity" />
         <activity android:name=".CRUD.Create.AddProjectReviewActivity" />
         <activity android:name=".Events.EventListActivity" />
-        <activity android:name=".Options.NewSettings"></activity>
+        <activity android:name=".Options.Settings"></activity>
     </application>
 
 </manifest>

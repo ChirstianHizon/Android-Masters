@@ -1,10 +1,9 @@
-package com.example.chris.androidmasters;
+package com.example.chris.androidmasters.Projects;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,11 +28,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
 import com.example.chris.androidmasters.Events.EventListActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
+import com.example.chris.androidmasters.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -353,19 +356,32 @@ public class ProjectView extends AppCompatActivity {
 
                 if(!details.getSelectedImages(x).equals("") && details.getSelectedImages(x) != null){
 
-                    Picasso.Builder builder = new Picasso.Builder(this);
-                    builder.listener(new Picasso.Listener() {
-                        @Override
-                        public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                            myImage.setVisibility(View.GONE);
-                        }
-                    });
-                    // Set to False to remove indicators on upper Left
-//                    builder.indicatorsEnabled(true);
-                    builder.build()
+//                    Glide.Builder builder = new Glide.Builder(this);
+//                    builder.listener(new Picasso.Listener() {
+//                        @Override
+//                        public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+//                            myImage.setVisibility(View.GONE);
+//                        }
+//                    });
+//                    // Set to False to remove indicators on upper Left
+////                    builder.indicatorsEnabled(true);
+//                    builder.build()
+//                            .load(details.getSelectedImages(x))
+//                            .resize(200,200)
+//                            .centerCrop()
+//                            .error(R.mipmap.ic_launcher)
+//                            .into(myImage);
+
+                    RequestOptions myOptions = new RequestOptions()
+                            .error(R.color.white)
+                            .override(250, 250)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+                    Glide.with(context)
                             .load(details.getSelectedImages(x))
-                            .resize(0,500)
-                            .error(R.mipmap.ic_launcher)
+                            .apply(myOptions)
                             .into(myImage);
                 }else{
                     myImage.setVisibility(View.GONE);
@@ -375,14 +391,15 @@ public class ProjectView extends AppCompatActivity {
         }
 
     }
-
     private void changeDisplayImage(String image){
         ImageView display = (ImageView)findViewById(R.id.app_bar_image);
 
         if(image != null && !image.equals("")){
+
             Picasso.with(this)
                     .load(image)
-                    .resize(0,800)
+                    .fit()
+                    .centerCrop()
                     .error(R.mipmap.ic_launcher)
                     .into(display);
         }

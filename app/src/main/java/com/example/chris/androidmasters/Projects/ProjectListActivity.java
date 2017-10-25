@@ -1,4 +1,4 @@
-package com.example.chris.androidmasters;
+package com.example.chris.androidmasters.Projects;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -19,7 +19,8 @@ import android.widget.Toast;
 import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
 import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.Options.AboutActivity;
-import com.example.chris.androidmasters.Options.NewSettings;
+import com.example.chris.androidmasters.Options.Settings;
+import com.example.chris.androidmasters.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -187,7 +188,7 @@ public class ProjectListActivity extends AppCompatActivity{
                 startActivity(intent);
                 return true;
             case R.id.menu_settings:
-                intent = new Intent(ProjectListActivity.this, NewSettings.class);
+                intent = new Intent(ProjectListActivity.this, Settings.class);
                 startActivity(intent);
                 return true;
             default:

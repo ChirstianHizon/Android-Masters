@@ -1,4 +1,4 @@
-package com.example.chris.androidmasters;
+package com.example.chris.androidmasters.Projects;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.chris.androidmasters.Objects.Constants;
+import com.example.chris.androidmasters.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
