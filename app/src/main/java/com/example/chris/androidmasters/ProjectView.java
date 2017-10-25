@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chris.androidmasters.Adapters.ProjectContactsAdapter;
+import com.example.chris.androidmasters.Events.EventListActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
@@ -102,7 +103,9 @@ public class ProjectView extends AppCompatActivity {
         tvviewevents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, EventListActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
 

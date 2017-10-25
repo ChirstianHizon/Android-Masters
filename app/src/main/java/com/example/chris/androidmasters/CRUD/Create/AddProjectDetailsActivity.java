@@ -110,6 +110,8 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
 
 //        ----------------- SELECT IMAGE --------------------------
         Button btnimage = (Button)findViewById(R.id.btn_image);
+
+
         btnimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

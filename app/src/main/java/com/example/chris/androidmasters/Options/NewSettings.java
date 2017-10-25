@@ -150,7 +150,7 @@ public class NewSettings extends AppCompatActivity {
                 tvemail.setText(user.getEmail());
 
                 Picasso.with(context)
-                        .load(R.drawable.app_logo)
+                        .load(R.drawable.images)
                         .error(R.mipmap.ic_launcher)
                         .into(ivimage);
 

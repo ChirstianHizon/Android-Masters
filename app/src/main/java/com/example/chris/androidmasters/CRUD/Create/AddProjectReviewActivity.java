@@ -87,11 +87,11 @@ public class AddProjectReviewActivity extends AppCompatActivity {
 
         ImageView ivimage = (ImageView)findViewById(R.id.iv_image);
 
-        Picasso.with(context)
-                .load(Uri.parse(image))
+        Picasso.with(context)// activity name.this
+                .load(Uri.parse(image)) //url of image
                 .placeholder(R.color.white)
                 .error(R.color.colorAccent)
-                .into(ivimage);
+                .into(ivimage); //image view
 
         fbdate = new Date();
         try {
@@ -132,14 +132,12 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 project.put("visible",false);
 
 
-               db.collection("Projects")
+               db.collection("Lost")
                 .add(project)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                        progress.dismiss();
-                        uploadDisplayImage(image,documentReference.getId());
+
 
                     }
                 })
@@ -148,7 +146,7 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
                         Toast.makeText(context, "Unable to Upload to Server", Toast.LENGTH_SHORT).show();
-                        progress.dismiss();
+
                     }
                 });
             }

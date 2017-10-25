@@ -115,19 +115,9 @@ public class ProjectListActivity extends AppCompatActivity{
     private void createRecyclerView( QuerySnapshot documentSnap){
         adapter.clear();
         for (DocumentSnapshot docx : documentSnap) {
-            if(docx.getString("name") != null && docx.getString("organization") != null
-                    && docx.getString("image") != null && docx.getDate("completion_date") != null
-                    && docx.getString("goal") != null && docx.getString("current") != null) {
-
-                if(!docx.getString("name").equalsIgnoreCase("") && !docx.getString("organization").equalsIgnoreCase("")
-                        && !docx.getString("image").equalsIgnoreCase("") && !docx.getString("current").equalsIgnoreCase("")
-                        && !docx.getString("goal").equalsIgnoreCase("") ){
-
-                    Project project = docx.toObject(Project.class);
-                    project.setId(docx.getId());
-                    projectlist.add(project);
-                }
-            }
+            Project project = docx.toObject(Project.class);
+            project.setId(docx.getId());
+            projectlist.add(project);
         }
         adapter.notifyDataSetChanged();
     }
