@@ -37,6 +37,8 @@ import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Contacts;
 import com.example.chris.androidmasters.Objects.Details;
 import com.example.chris.androidmasters.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -118,6 +120,10 @@ public class ProjectView extends AppCompatActivity {
         getProjectContacts();
         getProjectDetails();
         getProjectInfo();
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 

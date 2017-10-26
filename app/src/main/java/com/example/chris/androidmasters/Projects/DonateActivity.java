@@ -16,6 +16,11 @@ import android.widget.Toast;
 
 import com.example.chris.androidmasters.Objects.Constants;
 import com.example.chris.androidmasters.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +53,7 @@ public class DonateActivity extends AppCompatActivity {
     private String TAG = "DONATE_ACTIVITY";
     private ProgressBar pbloading;
     private Button btnamount;
+    private RewardedVideoAd mAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,8 @@ public class DonateActivity extends AppCompatActivity {
 
 
         db = FirebaseFirestore.getInstance();
+        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
 
         edtamount = (EditText)findViewById(R.id.edt_amount);
         pbloading = (ProgressBar)findViewById(R.id.pb_loading);
@@ -90,10 +98,75 @@ public class DonateActivity extends AppCompatActivity {
                 }
 
 
+
+
             }
         });
 
+        loadRewardedVideoAd();
+        initAdsListeners();
 
+
+
+        Button btnads = (Button)findViewById(R.id.btn_ads);
+        btnads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAd.isLoaded()) {
+                    mAd.show();
+                }else{
+                    Toast.makeText(context, "Ads has not yet Loaded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void loadRewardedVideoAd() {
+        mAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
+    }
+
+    private void initAdsListeners(){
+        mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                Log.d("DONATE_ADS","VIDEO Loaded");
+
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+                Log.d("DONATE_ADS","VIDEO OPENED");
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+                Log.d("DONATE_ADS","VIDEO STARTED");
+
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+
+            }
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+                Log.d("DONATE_ADS","VIDEO Complete");
+                Toast.makeText(context, rewardItem.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+                Log.d("DONATE_ADS","VIDEO Left");
+
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {
+                Log.d("DONATE_ADS","VIDEO Failed");
+
+            }
+        });
     }
 
     @Override
