@@ -48,6 +48,7 @@ public class Settings extends AppCompatActivity {
     private Activity context = this;
     private Button btnadminadd;
     private ProgressDialog loginprogress;
+    private CardView cvadmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,7 @@ public class Settings extends AppCompatActivity {
             TextView tvusername = (TextView)findViewById(R.id.tv_username);
             TextView tvemail = (TextView)findViewById(R.id.tv_email);
             TextView tvkey = (TextView)findViewById(R.id.tv_key);
-            CardView cvadmin = (CardView)findViewById(R.id.cv_admin);
+            cvadmin = (CardView)findViewById(R.id.cv_admin);
             CardView cvname = (CardView)findViewById(R.id.cv_name);
             CardView cvemail = (CardView)findViewById(R.id.cv_email);
 
@@ -282,6 +283,7 @@ public class Settings extends AppCompatActivity {
     }
 
     private void enterAdmin(){
+        cvadmin.setVisibility(View.VISIBLE);
         btnadminadd.setVisibility(View.VISIBLE);
         btnadminadd.setOnClickListener(new View.OnClickListener() {
             @Override

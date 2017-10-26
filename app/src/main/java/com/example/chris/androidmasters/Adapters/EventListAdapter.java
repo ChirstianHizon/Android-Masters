@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.chris.androidmasters.Events.EventViewActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
@@ -71,7 +73,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Events events = eventlist.get(position);
+        final Events events = eventlist.get(position);
 
         Date now = new Date();
         Date completion = events.getDate_event();
@@ -101,6 +103,16 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         holder.date.setText(monthString +" "+day+", "+year);
         holder.time.setText(hour+" : "+min);
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = events.getId();
+                Intent intent =  new Intent(context, EventViewActivity.class);
+                intent.putExtra("id",id);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
