@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.chris.androidmasters.Adapters.ProjectListAdapter;
 import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.Options.AboutActivity;
-import com.example.chris.androidmasters.Options.Settings;
+import com.example.chris.androidmasters.Options.SettingsActivity;
 import com.example.chris.androidmasters.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -186,7 +186,7 @@ public class ProjectListActivity extends AppCompatActivity{
                 startActivity(intent);
                 return true;
             case R.id.menu_settings:
-                intent = new Intent(ProjectListActivity.this, Settings.class);
+                intent = new Intent(ProjectListActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             default:

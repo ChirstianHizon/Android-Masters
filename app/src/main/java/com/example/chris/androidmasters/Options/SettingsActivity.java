@@ -34,7 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 800 ;
     private static final String TAG = "SETTINGS_ACT";
@@ -55,7 +55,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_settings);
 
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle("SettingsActivity");
 //        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -80,15 +80,13 @@ public class Settings extends AppCompatActivity {
 
         btnsignin = findViewById(R.id.btn_signin);
         btnsignout = (Button)findViewById(R.id.btn_signout);
+        cvadmin = (CardView)findViewById(R.id.cv_admin);
 
         updateUI(User);
 
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.d("GOOGLEAPI", String.valueOf(mGoogleApiClient.isConnecting()));
-                Log.d("GOOGLEAPI", String.valueOf(mGoogleApiClient.isConnected()));
 
                 if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.clearDefaultAccountAndReconnect();
@@ -107,24 +105,24 @@ public class Settings extends AppCompatActivity {
                 progress.setCancelable(false);
                 progress.show();
                 mAuth.signInAnonymously()
-                        .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, updateUI UI with the signed-in user's information
-                                    Log.d(TAG, "signInAnonymously:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    updateUI(user);
+                    .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, updateUI UI with the signed-in user's information
+                                Log.d(TAG, "signInAnonymously:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
 
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInAnonymously:failure", task.getException());
-                                    Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
-                                }
-                                progress.dismiss();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInAnonymously:failure", task.getException());
+                                Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                updateUI(null);
                             }
-                        });
+                            progress.dismiss();
+                        }
+                    });
 
             }
         });
@@ -147,7 +145,6 @@ public class Settings extends AppCompatActivity {
             TextView tvusername = (TextView)findViewById(R.id.tv_username);
             TextView tvemail = (TextView)findViewById(R.id.tv_email);
             TextView tvkey = (TextView)findViewById(R.id.tv_key);
-            cvadmin = (CardView)findViewById(R.id.cv_admin);
             CardView cvname = (CardView)findViewById(R.id.cv_name);
             CardView cvemail = (CardView)findViewById(R.id.cv_email);
 
@@ -169,6 +166,7 @@ public class Settings extends AppCompatActivity {
                 btnsignin.setVisibility(View.VISIBLE);
                 btnsignout.setVisibility(View.GONE);
             }else{
+                enterAdmin();
                 Picasso.with(context)
                         .load(user.getPhotoUrl().toString())
                         .error(R.mipmap.ic_launcher)
@@ -248,25 +246,7 @@ public class Settings extends AppCompatActivity {
 //                                admin.put("status", true);
 //                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
 
-
-
-                                db.collection("Administrators").document(User.getEmail())
-                                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        if(documentSnapshot.exists()){
-                                            if(documentSnapshot.getBoolean("status")){
-                                                Toast.makeText(context, "Welcome "+User.getDisplayName(), Toast.LENGTH_SHORT).show();
-                                                enterAdmin();
-                                            }else{
-                                                Toast.makeText(context, "Privileges has been removed", Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        }else{
-                                            Toast.makeText(context, "Welcome "+User.getDisplayName(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                enterAdmin();
 
                                 updateUI(User);
                                 loginprogress.dismiss();
@@ -283,16 +263,31 @@ public class Settings extends AppCompatActivity {
     }
 
     private void enterAdmin(){
-        cvadmin.setVisibility(View.VISIBLE);
-        btnadminadd.setVisibility(View.VISIBLE);
-        btnadminadd.setOnClickListener(new View.OnClickListener() {
+        db.collection("Administrators").document(User.getEmail())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, AddProjectDetailsActivity.class);
-                startActivity(intent);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    if(documentSnapshot.getBoolean("status")){
+                        Toast.makeText(context, "Welcome "+User.getDisplayName(), Toast.LENGTH_SHORT).show();
+                        cvadmin.setVisibility(View.VISIBLE);
+                        btnadminadd.setVisibility(View.VISIBLE);
+                        btnadminadd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(context, AddProjectDetailsActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }else{
+                        Toast.makeText(context, "Privileges has been removed", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(context, "Welcome "+User.getDisplayName(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
     }
 
     @Override

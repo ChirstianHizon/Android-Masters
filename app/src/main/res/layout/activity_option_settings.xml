@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chris.androidmasters.Options.Settings">
+    tools:context="com.example.chris.androidmasters.Options.SettingsActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -182,6 +182,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Control Panel"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_admin_add"

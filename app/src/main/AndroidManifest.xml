@@ -52,7 +52,7 @@
         <activity android:name=".CRUD.Create.AddProjectImagesActivity" />
         <activity android:name=".CRUD.Create.AddProjectReviewActivity" />
         <activity android:name=".Events.EventListActivity" />
-        <activity android:name=".Options.Settings" />
+        <activity android:name=".Options.SettingsActivity" />
         <activity android:name=".Events.EventViewActivity"></activity>
     </application>
 

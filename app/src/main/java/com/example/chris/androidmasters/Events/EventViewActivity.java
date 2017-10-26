@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
@@ -79,9 +78,7 @@ public class EventViewActivity extends AppCompatActivity {
         Log.d("CALENDAR DATES", String.valueOf(dtend.getTime()));
         Log.d("CALENDAR DATES", String.valueOf(dtstart.getTime()));
 
-        Toast.makeText(context, dtend.toString(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, dtstart.toString(), Toast.LENGTH_SHORT).show();
-
+//      TODO: Fix the date start and end
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra(CalendarContract.Events.DTSTART, dtstart.getTimeInMillis());
