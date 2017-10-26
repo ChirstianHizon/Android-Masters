@@ -274,6 +274,8 @@ public class Settings extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                            loginprogress.dismiss();
                         }
                     }
                 });

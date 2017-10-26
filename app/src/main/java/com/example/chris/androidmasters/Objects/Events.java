@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Events {
 
-    private String name,location,description,project;
+    private String id,name,location,description,project;
     private Date date_added,date_event;
     private Boolean volunteers;
 
@@ -68,5 +68,13 @@ public class Events {
 
     public void setVolunteers(Boolean volunteers) {
         this.volunteers = volunteers;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,14 +1,38 @@
 package com.example.chris.androidmasters.Events;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.chris.androidmasters.Adapters.EventListAdapter;
+import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventListActivity extends AppCompatActivity {
 
+    private Activity context = this;
     private String id;
+    private FirebaseFirestore db;
+    private RecyclerView recmain;
+    private List<Events> eventlist;
+    private EventListAdapter adapter;
+    private String TAG = "EVENT_LIST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +41,71 @@ public class EventListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+
+        Log.d(TAG,id);
+        getSupportActionBar().setTitle("Events");
+        //        -----------  add back arrow to toolbar ------------
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        db = FirebaseFirestore.getInstance();
+
+        recmain = (RecyclerView)findViewById(R.id.rec_main);
+        eventlist = new ArrayList<Events>();
+        adapter = new EventListAdapter(context,eventlist);
+
+        recmain.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recmain.setLayoutManager(layoutManager);
+        recmain.setItemAnimator(new DefaultItemAnimator());
+        recmain.setAdapter(adapter);
+
+        Query queryRef = db.collection("Events")
+                .whereEqualTo("project",id)
+                .orderBy("date_added" , Query.Direction.DESCENDING);
+        gatherEvents(queryRef);
+
     }
 
-    private void gatherEvents(){
+    private void gatherEvents(Query query){
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
+            @Override
+            public void onEvent(QuerySnapshot snapshot, FirebaseFirestoreException e) {
 
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
 
+                if(snapshot.isEmpty()){
+                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+                }else{
+                    createRecyclerView(snapshot);
+                }
+            }
+        });
+    }
+
+    private void createRecyclerView( QuerySnapshot documentSnap){
+        adapter.clear();
+        for (DocumentSnapshot docx : documentSnap) {
+            Events events = docx.toObject(Events.class);
+            events.setId(docx.getId());
+            eventlist.add(events);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

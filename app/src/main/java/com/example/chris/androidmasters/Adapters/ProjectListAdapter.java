@@ -16,11 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.Projects.ProjectView;
 import com.example.chris.androidmasters.R;
-import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -151,19 +153,32 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         Log.d("IMAGE",project.getImage());
 
-        Picasso.with(context)
-                .load(project.getImage())
+        RequestOptions myOptions = new RequestOptions()
+                .error(R.color.white)
                 .placeholder(getRandomDrawbleColor())
                 .error(getRandomDrawbleColor())
+                .optionalCenterInside()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+        Glide.with(context)
+                .load(project.getImage())
+                .apply(myOptions)
                 .into(holder.image);
 
-        Picasso.with(context)
-                .load(project.getLogo())
-                .resize(30,30)
-                .placeholder(getRandomDrawbleColor())
-                .error(getRandomDrawbleColor())
-                .centerCrop()
-                .into(holder.logo);
+//        Picasso.with(context)
+//                .load(project.getImage())
+//                .placeholder(getRandomDrawbleColor())
+//                .error(getRandomDrawbleColor())
+//                .into(holder.image);
+
+//        Picasso.with(context)
+//                .load(project.getLogo())
+//                .resize(30,30)
+//                .placeholder(getRandomDrawbleColor())
+//                .error(getRandomDrawbleColor())
+//                .centerCrop()
+//                .into(holder.logo);
 
 //        ------------- ON CLICK LISTENER ----------------------
 

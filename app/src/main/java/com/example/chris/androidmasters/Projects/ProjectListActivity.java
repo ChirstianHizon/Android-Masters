@@ -106,8 +106,6 @@ public class ProjectListActivity extends AppCompatActivity{
             }else{
                 createRecyclerView(snapshot);
             }
-
-
             }
         });
 

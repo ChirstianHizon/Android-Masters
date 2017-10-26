@@ -44,7 +44,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -396,12 +395,23 @@ public class ProjectView extends AppCompatActivity {
 
         if(image != null && !image.equals("")){
 
-            Picasso.with(this)
+            RequestOptions myOptions = new RequestOptions()
+                    .error(R.drawable.app_logo)
+                    .optionalCenterInside()
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+            Glide.with(context)
                     .load(image)
-                    .fit()
-                    .centerCrop()
-                    .error(R.mipmap.ic_launcher)
+                    .apply(myOptions)
                     .into(display);
+
+//            Picasso.with(this)
+//                    .load(image)
+//                    .fit()
+//                    .centerCrop()
+//                    .error(R.mipmap.ic_launcher)
+//                    .into(display);
         }
     }
 
