@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,13 +48,62 @@ public class EventViewActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getEvent(db.collection("Events").document(id));
 
+
     }
 
     private void getEvent(DocumentReference query) {
-        query.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        query.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                final Events events = task.getResult().toObject(Events.class);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d("EVENTS_VIEW", String.valueOf(documentSnapshot.getData()));
+                final Events events = documentSnapshot.toObject(Events.class);
+                Log.d("EVENTS_VIEW",events.getName());
+
+                TextView eventname = (TextView)findViewById(R.id.tv_event);
+                TextView eventdesc = (TextView)findViewById(R.id.tv_desc);
+                TextView eventlocation = (TextView)findViewById(R.id.tv_location);
+                TextView eventdate = (TextView)findViewById(R.id.tv_date);
+                TextView eventtime = (TextView)findViewById(R.id.tv_time);
+                TextView eventremain = (TextView)findViewById(R.id.tv_remain);
+
+                Button btnvolunteer = (Button)findViewById(R.id.btn_volunteer);
+
+                eventname.setText(events.getName());
+                eventdesc.setText(events.getDescription());
+                eventlocation.setText(events.getLocation());
+
+
+                Date now = new Date();
+                Date completion = events.getDate_event();
+
+                String day          = (String) DateFormat.format("dd",   completion);
+                String monthString  = (String) DateFormat.format("MMM",  completion);
+                String year         = (String) DateFormat.format("yyyy", completion);
+                String hour         = (String) DateFormat.format("hh", completion);
+                String min         = (String) DateFormat.format("mm", completion);
+
+                eventdate.setText(monthString +" "+day+", "+year);
+                eventtime.setText(hour+" : "+min);
+
+                if(events.getVolunteers()){
+                    btnvolunteer.setVisibility(View.VISIBLE);
+                }else{
+                    btnvolunteer.setVisibility(View.GONE);
+                }
+
+                ElapsedTime elapsed = new ElapsedTime(now,completion);
+
+                if(elapsed.getDay() != 0 ){
+                    eventremain.setText(elapsed.getDay() + " days remaining");
+                }else if(elapsed.getHour()!= 0 ){
+                    eventremain.setText(elapsed.getHour() + " hours remaining");
+                }else if(elapsed.getMinute() != 0 ){
+                    eventremain.setText(elapsed.getMinute() + " mins remaining");
+                }else{
+                    eventremain.setText("Finished");
+                    btnvolunteer.setVisibility(View.GONE);
+                }
 
                 Button btnCalendar = (Button)findViewById(R.id.btn_addEvent);
                 btnCalendar.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +112,7 @@ public class EventViewActivity extends AppCompatActivity {
                         addtoCalendar(events);
                     }
                 });
+
 
             }
         });
