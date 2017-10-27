@@ -94,11 +94,11 @@ public class EventViewActivity extends AppCompatActivity {
 
                 ElapsedTime elapsed = new ElapsedTime(now, completion);
 
-                if (elapsed.getDay() != 0) {
+                if (elapsed.getDay() > 0) {
                     eventremain.setText(elapsed.getDay() + " days left");
-                } else if (elapsed.getHour() != 0) {
+                } else if (elapsed.getHour() > 0) {
                     eventremain.setText(elapsed.getHour() + " hours remaining");
-                } else if (elapsed.getMinute() != 0) {
+                } else if (elapsed.getMinute() > 0) {
                     eventremain.setText(elapsed.getMinute() + " mins remaining");
                 } else {
                     eventremain.setText("Finished");

@@ -131,13 +131,14 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                 project.put("visible", false);
 
 
-                db.collection("Lost")
+                db.collection("Projects")
                         .add(project)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-
-
+                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                                progress.dismiss();
+                                uploadDisplayImage(image,documentReference.getId());
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -145,7 +146,6 @@ public class AddProjectReviewActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error adding document", e);
                                 Toast.makeText(context, "Unable to Upload to Server", Toast.LENGTH_SHORT).show();
-
                             }
                         });
             }
