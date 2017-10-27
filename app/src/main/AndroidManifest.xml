@@ -3,6 +3,7 @@
     package="com.example.chris.androidmasters">
 
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -57,7 +58,10 @@
         <activity android:name=".Events.EventViewActivity" />
         <activity android:name=".CRUD.CRUDProjectListActivity" />
         <activity android:name=".CRUD.CRUDEventListActivity" />
-        <activity android:name=".CRUD.Create.AddEventActivity"></activity>
+        <activity android:name=".CRUD.Create.AddEventActivity" />
+        <activity
+            android:name=".Events.VolunteerActivity"
+            android:label="@string/title_activity_volunteer"></activity>
     </application>
 
 </manifest>

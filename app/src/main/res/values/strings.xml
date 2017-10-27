@@ -19,4 +19,5 @@
 
     <string name="path_logo_s">M 786 149 c -2 -42 22 -76 100 -76 c 74 1 88 53 86 83 l -36 -1 c 2 -57 -112 -62 -110 -7 c 4 35 90 17 111 29 c 63 37 42 134 -57 132 c -75 -1 -96 -39 -92 -77 l 37 1 c 2 58 111 48 111 3 c -3 -42 -25 -11 -111 -35 c -15 0 -38 -22 -38 -39 z</string>
     <string name="path_logo_t">M 1013 118 v -44 h 50 v -50 h 44 v 50 h 50 v 45 h -50 v 229 h -44 v -229 z</string>
+    <string name="title_activity_volunteer">VolunteerActivity</string>
 </resources>

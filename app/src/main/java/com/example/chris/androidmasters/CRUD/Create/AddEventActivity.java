@@ -119,7 +119,7 @@ public class AddEventActivity extends AppCompatActivity {
 
                     }
                 }, mYear, mMonth, mDay);
-                mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 2000);
                 mDatePicker.show();
 
             }
@@ -128,6 +128,7 @@ public class AddEventActivity extends AppCompatActivity {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                TODO: Validate Fields, Check date is set as today
                 addtoEvents(name,desc,location,date,time,volunteer);
             }
         });
@@ -163,10 +164,9 @@ public class AddEventActivity extends AppCompatActivity {
 
         ProgressDialog progress = new ProgressDialog(context);
         progress.setMessage("Uploading data to Server... ");
-        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.setCancelable(false);
-        progress.setProgress(0);
         progress.show();
 
         db.collection("Events").add(event)

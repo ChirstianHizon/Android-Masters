@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.chris.androidmasters.CRUD.CRUDEventListActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
@@ -110,6 +111,15 @@ public class EventViewActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         addtoCalendar(events);
+                    }
+                });
+
+                btnvolunteer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, VolunteerActivity.class);
+                        intent.putExtra("id", id);
+                        context.startActivity(intent);
                     }
                 });
 
