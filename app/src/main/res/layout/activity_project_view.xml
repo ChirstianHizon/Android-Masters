@@ -140,9 +140,10 @@
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/ic_event_black_24dp"
                             android:drawablePadding="8sp"
+                            android:drawableTint="#333"
                             android:fontFamily="sans-serif"
                             android:gravity="center_vertical"
-                            android:textColor="#111"
+                            android:textColor="#333"
                             android:textSize="14sp" />
 
                         <TextView
@@ -155,9 +156,10 @@
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/ic_timelapse_black_24dp"
                             android:drawablePadding="8sp"
+                            android:drawableTint="#333"
                             android:fontFamily="sans-serif"
                             android:gravity="center_vertical"
-                            android:textColor="#111"
+                            android:textColor="#333"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -206,20 +208,19 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_viewevents"
+                    <Button
+                        android:id="@+id/btn_viewevents"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginEnd="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/colorPrimary"
                         android:text="View Events"
-                        android:textAlignment="center"
-                        android:textColor="#444"
-                        android:textSize="18sp" />
+                        android:textColor="#fff" />
 
                     <View
                         android:layout_width="match_parent"
@@ -344,7 +345,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:lineSpacingExtra="3dp"
-                        android:text="This Project is in cooperation with the University of Saint Lasalle Bayan. All money collected through this app will be used to funds talks, seminar and other activites which will be planned"
+                        android:text="This Project is in cooperation with the University of Saint Lasalle Balayan. All money collected through this app will be used to fund seminars, talks, donations and other activites."
                         android:textAlignment="viewStart"
                         android:textColor="#777"
                         android:textSize="11sp" />
