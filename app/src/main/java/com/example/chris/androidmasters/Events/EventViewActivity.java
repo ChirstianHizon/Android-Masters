@@ -80,11 +80,11 @@ public class EventViewActivity extends AppCompatActivity {
                 String day = (String) DateFormat.format("dd", completion);
                 String monthString = (String) DateFormat.format("MMM", completion);
                 String year = (String) DateFormat.format("yyyy", completion);
-                String hour = (String) DateFormat.format("hh", completion);
+                String hour = (String) DateFormat.format("HH", completion);
                 String min = (String) DateFormat.format("mm", completion);
 
                 eventdate.setText(monthString + " " + day + ", " + year);
-                eventtime.setText(hour + " : " + min);
+                eventtime.setText(hour + ":" + min);
 
                 if (events.getVolunteers()) {
                     btnvolunteer.setVisibility(View.VISIBLE);
@@ -95,7 +95,7 @@ public class EventViewActivity extends AppCompatActivity {
                 ElapsedTime elapsed = new ElapsedTime(now, completion);
 
                 if (elapsed.getDay() != 0) {
-                    eventremain.setText(elapsed.getDay() + " days remaining");
+                    eventremain.setText(elapsed.getDay() + " days left");
                 } else if (elapsed.getHour() != 0) {
                     eventremain.setText(elapsed.getHour() + " hours remaining");
                 } else if (elapsed.getMinute() != 0) {
