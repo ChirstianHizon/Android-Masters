@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.chris.androidmasters.CRUD.CRUDEventListActivity;
+import com.example.chris.androidmasters.Events.EventViewActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
-import com.example.chris.androidmasters.Objects.Project;
+import com.example.chris.androidmasters.Objects.Events;
 import com.example.chris.androidmasters.R;
 
 import java.util.Date;
@@ -25,10 +25,10 @@ import java.util.Random;
  * Created by chris on 08/10/2017.
  */
 
-public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectListAdapter.ViewHolder> {
+public class CRUDEventListAdapter extends RecyclerView.Adapter<CRUDEventListAdapter.ViewHolder> {
 
     private Context context;
-    private List<Project> projectlist;
+    private List<Events> eventlist;
     private ColorDrawable[] vibrantLightColorList =
             {
                     new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
@@ -37,26 +37,24 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
                     new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
             };
 
-    public CRUDProjectListAdapter(Context context, List<Project> projectlist) {
+    public CRUDEventListAdapter(Context context, List<Events> eventlist) {
         this.context = context;
-        this.projectlist = projectlist;
+        this.eventlist = eventlist;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_crud_project_list, parent, false);
+                .inflate(R.layout.card_event_list, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Project project = projectlist.get(position);
-
-        holder.project.setText(project.getName());
+        final Events events = eventlist.get(position);
 
         Date now = new Date();
-        Date completion = project.getCompletion_date();
+        Date completion = events.getDate_event();
 
         ElapsedTime elapsed = new ElapsedTime(now, completion);
 
@@ -74,6 +72,7 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
             holder.measure.setText("Finished");
         }
 
+        holder.event.setText(events.getName());
         String day = (String) DateFormat.format("dd", completion);
         String monthString = (String) DateFormat.format("MMM", completion);
         String year = (String) DateFormat.format("yyyy", completion);
@@ -86,8 +85,8 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = project.getId();
-                Intent intent = new Intent(context, CRUDEventListActivity.class);
+                String id = events.getId();
+                Intent intent = new Intent(context, EventViewActivity.class);
                 intent.putExtra("id", id);
                 context.startActivity(intent);
             }
@@ -97,11 +96,11 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
 
     @Override
     public int getItemCount() {
-        return projectlist.size();
+        return eventlist.size();
     }
 
     public void clear() {
-        projectlist.clear();
+        eventlist.clear();
     }
 
     public ColorDrawable getRandomDrawbleColor() {
@@ -111,7 +110,7 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView project;
+        private final TextView event;
         private final TextView date;
         private final TextView time;
         private final TextView remain;
@@ -121,7 +120,7 @@ public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectList
         public ViewHolder(View view) {
             super(view);
 
-            project = (TextView) view.findViewById(R.id.tv_project);
+            event = (TextView) view.findViewById(R.id.tv_event);
             date = (TextView) view.findViewById(R.id.tv_date);
             time = (TextView) view.findViewById(R.id.tv_time);
             remain = (TextView) view.findViewById(R.id.tv_remain);
