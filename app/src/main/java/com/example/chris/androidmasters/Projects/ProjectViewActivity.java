@@ -67,7 +67,7 @@ public class ProjectViewActivity extends AppCompatActivity {
     private boolean isShow = false;
     private int scrollRange = -1;
     private Button btndonate;
-    private TextView tvviewevents;
+    private Button btnviewevents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +105,8 @@ public class ProjectViewActivity extends AppCompatActivity {
 
             }
         });
-        tvviewevents = (TextView) findViewById(R.id.tv_viewevents);
-        tvviewevents.setOnClickListener(new View.OnClickListener() {
+        btnviewevents = (Button) findViewById(R.id.btn_viewevents);
+        btnviewevents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, EventListActivity.class);
