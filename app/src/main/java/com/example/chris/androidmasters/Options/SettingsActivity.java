@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.androidmasters.CRUD.CRUDProjectListActivity;
 import com.example.chris.androidmasters.CRUD.Create.AddProjectDetailsActivity;
 import com.example.chris.androidmasters.R;
@@ -35,7 +38,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -162,10 +164,18 @@ public class SettingsActivity extends AppCompatActivity {
                 tvusername.setText(user.getDisplayName());
                 tvemail.setText(user.getEmail());
 
-                Picasso.with(context)
-                        .load(R.drawable.images)
-                        .placeholder(R.drawable.images)
+
+                RequestOptions myOptions = new RequestOptions()
                         .error(R.drawable.images)
+                        .override(100, 100)
+                        .circleCrop()
+                        .placeholder(R.drawable.images)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+                Glide.with(context)
+                        .load(R.drawable.images)
+                        .apply(myOptions)
                         .into(ivimage);
 
                 cvadmin.setVisibility(View.GONE);
@@ -175,9 +185,17 @@ public class SettingsActivity extends AppCompatActivity {
                 btnsignout.setVisibility(View.GONE);
             } else {
                 enterAdmin();
-                Picasso.with(context)
+                RequestOptions myOptions = new RequestOptions()
+                        .error(R.drawable.images)
+                        .override(200, 200)
+                        .circleCrop()
+                        .placeholder(R.drawable.images)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+                Glide.with(context)
                         .load(user.getPhotoUrl().toString())
-                        .error(R.mipmap.ic_launcher)
+                        .apply(myOptions)
                         .into(ivimage);
 
                 tvusername.setText(user.getDisplayName());
