@@ -379,7 +379,7 @@ public class ProjectViewActivity extends AppCompatActivity {
 
                     RequestOptions myOptions = new RequestOptions()
                             .error(R.color.white)
-                            .override(250, 250)
+                            .override(350, 350)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
 
