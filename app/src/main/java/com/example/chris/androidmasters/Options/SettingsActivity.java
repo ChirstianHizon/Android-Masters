@@ -215,6 +215,8 @@ public class SettingsActivity extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.w(TAG,"SUCCESS "+result.isSuccess());
+            Log.w(TAG,"RESULT "+result.toString());
             if (result.isSuccess()) {
                 Log.w(TAG,"Google Result Success");
                 // Google Sign In was successful, authenticate with Firebase
