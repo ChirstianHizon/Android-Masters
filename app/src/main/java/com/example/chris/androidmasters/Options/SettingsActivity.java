@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chris.androidmasters.CRUD.CRUDProjectListActivity;
 import com.example.chris.androidmasters.CRUD.Create.AddProjectDetailsActivity;
 import com.example.chris.androidmasters.R;
 import com.google.android.gms.auth.api.Auth;
@@ -32,7 +33,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -80,10 +87,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         btnsignin = findViewById(R.id.btn_signin);
         btnsignout = (Button) findViewById(R.id.btn_signout);
+
         cvadmin = (CardView) findViewById(R.id.cv_admin);
 
         updateUI(User);
-
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,7 +220,7 @@ public class SettingsActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
 
             } else {
-                Log.d("GOOGLEAPI", mAuth.getCurrentUser().toString());
+//                Log.d("GOOGLEAPI", mAuth.getCurrentUser().toString());
                 loginprogress.dismiss();
             }
         }
@@ -235,18 +242,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                                 Toast.makeText(context, "Authentication Complete.",
                                         Toast.LENGTH_SHORT).show();
-
-//                                Map<String, Object> admin = new HashMap<>();
-//                                admin.put("ID", User.getUid());
-//                                admin.put("Name", User.getDisplayName());
-//                                admin.put("Phone", User.getPhoneNumber());
-//                                admin.put("Email", User.getEmail());
-//                                admin.put("Provider", User.getProviderId());
-//                                admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
-//                                admin.put("date", new Date());
-//                                admin.put("status", true);
-//                                db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge());
-
                                 enterAdmin();
 
                                 updateUI(User);
@@ -264,6 +259,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void enterAdmin() {
+        final ProgressDialog progress = new ProgressDialog(context);
+        progress.setMessage("Checking User Details... ");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.show();
+
         db.collection("Administrators").document(User.getEmail())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -272,20 +274,49 @@ public class SettingsActivity extends AppCompatActivity {
                     if (documentSnapshot.getBoolean("status")) {
                         Toast.makeText(context, "Welcome " + User.getDisplayName(), Toast.LENGTH_SHORT).show();
                         cvadmin.setVisibility(View.VISIBLE);
-                        btnadminadd.setVisibility(View.VISIBLE);
+
+                        Map<String, Object> admin = new HashMap<>();
+                        admin.put("ID", User.getUid());
+                        admin.put("Name", User.getDisplayName());
+                        admin.put("Phone", User.getPhoneNumber());
+                        admin.put("Email", User.getEmail());
+                        admin.put("Provider", User.getProviderId());
+                        admin.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
+                        admin.put("date", new Date());
+                        admin.put("status", true);
+                        db.collection("Administrators").document(User.getEmail()).set(admin, SetOptions.merge())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        progress.dismiss();
+                                    }
+                                });
+
                         btnadminadd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 Intent intent = new Intent(context, AddProjectDetailsActivity.class);
+                                startActivity(intent);
+
+                            }
+                        });
+                        Button btnadminevent = (Button) findViewById(R.id.btn_admin_event);
+                        btnadminevent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(context, CRUDProjectListActivity.class);
                                 startActivity(intent);
                             }
                         });
                     } else {
                         Toast.makeText(context, "Privileges has been removed", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
                     }
 
                 } else {
                     Toast.makeText(context, "Welcome " + User.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
             }
         });
@@ -297,7 +328,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

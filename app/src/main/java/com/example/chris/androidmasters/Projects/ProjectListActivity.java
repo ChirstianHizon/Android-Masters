@@ -45,7 +45,7 @@ public class ProjectListActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private ListenerRegistration listener;
     private SearchView searchView;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     @Override
     protected void onStart() {
         super.onStart();
@@ -118,10 +118,11 @@ public class ProjectListActivity extends AppCompatActivity {
             projectlist.add(project);
         }
         adapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void pullToRefresh() {
-        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -132,8 +133,6 @@ public class ProjectListActivity extends AppCompatActivity {
                 }
                 Query queryRef = db.collection("Projects").orderBy("added_date", Query.Direction.DESCENDING);
                 getInitialProjects(queryRef);
-
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

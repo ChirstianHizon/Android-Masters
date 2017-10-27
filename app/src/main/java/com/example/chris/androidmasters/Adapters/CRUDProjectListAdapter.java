@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.chris.androidmasters.Events.EventViewActivity;
+import com.example.chris.androidmasters.CRUD.Create.AddEventActivity;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
-import com.example.chris.androidmasters.Objects.Events;
+import com.example.chris.androidmasters.Objects.Project;
 import com.example.chris.androidmasters.R;
 
 import java.util.Date;
@@ -25,10 +25,10 @@ import java.util.Random;
  * Created by chris on 08/10/2017.
  */
 
-public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
+public class CRUDProjectListAdapter extends RecyclerView.Adapter<CRUDProjectListAdapter.ViewHolder> {
 
     private Context context;
-    private List<Events> eventlist;
+    private List<Project> projectlist;
     private ColorDrawable[] vibrantLightColorList =
             {
                     new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
@@ -37,24 +37,26 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                     new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
             };
 
-    public EventListAdapter(Context context, List<Events> eventlist) {
+    public CRUDProjectListAdapter(Context context, List<Project> projectlist) {
         this.context = context;
-        this.eventlist = eventlist;
+        this.projectlist = projectlist;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_event_list, parent, false);
+                .inflate(R.layout.card_crud_project_list, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Events events = eventlist.get(position);
+        final Project project = projectlist.get(position);
+
+        holder.project.setText(project.getName());
 
         Date now = new Date();
-        Date completion = events.getDate_event();
+        Date completion = project.getCompletion_date();
 
         ElapsedTime elapsed = new ElapsedTime(now, completion);
 
@@ -72,7 +74,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             holder.measure.setText("Finished");
         }
 
-        holder.event.setText(events.getName());
         String day = (String) DateFormat.format("dd", completion);
         String monthString = (String) DateFormat.format("MMM", completion);
         String year = (String) DateFormat.format("yyyy", completion);
@@ -85,8 +86,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = events.getId();
-                Intent intent = new Intent(context, EventViewActivity.class);
+                String id = project.getId();
+                Intent intent = new Intent(context, AddEventActivity.class);
                 intent.putExtra("id", id);
                 context.startActivity(intent);
             }
@@ -96,11 +97,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     @Override
     public int getItemCount() {
-        return eventlist.size();
+        return projectlist.size();
     }
 
     public void clear() {
-        eventlist.clear();
+        projectlist.clear();
     }
 
     public ColorDrawable getRandomDrawbleColor() {
@@ -110,7 +111,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView event;
+        private final TextView project;
         private final TextView date;
         private final TextView time;
         private final TextView remain;
@@ -120,7 +121,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         public ViewHolder(View view) {
             super(view);
 
-            event = (TextView) view.findViewById(R.id.tv_event);
+            project = (TextView) view.findViewById(R.id.tv_project);
             date = (TextView) view.findViewById(R.id.tv_date);
             time = (TextView) view.findViewById(R.id.tv_time);
             remain = (TextView) view.findViewById(R.id.tv_remain);
