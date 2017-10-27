@@ -84,7 +84,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-light"
                             android:includeFontPadding="false"
-                            android:textColor="#222"
+                            android:textColor="#000"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -139,11 +139,12 @@
                             android:layout_marginTop="2dp"
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/ic_event_black_24dp"
-                            android:drawablePadding="8sp"
-                            android:drawableTint="#333"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="#111"
                             android:fontFamily="sans-serif"
-                            android:gravity="center_vertical"
-                            android:textColor="#333"
+                            android:gravity="left"
+                            android:text="Oct 31, 2017"
+                            android:textColor="#111"
                             android:textSize="14sp" />
 
                         <TextView
@@ -155,11 +156,12 @@
                             android:layout_marginTop="2dp"
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/ic_timelapse_black_24dp"
-                            android:drawablePadding="8sp"
-                            android:drawableTint="#333"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="#111"
                             android:fontFamily="sans-serif"
-                            android:gravity="center_vertical"
-                            android:textColor="#333"
+                            android:gravity="left"
+                            android:text="3 days remaining"
+                            android:textColor="#111"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -208,20 +210,6 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btn_viewevents"
-                        style="@style/Widget.AppCompat.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginRight="24dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="16dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="View Events"
-                        android:textColor="#fff" />
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -258,11 +246,37 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
+                    <Button
+                        android:id="@+id/btn_viewevents"
+                        style="@style/Widget.AppCompat.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginStart="24dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:drawableLeft="@drawable/ic_view_day_black_24dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="#fff"
+                        android:text="View Events"
+                        android:textColor="#fff" />
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="36dp"
+                        android:layout_marginTop="36dp"
+                        android:background="?android:attr/listDivider"
+                        android:minHeight="1dp" />
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:layout_weight="1"
@@ -381,6 +395,6 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="-1dp"
         android:background="@color/ceruleanBlue"
-        android:text="BOOST" />
+        android:text="BOOST THIS PROJECT" />
 
 </android.support.design.widget.CoordinatorLayout>

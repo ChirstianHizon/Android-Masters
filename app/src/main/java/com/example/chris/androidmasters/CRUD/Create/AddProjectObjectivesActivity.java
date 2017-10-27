@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.CRUD.Create;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,6 +129,8 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
                     adapter.add("\u2022" + "  " + objective.getText().toString());
                     objectives.add(objective.getText().toString());
                     objective.setText("");
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(objective.getWindowToken(), 0);
                 } else {
                     Toast.makeText(context, "Missing Fields", Toast.LENGTH_SHORT).show();
                 }
@@ -140,6 +144,8 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         });
         AlertDialog b = dialogBuilder.create();
         b.show();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     @Override

@@ -79,7 +79,7 @@
 
                     <ImageView
                         android:id="@+id/imageView"
-                        android:layout_width="50dp"
+                        android:layout_width="35dp"
                         android:layout_height="25dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_subject_black_24dp" />
@@ -134,7 +134,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Event Schedule"
                     android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
                 <LinearLayout

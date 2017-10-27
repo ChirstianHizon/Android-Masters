@@ -1,6 +1,7 @@
 package com.example.chris.androidmasters.CRUD.Create;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -147,6 +149,8 @@ public class AddProjectContactsActivity extends AppCompatActivity {
                     person.add(edtname.getText().toString());
                     position.add(edtposition.getText().toString());
                     contacts.add(edtcontacts.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtposition.getWindowToken(), 0);
                 } else {
                     Toast.makeText(context, "Missing Fields", Toast.LENGTH_SHORT).show();
                 }
@@ -160,6 +164,9 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         });
         AlertDialog b = dialogBuilder.create();
         b.show();
+        edtname.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
 
