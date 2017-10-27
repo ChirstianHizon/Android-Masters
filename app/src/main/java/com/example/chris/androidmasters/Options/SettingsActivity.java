@@ -94,7 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.w(TAG,"starting Login");
                 if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.clearDefaultAccountAndReconnect();
                 }
@@ -202,19 +202,20 @@ public class SettingsActivity extends AppCompatActivity {
         loginprogress.setIndeterminate(true);
         loginprogress.setCancelable(false);
         loginprogress.show();
-
+        Log.w(TAG,"starting Google Activity");
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.w(TAG,"Google Result Recieved");
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
+                Log.w(TAG,"Google Result Success");
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
@@ -228,7 +229,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
