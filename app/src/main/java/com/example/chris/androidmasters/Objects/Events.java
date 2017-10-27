@@ -8,11 +8,12 @@ import java.util.Date;
 
 public class Events {
 
-    private String id,name,location,description,project;
-    private Date date_added,date_event;
+    private String id, name, location, description, project;
+    private Date date_added, date_event;
     private Boolean volunteers;
 
-    public Events(){}
+    public Events() {
+    }
 
     public String getName() {
         return name;

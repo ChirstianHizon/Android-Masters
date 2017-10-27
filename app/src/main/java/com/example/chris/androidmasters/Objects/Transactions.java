@@ -6,10 +6,12 @@ package com.example.chris.androidmasters.Objects;
 
 public class Transactions {
 
-    private String id,date,amount;
+    private String id, date, amount;
 
-    public Transactions (){}
-    public Transactions (String id,String date,String amount){
+    public Transactions() {
+    }
+
+    public Transactions(String id, String date, String amount) {
         this.id = id;
         this.date = date;
         this.amount = amount;

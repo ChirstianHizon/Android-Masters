@@ -16,11 +16,7 @@ import android.widget.Toast;
 
 import com.example.chris.androidmasters.Objects.Constants;
 import com.example.chris.androidmasters.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -45,10 +41,10 @@ import java.util.Map;
 
 public class DonateActivity extends AppCompatActivity {
 
-    private Activity context = this;
     public static final int PAYPAL_REQUEST_CODE = 484;
+    private Activity context = this;
     private EditText edtamount;
-    private String amount,id;
+    private String amount, id;
     private FirebaseFirestore db;
     private String TAG = "DONATE_ACTIVITY";
     private ProgressBar pbloading;
@@ -70,13 +66,12 @@ public class DonateActivity extends AppCompatActivity {
         }
 
 
-
         db = FirebaseFirestore.getInstance();
-        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
-        mAd = MobileAds.getRewardedVideoAdInstance(this);
+//        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
+//        mAd = MobileAds.getRewardedVideoAdInstance(this);
 
-        edtamount = (EditText)findViewById(R.id.edt_amount);
-        pbloading = (ProgressBar)findViewById(R.id.pb_loading);
+        edtamount = (EditText) findViewById(R.id.edt_amount);
+        pbloading = (ProgressBar) findViewById(R.id.pb_loading);
         btnamount = (Button) findViewById(R.id.btn_donate);
 
         Intent intent = getIntent();
@@ -88,86 +83,81 @@ public class DonateActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 amount = edtamount.getText().toString();
-                if(!amount.equals("") && amount != null){
+                if (!amount.equals("") && amount != null) {
                     pbloading.setVisibility(View.VISIBLE);
                     edtamount.setVisibility(View.GONE);
                     btnamount.setVisibility(View.GONE);
-                  getPayment(amount);
-                }else{
+                    getPayment(amount);
+                } else {
                     Toast.makeText(context, "Set Desired Amount First", Toast.LENGTH_SHORT).show();
                 }
 
 
-
-
             }
         });
 
-        loadRewardedVideoAd();
-        initAdsListeners();
-
-
-
-        Button btnads = (Button)findViewById(R.id.btn_ads);
-        btnads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mAd.isLoaded()) {
-                    mAd.show();
-                }else{
-                    Toast.makeText(context, "Ads has not yet Loaded", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        loadRewardedVideoAd();
+//        initAdsListeners();
+//        Button btnads = (Button)findViewById(R.id.btn_ads);
+//        btnads.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mAd.isLoaded()) {
+//                    mAd.show();
+//                }else{
+//                    Toast.makeText(context, "Ads has not yet Loaded", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
-    private void loadRewardedVideoAd() {
-        mAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
-    }
-
-    private void initAdsListeners(){
-        mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
-            @Override
-            public void onRewardedVideoAdLoaded() {
-                Log.d("DONATE_ADS","VIDEO Loaded");
-
-            }
-
-            @Override
-            public void onRewardedVideoAdOpened() {
-                Log.d("DONATE_ADS","VIDEO OPENED");
-            }
-
-            @Override
-            public void onRewardedVideoStarted() {
-                Log.d("DONATE_ADS","VIDEO STARTED");
-
-            }
-
-            @Override
-            public void onRewardedVideoAdClosed() {
-
-            }
-
-            @Override
-            public void onRewarded(RewardItem rewardItem) {
-                Log.d("DONATE_ADS","VIDEO Complete");
-                Toast.makeText(context, rewardItem.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onRewardedVideoAdLeftApplication() {
-                Log.d("DONATE_ADS","VIDEO Left");
-
-            }
-
-            @Override
-            public void onRewardedVideoAdFailedToLoad(int i) {
-                Log.d("DONATE_ADS","VIDEO Failed");
-
-            }
-        });
-    }
+//    private void loadRewardedVideoAd() {
+//        mAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
+//    }
+//
+//    private void initAdsListeners(){
+//        mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+//            @Override
+//            public void onRewardedVideoAdLoaded() {
+//                Log.d("DONATE_ADS","VIDEO Loaded");
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdOpened() {
+//                Log.d("DONATE_ADS","VIDEO OPENED");
+//            }
+//
+//            @Override
+//            public void onRewardedVideoStarted() {
+//                Log.d("DONATE_ADS","VIDEO STARTED");
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdClosed() {
+//
+//            }
+//
+//            @Override
+//            public void onRewarded(RewardItem rewardItem) {
+//                Log.d("DONATE_ADS","VIDEO Complete");
+//                Toast.makeText(context, rewardItem.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdLeftApplication() {
+//                Log.d("DONATE_ADS","VIDEO Left");
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdFailedToLoad(int i) {
+//                Log.d("DONATE_ADS","VIDEO Failed");
+//
+//            }
+//        });
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -229,8 +219,8 @@ public class DonateActivity extends AppCompatActivity {
 
                         String state = response.getString("state");
 
-                        if(state != null && state.equals("approved")){
-                            Toast.makeText(context, "Thank you for your Donation of P"+amount, Toast.LENGTH_SHORT).show();
+                        if (state != null && state.equals("approved")) {
+                            Toast.makeText(context, "Thank you for your Donation of P" + amount, Toast.LENGTH_SHORT).show();
 
                             String time = response.getString("create_time");
                             String trans_id = response.getString("id");
@@ -238,22 +228,27 @@ public class DonateActivity extends AppCompatActivity {
                             FirebaseAuth mAuth = FirebaseAuth.getInstance();
                             FirebaseUser User = mAuth.getCurrentUser();
                             String key = "";
-                            if(User != null) {
+                            String name = "";
+                            String email = "";
+                            if (User != null) {
                                 key = User.getUid();
+                                email = User.getEmail();
+                                name = User.getDisplayName();
                             }
 
                             Map<String, Object> transactions = new HashMap<>();
                             transactions.put("id", trans_id);
                             transactions.put("date", new Date());
                             transactions.put("amount", amount);
-                            transactions.put("user",key);
+                            transactions.put("id", key);
+                            transactions.put("email", email);
+                            transactions.put("name", name);
 
                             Map<String, Object> docData = new HashMap<>();
                             docData.put(String.valueOf(new Date()), transactions);
 
 
-
-                            db.collection("Transactions").document(id).set(docData,SetOptions.merge())
+                            db.collection("Transactions").document(id).set(docData, SetOptions.merge())
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -282,7 +277,7 @@ public class DonateActivity extends AppCompatActivity {
         }
     }
 
-    private void UpdateProgress(final String amount){
+    private void UpdateProgress(final String amount) {
         // Gets the Current Amount then adds  the latest Donation
         DocumentReference docRef = db.collection("Projects").document(id);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -310,7 +305,7 @@ public class DonateActivity extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "FS Update Failed", task.getException());
                     }
-                }else{
+                } else {
                     Log.d(TAG, "FS RETRIEVE Failed", task.getException());
                 }
             }

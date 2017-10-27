@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.chris.androidmasters.IntroActivity;
 import com.example.chris.androidmasters.R;
 import com.github.paolorotolo.appintro.ISlideBackgroundColorHolder;
 
@@ -19,6 +18,7 @@ import com.github.paolorotolo.appintro.ISlideBackgroundColorHolder;
 public class FirstSlide extends Fragment implements ISlideBackgroundColorHolder {
 
     private View v;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

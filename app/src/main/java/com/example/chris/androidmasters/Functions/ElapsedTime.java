@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class ElapsedTime {
 
-    private long day,hour,minute,second;
-    private Date start,end;
+    private long day, hour, minute, second;
+    private Date start, end;
 
     // Calculate Date Difference
     //1 minute = 60 seconds
@@ -24,7 +24,7 @@ public class ElapsedTime {
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
 
-        this.day  = different / daysInMilli;
+        this.day = different / daysInMilli;
         different = different % daysInMilli;
 
         this.hour = different / hoursInMilli;

@@ -24,21 +24,7 @@ public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDIma
     private final List<Uri> imageList;
     private Context context;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final CardView card;
-        private final ImageView image;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            card = (CardView)view.findViewById(R.id.cv_card);
-            image = (ImageView)view.findViewById(R.id.iv_image);
-
-        }
-    }
-
-    public ProjectCRUDImageAdapter(Context context, ArrayList<Uri> contactsList){
+    public ProjectCRUDImageAdapter(Context context, ArrayList<Uri> contactsList) {
         this.context = context;
         this.imageList = contactsList;
     }
@@ -65,7 +51,23 @@ public class ProjectCRUDImageAdapter extends RecyclerView.Adapter<ProjectCRUDIma
         return imageList.size();
     }
 
-    public void clear() {imageList.clear();}
+    public void clear() {
+        imageList.clear();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final CardView card;
+        private final ImageView image;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            card = (CardView) view.findViewById(R.id.cv_card);
+            image = (ImageView) view.findViewById(R.id.iv_image);
+
+        }
+    }
 
 
 }

@@ -38,7 +38,7 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        startActivity(new Intent(context,ProjectListActivity.class));
+        startActivity(new Intent(context, ProjectListActivity.class));
         finish();
     }
 
@@ -46,7 +46,7 @@ public class IntroActivity extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
 
-        startActivity(new Intent(context,ProjectListActivity.class));
+        startActivity(new Intent(context, ProjectListActivity.class));
         finish();
     }
 }

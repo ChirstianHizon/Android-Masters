@@ -27,16 +27,23 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-public class AddProjectDetailsActivity extends AppCompatActivity{
+public class AddProjectDetailsActivity extends AppCompatActivity {
 
+    public static final int PICK_IMAGE = 1;
+    public static Activity act;
     private Activity context = this;
     private Uri imageUri;
-    public static final int PICK_IMAGE = 1;
     private Project project;
     private int selectedyear, selectedmonth, selectedday;
     private int selectedHour, selectedMinute;
+    private ColorDrawable[] vibrantLightColorList =
+            {
+                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
+                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
+                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
+                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
+            };
 
-    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +60,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
 
 
 //        --------------------- Set Deadline -------------------
-        final EditText edtDate = (EditText)findViewById(R.id.edt_date);
+        final EditText edtDate = (EditText) findViewById(R.id.edt_date);
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +83,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
                                 + selectedyear);
 
                     }
-                },mYear, mMonth, mDay);
+                }, mYear, mMonth, mDay);
                 mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 mDatePicker.show();
 
@@ -84,7 +91,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
             }
         });
 
-        final EditText edttime = (EditText)findViewById(R.id.edt_time);
+        final EditText edttime = (EditText) findViewById(R.id.edt_time);
         edttime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +107,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
                         selectedMinute = xselectedMinute;
                         DecimalFormat formatter = new DecimalFormat("00");
 
-                        edttime.setText( formatter.format(selectedHour) + ":" + formatter.format(selectedMinute));
+                        edttime.setText(formatter.format(selectedHour) + ":" + formatter.format(selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -109,7 +116,7 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
         });
 
 //        ----------------- SELECT IMAGE --------------------------
-        Button btnimage = (Button)findViewById(R.id.btn_image);
+        Button btnimage = (Button) findViewById(R.id.btn_image);
 
 
         btnimage.setOnClickListener(new View.OnClickListener() {
@@ -122,25 +129,24 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
                 pickIntent.setType("image/*");
 
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
                 startActivityForResult(chooserIntent, PICK_IMAGE);
             }
         });
 
-        Button bntnnext = (Button)findViewById(R.id.btn_next);
+        Button bntnnext = (Button) findViewById(R.id.btn_next);
         bntnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //public Project (String name,String desc,String org,Date date,String goal,Uri img)
 
-                TextView name = (TextView)findViewById(R.id.edt_name);
-                TextView desc = (TextView)findViewById(R.id.edt_description);
-                TextView org = (TextView)findViewById(R.id.edt_org);
-                TextView goal = (TextView)findViewById(R.id.edt_goal);
-                TextView date = (TextView)findViewById(R.id.edt_date);
-                TextView time = (TextView)findViewById(R.id.edt_time);
-
+                TextView name = (TextView) findViewById(R.id.edt_name);
+                TextView desc = (TextView) findViewById(R.id.edt_description);
+                TextView org = (TextView) findViewById(R.id.edt_org);
+                TextView goal = (TextView) findViewById(R.id.edt_goal);
+                TextView date = (TextView) findViewById(R.id.edt_date);
+                TextView time = (TextView) findViewById(R.id.edt_time);
 
 
                 DecimalFormat formatter = new DecimalFormat("00");
@@ -149,10 +155,10 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
                 String month = formatter.format(selectedmonth + 1);
                 String day = formatter.format(selectedday);
 
-                String hour =formatter.format(selectedHour);
+                String hour = formatter.format(selectedHour);
                 String min = formatter.format(selectedMinute);
 
-                String datef = year+month+day+hour+min;
+                String datef = year + month + day + hour + min;
 
 //                Log.d("DATE_SELECT", year+month+day+hour+min);
 //
@@ -166,32 +172,32 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
 //                    e.printStackTrace();
 //                }
 
-                if((name.getText().toString().replace(" ", "")).equals("")){
+                if ((name.getText().toString().replace(" ", "")).equals("")) {
                     Toast.makeText(context, "Fill in Name", Toast.LENGTH_SHORT).show();
 
-                }else if ((desc.getText().toString().replace(" ", "")).equals("")){
+                } else if ((desc.getText().toString().replace(" ", "")).equals("")) {
                     Toast.makeText(context, "Fill in Description", Toast.LENGTH_SHORT).show();
 
-                }else if ((org.getText().toString().replace(" ", "")).equals("")){
+                } else if ((org.getText().toString().replace(" ", "")).equals("")) {
                     Toast.makeText(context, "Organization", Toast.LENGTH_SHORT).show();
-                }else if (goal.getText().toString().equals("")){
+                } else if (goal.getText().toString().equals("")) {
                     Toast.makeText(context, "Goal", Toast.LENGTH_SHORT).show();
-                }else if (date.getText().toString().equals("")){
+                } else if (date.getText().toString().equals("")) {
                     Toast.makeText(context, "Set a Target Date", Toast.LENGTH_SHORT).show();
-                }else if (time.getText().toString().equals("")){
+                } else if (time.getText().toString().equals("")) {
                     Toast.makeText(context, "Set a Target Time", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
 
-                    if(imageUri != null){
-                        Intent intent = new Intent(context,AddProjectObjectivesActivity.class);
-                        intent.putExtra("name",  name.getText().toString());
-                        intent.putExtra("desc",  desc.getText().toString());
-                        intent.putExtra("org",  org.getText().toString());
-                        intent.putExtra("date",  datef);
-                        intent.putExtra("goal",  goal.getText().toString());
-                        intent.putExtra("image",  imageUri.toString());
+                    if (imageUri != null) {
+                        Intent intent = new Intent(context, AddProjectObjectivesActivity.class);
+                        intent.putExtra("name", name.getText().toString());
+                        intent.putExtra("desc", desc.getText().toString());
+                        intent.putExtra("org", org.getText().toString());
+                        intent.putExtra("date", datef);
+                        intent.putExtra("goal", goal.getText().toString());
+                        intent.putExtra("image", imageUri.toString());
                         startActivity(intent);
-                    }else{
+                    } else {
                         Toast.makeText(context, "Set an Image", Toast.LENGTH_SHORT).show();
                     }
 
@@ -203,16 +209,15 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             //TODO: action
-            if (data != null){
+            if (data != null) {
 
                 imageUri = data.getData();
-                final ImageView ivdisplay = (ImageView)findViewById(R.id.iv_display);
+                final ImageView ivdisplay = (ImageView) findViewById(R.id.iv_display);
 
-                if(imageUri != null){
+                if (imageUri != null) {
                     Picasso.with(context)
                             .load(imageUri)
                             .placeholder(getRandomDrawbleColor())
@@ -239,14 +244,6 @@ public class AddProjectDetailsActivity extends AppCompatActivity{
         int idx = new Random().nextInt(vibrantLightColorList.length);
         return vibrantLightColorList[idx];
     }
-
-    private ColorDrawable[] vibrantLightColorList =
-            {
-                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
-                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
-                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
-                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
-            };
 
 }
 

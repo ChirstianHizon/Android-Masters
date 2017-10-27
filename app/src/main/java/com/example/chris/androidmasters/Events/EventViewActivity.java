@@ -58,16 +58,16 @@ public class EventViewActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Log.d("EVENTS_VIEW", String.valueOf(documentSnapshot.getData()));
                 final Events events = documentSnapshot.toObject(Events.class);
-                Log.d("EVENTS_VIEW",events.getName());
+                Log.d("EVENTS_VIEW", events.getName());
 
-                TextView eventname = (TextView)findViewById(R.id.tv_event);
-                TextView eventdesc = (TextView)findViewById(R.id.tv_desc);
-                TextView eventlocation = (TextView)findViewById(R.id.tv_location);
-                TextView eventdate = (TextView)findViewById(R.id.tv_date);
-                TextView eventtime = (TextView)findViewById(R.id.tv_time);
-                TextView eventremain = (TextView)findViewById(R.id.tv_remain);
+                TextView eventname = (TextView) findViewById(R.id.tv_event);
+                TextView eventdesc = (TextView) findViewById(R.id.tv_desc);
+                TextView eventlocation = (TextView) findViewById(R.id.tv_location);
+                TextView eventdate = (TextView) findViewById(R.id.tv_date);
+                TextView eventtime = (TextView) findViewById(R.id.tv_time);
+                TextView eventremain = (TextView) findViewById(R.id.tv_remain);
 
-                Button btnvolunteer = (Button)findViewById(R.id.btn_volunteer);
+                Button btnvolunteer = (Button) findViewById(R.id.btn_volunteer);
 
                 eventname.setText(events.getName());
                 eventdesc.setText(events.getDescription());
@@ -77,35 +77,35 @@ public class EventViewActivity extends AppCompatActivity {
                 Date now = new Date();
                 Date completion = events.getDate_event();
 
-                String day          = (String) DateFormat.format("dd",   completion);
-                String monthString  = (String) DateFormat.format("MMM",  completion);
-                String year         = (String) DateFormat.format("yyyy", completion);
-                String hour         = (String) DateFormat.format("hh", completion);
-                String min         = (String) DateFormat.format("mm", completion);
+                String day = (String) DateFormat.format("dd", completion);
+                String monthString = (String) DateFormat.format("MMM", completion);
+                String year = (String) DateFormat.format("yyyy", completion);
+                String hour = (String) DateFormat.format("hh", completion);
+                String min = (String) DateFormat.format("mm", completion);
 
-                eventdate.setText(monthString +" "+day+", "+year);
-                eventtime.setText(hour+" : "+min);
+                eventdate.setText(monthString + " " + day + ", " + year);
+                eventtime.setText(hour + " : " + min);
 
-                if(events.getVolunteers()){
+                if (events.getVolunteers()) {
                     btnvolunteer.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     btnvolunteer.setVisibility(View.GONE);
                 }
 
-                ElapsedTime elapsed = new ElapsedTime(now,completion);
+                ElapsedTime elapsed = new ElapsedTime(now, completion);
 
-                if(elapsed.getDay() != 0 ){
+                if (elapsed.getDay() != 0) {
                     eventremain.setText(elapsed.getDay() + " days remaining");
-                }else if(elapsed.getHour()!= 0 ){
+                } else if (elapsed.getHour() != 0) {
                     eventremain.setText(elapsed.getHour() + " hours remaining");
-                }else if(elapsed.getMinute() != 0 ){
+                } else if (elapsed.getMinute() != 0) {
                     eventremain.setText(elapsed.getMinute() + " mins remaining");
-                }else{
+                } else {
                     eventremain.setText("Finished");
                     btnvolunteer.setVisibility(View.GONE);
                 }
 
-                Button btnCalendar = (Button)findViewById(R.id.btn_addEvent);
+                Button btnCalendar = (Button) findViewById(R.id.btn_addEvent);
                 btnCalendar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -121,7 +121,7 @@ public class EventViewActivity extends AppCompatActivity {
     public void addtoCalendar(Events events) {
 
         Calendar dtend = Calendar.getInstance();
-        dtend.setTime( events.getDate_event());
+        dtend.setTime(events.getDate_event());
 
         Calendar dtstart = Calendar.getInstance();
         dtstart.setTime(new Date());

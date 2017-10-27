@@ -42,7 +42,7 @@ public class EventListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        Log.d(TAG,id);
+        Log.d(TAG, id);
         getSupportActionBar().setTitle("Events");
         //        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
@@ -52,9 +52,9 @@ public class EventListActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        recmain = (RecyclerView)findViewById(R.id.rec_main);
+        recmain = (RecyclerView) findViewById(R.id.rec_main);
         eventlist = new ArrayList<Events>();
-        adapter = new EventListAdapter(context,eventlist);
+        adapter = new EventListAdapter(context, eventlist);
 
         recmain.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -63,13 +63,13 @@ public class EventListActivity extends AppCompatActivity {
         recmain.setAdapter(adapter);
 
         Query queryRef = db.collection("Events")
-                .whereEqualTo("project",id)
-                .orderBy("date_added" , Query.Direction.DESCENDING);
+                .whereEqualTo("project", id)
+                .orderBy("date_added", Query.Direction.DESCENDING);
         gatherEvents(queryRef);
 
     }
 
-    private void gatherEvents(Query query){
+    private void gatherEvents(Query query) {
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
@@ -80,16 +80,16 @@ public class EventListActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(snapshot.isEmpty()){
+                if (snapshot.isEmpty()) {
                     Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     createRecyclerView(snapshot);
                 }
             }
         });
     }
 
-    private void createRecyclerView( QuerySnapshot documentSnap){
+    private void createRecyclerView(QuerySnapshot documentSnap) {
         adapter.clear();
         for (DocumentSnapshot docx : documentSnap) {
             Events events = docx.toObject(Events.class);

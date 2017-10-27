@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddProjectContactsActivity extends AppCompatActivity {
+    public static Activity act;
     private Activity context = this;
     private List<Contacts> contactList;
     private ProjectCRUDContactsAdapter adapter;
@@ -31,8 +32,6 @@ public class AddProjectContactsActivity extends AppCompatActivity {
     private ArrayList<String> position;
     private ArrayList<String> contacts;
 
-
-    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,19 +49,18 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         final String desc = intent.getStringExtra("desc");
-        final String org =  intent.getStringExtra("org");
+        final String org = intent.getStringExtra("org");
         final String date = intent.getStringExtra("date");
         final String goal = intent.getStringExtra("goal");
-        final String image =  intent.getStringExtra("image");
-        final ArrayList<String> objectives =  intent.getStringArrayListExtra("objectives");
-
+        final String image = intent.getStringExtra("image");
+        final ArrayList<String> objectives = intent.getStringArrayListExtra("objectives");
 
 
         person = new ArrayList<>();
         position = new ArrayList<>();
         contacts = new ArrayList<>();
 
-        RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
+        RecyclerView recmain = (RecyclerView) findViewById(R.id.rec_main);
         contactList = new ArrayList<Contacts>();
         adapter = new ProjectCRUDContactsAdapter(context, contactList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -73,8 +71,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         recmain.setAdapter(adapter);
 
 
-
-        Button btnadd = (Button)findViewById(R.id.btn_add);
+        Button btnadd = (Button) findViewById(R.id.btn_add);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +79,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
             }
         });
 
-        Button btnclear = (Button)findViewById(R.id.btn_clear);
+        Button btnclear = (Button) findViewById(R.id.btn_clear);
         btnclear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,25 +92,25 @@ public class AddProjectContactsActivity extends AppCompatActivity {
             }
         });
 
-        Button btnnext = (Button)findViewById(R.id.btn_next);
+        Button btnnext = (Button) findViewById(R.id.btn_next);
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(contacts.size() > 0){
-                    Intent intent = new Intent(context,AddProjectImagesActivity.class);
-                    intent.putExtra("name",  name);
-                    intent.putExtra("desc",  desc);
-                    intent.putExtra("org",  org);
-                    intent.putExtra("date",  date);
-                    intent.putExtra("goal",  goal);
-                    intent.putExtra("image",  image);
-                    intent.putStringArrayListExtra("objectives",  objectives);
-                    intent.putStringArrayListExtra("person",  person);
-                    intent.putStringArrayListExtra("position",  position);
-                    intent.putStringArrayListExtra("contact",  contacts);
+                if (contacts.size() > 0) {
+                    Intent intent = new Intent(context, AddProjectImagesActivity.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("desc", desc);
+                    intent.putExtra("org", org);
+                    intent.putExtra("date", date);
+                    intent.putExtra("goal", goal);
+                    intent.putExtra("image", image);
+                    intent.putStringArrayListExtra("objectives", objectives);
+                    intent.putStringArrayListExtra("person", person);
+                    intent.putStringArrayListExtra("position", position);
+                    intent.putStringArrayListExtra("contact", contacts);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(context, "Select atleast 1 Contact Person", Toast.LENGTH_SHORT).show();
                 }
 
@@ -121,9 +118,8 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+
     public void showChangeLangDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -139,7 +135,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
         dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                if( !edtname.getText().toString().equals("") && !edtposition.getText().equals("") && !edtcontacts.getText().toString().equals("")){
+                if (!edtname.getText().toString().equals("") && !edtposition.getText().equals("") && !edtcontacts.getText().toString().equals("")) {
                     contactList.add(
                             new Contacts(
                                     edtname.getText().toString(),
@@ -151,7 +147,7 @@ public class AddProjectContactsActivity extends AppCompatActivity {
                     person.add(edtname.getText().toString());
                     position.add(edtposition.getText().toString());
                     contacts.add(edtcontacts.getText().toString());
-                }else{
+                } else {
                     Toast.makeText(context, "Missing Fields", Toast.LENGTH_SHORT).show();
                 }
 

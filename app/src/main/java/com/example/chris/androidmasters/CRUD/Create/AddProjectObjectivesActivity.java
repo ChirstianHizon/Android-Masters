@@ -20,12 +20,12 @@ import com.example.chris.androidmasters.R;
 import java.util.ArrayList;
 
 public class AddProjectObjectivesActivity extends AppCompatActivity {
+    public static Activity act;
     private Activity context = this;
     private ArrayList<String> objectives;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> values;
 
-    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +44,12 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         final String desc = intent.getStringExtra("desc");
-        final String org =  intent.getStringExtra("org");
+        final String org = intent.getStringExtra("org");
         final String date = intent.getStringExtra("date");
         final String goal = intent.getStringExtra("goal");
-        final String image =  intent.getStringExtra("image");
+        final String image = intent.getStringExtra("image");
 
-        ListView lvobj = (ListView)findViewById(R.id.lv_obj);
+        ListView lvobj = (ListView) findViewById(R.id.lv_obj);
 
         values = new ArrayList<>();
         objectives = new ArrayList<>();
@@ -59,16 +59,16 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         lvobj.setAdapter(adapter);
 
 
-        Button btnadd = (Button)findViewById(R.id.btn_add);
+        Button btnadd = (Button) findViewById(R.id.btn_add);
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    showChangeLangDialog();
+                showChangeLangDialog();
             }
         });
 
-        Button btnclear = (Button)findViewById(R.id.btn_clear);
+        Button btnclear = (Button) findViewById(R.id.btn_clear);
 
         btnclear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,22 +78,22 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
             }
         });
 
-        Button btnnext = (Button)findViewById(R.id.btn_next);
+        Button btnnext = (Button) findViewById(R.id.btn_next);
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(values.size() > 0){
-                    Intent intent = new Intent(context,AddProjectContactsActivity.class);
-                    intent.putExtra("name",  name);
-                    intent.putExtra("desc",  desc);
-                    intent.putExtra("org",  org);
-                    intent.putExtra("date",  date);
-                    intent.putExtra("goal",  goal);
-                    intent.putExtra("image",  image);
+                if (values.size() > 0) {
+                    Intent intent = new Intent(context, AddProjectContactsActivity.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("desc", desc);
+                    intent.putExtra("org", org);
+                    intent.putExtra("date", date);
+                    intent.putExtra("goal", goal);
+                    intent.putExtra("image", image);
                     intent.putStringArrayListExtra("objectives", objectives);
                     startActivity(intent);
-                }else{
+                } else {
 
                     Toast.makeText(context, "Select atleast 1 Objective", Toast.LENGTH_SHORT).show();
 
@@ -117,17 +117,17 @@ public class AddProjectObjectivesActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.dialog_objective, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText objective = (EditText)dialogView.findViewById(R.id.edt_objectives);
+        final EditText objective = (EditText) dialogView.findViewById(R.id.edt_objectives);
 
         dialogBuilder.setTitle("Add a New Objective");
         dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                if(!(objective.getText().toString().replace(" ", "")).equals("")){
-                    adapter.add("\u2022"+ "  "+objective.getText().toString());
+                if (!(objective.getText().toString().replace(" ", "")).equals("")) {
+                    adapter.add("\u2022" + "  " + objective.getText().toString());
                     objectives.add(objective.getText().toString());
                     objective.setText("");
-                }else{
+                } else {
                     Toast.makeText(context, "Missing Fields", Toast.LENGTH_SHORT).show();
                 }
 

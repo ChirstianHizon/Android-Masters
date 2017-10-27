@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Activity context =  this;
+    private Activity context = this;
     private FirebaseAuth mAuth;
     private String TAG = "SPLASH_PAGE";
     private FirebaseUser User;
@@ -55,16 +55,16 @@ public class SplashActivity extends AppCompatActivity {
         User = mAuth.getCurrentUser();
 
 //        mAuth.signOut();
-        if(User == null){
+        if (User == null) {
             signInUser();
-        }else{
+        } else {
             splashpageCounter();
         }
 
 
     }
 
-    private void setPersistence(){
+    private void setPersistence() {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -74,76 +74,76 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private void signInUser(){
+    private void signInUser() {
         final LinearLayout lvprogress = (LinearLayout) findViewById(R.id.lv_progress);
-        final TextView tvstatus = (TextView)findViewById(R.id.tv_status);
-        final ProgressBar pbstatus = (ProgressBar)findViewById(R.id.pb_status);
+        final TextView tvstatus = (TextView) findViewById(R.id.tv_status);
+        final ProgressBar pbstatus = (ProgressBar) findViewById(R.id.pb_status);
         lvprogress.setVisibility(View.VISIBLE);
 
         mAuth.signInAnonymously()
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInAnonymously:success");
-                        User = mAuth.getCurrentUser();
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInAnonymously:success");
+                            User = mAuth.getCurrentUser();
 
-                        Map<String, Object> devices = new HashMap<>();
-                        devices.put("ID", User.getUid());
-                        devices.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
-                        devices.put("date",new Date());
+                            Map<String, Object> devices = new HashMap<>();
+                            devices.put("ID", User.getUid());
+                            devices.put("FCM Token", FirebaseInstanceId.getInstance().getToken());
+                            devices.put("date", new Date());
 
-                        db.collection("Devices").add(devices).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.w(TAG,documentReference.getId());
-                                lvprogress.setVisibility(View.GONE);
-                                splashpageCounter();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                                pbstatus.setVisibility(View.GONE);
-                                tvstatus.setText("Server Error");
-                            }
-                        });
+                            db.collection("Devices").add(devices).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.w(TAG, documentReference.getId());
+                                    lvprogress.setVisibility(View.GONE);
+                                    splashpageCounter();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                    pbstatus.setVisibility(View.GONE);
+                                    tvstatus.setText("Server Error");
+                                }
+                            });
 
 
-                    } else {
-                        pbstatus.setVisibility(View.GONE);
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInAnonymously:failure", task.getException());
-                        tvstatus.setText("Unable to Connect to Server...");
+                        } else {
+                            pbstatus.setVisibility(View.GONE);
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInAnonymously:failure", task.getException());
+                            tvstatus.setText("Unable to Connect to Server...");
 
+                        }
                     }
-                }
-            });
+                });
     }
 
-    private void splashpageCounter(){
+    private void splashpageCounter() {
 
-        ImageView imgLogo = (ImageView)findViewById(R.id.img_logo);
+        ImageView imgLogo = (ImageView) findViewById(R.id.img_logo);
         // Insert your AnimatedVectorDrawable resource identifier
         AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_logo);
         imgLogo.setImageDrawable(d);
         d.start();
 
-        Thread splashThread = new Thread(){
+        Thread splashThread = new Thread() {
             @Override
-            public void run(){
-                try{
+            public void run() {
+                try {
                     int waited = 0;
-                    while(waited < 2750){
+                    while (waited < 2750) {
                         sleep(100);
                         waited += 100;
                     }
-                }catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     //do nothing
-                }finally{
-                    startActivity(new Intent(context,IntroActivity.class));
+                } finally {
+                    startActivity(new Intent(context, IntroActivity.class));
                     finish();
                 }
             }

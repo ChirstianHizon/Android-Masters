@@ -10,14 +10,15 @@ import java.util.Date;
 
 public class Project {
 
-    private String id,name,description,organization,image,logo,current,goal;
-    private Date completion_date,insert_date;
+    private String id, name, description, organization, image, logo, current, goal;
+    private Date completion_date, insert_date;
     private Uri uriimage;
 
-    public Project(){
+    public Project() {
 
     }
-    public Project (String name, String desc, String org,Date date, String goal, Uri img){
+
+    public Project(String name, String desc, String org, Date date, String goal, Uri img) {
         this.name = name;
         this.description = desc;
         this.organization = org;
@@ -25,7 +26,8 @@ public class Project {
         this.goal = goal;
         this.uriimage = img;
     }
-    public Project(String id,String name,String desc,String date,String organization,String image,String logo,String current,String goal){
+
+    public Project(String id, String name, String desc, String date, String organization, String image, String logo, String current, String goal) {
         this.id = id;
         this.name = name;
         this.description = desc;

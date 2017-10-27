@@ -6,11 +6,12 @@ package com.example.chris.androidmasters.Objects;
 
 public class Contacts {
 
-    private String id,name,position,contact;
+    private String id, name, position, contact;
 
-    public Contacts(){}
+    public Contacts() {
+    }
 
-    public Contacts(String name,String position,String contaact){
+    public Contacts(String name, String position, String contaact) {
 
         this.name = name;
         this.position = position;

@@ -25,23 +25,7 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
     private final List<Transactions> transactionsList;
     private Context context;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView amount;
-        private final TextView datestamp;
-        private final CardView card;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            amount  = (TextView)view.findViewById(R.id.tv_name);
-            datestamp = (TextView)view.findViewById(R.id.tv_date);
-            card = (CardView)view.findViewById(R.id.cv_card);
-
-        }
-    }
-
-    public ProjectTransactionAdapter(Context context, List<Transactions> transactionsList){
+    public ProjectTransactionAdapter(Context context, List<Transactions> transactionsList) {
         this.context = context;
         this.transactionsList = transactionsList;
     }
@@ -58,7 +42,7 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
         final Transactions transactions = transactionsList.get(position);
 
         String currency = getCurrencySymbol("PHP");
-        holder.amount.setText("A user has donated  "+currency+" "+ transactions.getAmount());
+        holder.amount.setText("A user has donated  " + currency + " " + transactions.getAmount());
         holder.datestamp.setText(transactions.getDate());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +51,6 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
                 Toast.makeText(context, transactions.getId(), Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }
@@ -80,6 +63,22 @@ public class ProjectTransactionAdapter extends RecyclerView.Adapter<ProjectTrans
     public void clear() {
         transactionsList.clear();
 
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView amount;
+        private final TextView datestamp;
+        private final CardView card;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            amount = (TextView) view.findViewById(R.id.tv_name);
+            datestamp = (TextView) view.findViewById(R.id.tv_date);
+            card = (CardView) view.findViewById(R.id.cv_card);
+
+        }
     }
 
 

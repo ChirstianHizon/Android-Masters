@@ -9,10 +9,11 @@ import java.util.List;
 
 public class Details {
 
-    private String display_image,display_video,full_description,organization,short_description,title,logo;
-    private List<String>images,objectives;
+    private String display_image, display_video, full_description, organization, short_description, title, logo;
+    private List<String> images, objectives;
 
-    public Details(){}
+    public Details() {
+    }
 
     public String getDisplay_image() {
         return display_image;
@@ -66,20 +67,21 @@ public class Details {
         return images;
     }
 
-    public String getSelectedImages(int pos) {
-        if(pos >= images.size()){
-            return null;
-        }else {
-            return images.get(pos);
-        }
-    }
-    public int getImagesSize(){
-        return images.size();
-    }
-
     public void setImages(List<String> images) {
         this.images = new ArrayList<String>();
         this.images = images;
+    }
+
+    public String getSelectedImages(int pos) {
+        if (pos >= images.size()) {
+            return null;
+        } else {
+            return images.get(pos);
+        }
+    }
+
+    public int getImagesSize() {
+        return images.size();
     }
 
     public String getLogo() {
@@ -92,11 +94,11 @@ public class Details {
 
     public List<String> getObjectives() {
 
-        if(objectives == null){
-            return  null;
-        } else if(objectives.isEmpty()){
+        if (objectives == null) {
             return null;
-        }else{
+        } else if (objectives.isEmpty()) {
+            return null;
+        } else {
             return objectives;
         }
     }

@@ -19,13 +19,13 @@ import com.example.chris.androidmasters.R;
 import java.util.ArrayList;
 
 public class AddProjectImagesActivity extends AppCompatActivity {
+    public static final int PICK_IMAGE = 1;
+    public static Activity act;
     private Activity context = this;
     private ArrayList<Uri> imageList;
     private ArrayList<String> stringimageList;
     private ProjectCRUDImageAdapter adapter;
-    public static final int PICK_IMAGE = 1;
 
-    public static Activity act;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        RecyclerView recmain = (RecyclerView)findViewById(R.id.rec_main);
+        RecyclerView recmain = (RecyclerView) findViewById(R.id.rec_main);
         imageList = new ArrayList<Uri>();
         adapter = new ProjectCRUDImageAdapter(context, imageList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -55,16 +55,16 @@ public class AddProjectImagesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         final String desc = intent.getStringExtra("desc");
-        final String org =  intent.getStringExtra("org");
+        final String org = intent.getStringExtra("org");
         final String date = intent.getStringExtra("date");
         final String goal = intent.getStringExtra("goal");
-        final String image =  intent.getStringExtra("image");
+        final String image = intent.getStringExtra("image");
         final ArrayList objectives = intent.getStringArrayListExtra("objectives");
         final ArrayList person = intent.getStringArrayListExtra("person");
         final ArrayList contacts = intent.getStringArrayListExtra("contact");
         final ArrayList position = intent.getStringArrayListExtra("position");
 
-        Button btnclear = (Button)findViewById(R.id.btn_clear);
+        Button btnclear = (Button) findViewById(R.id.btn_clear);
         btnclear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +76,7 @@ public class AddProjectImagesActivity extends AppCompatActivity {
             }
         });
 
-        Button btnadd = (Button)findViewById(R.id.btn_add);
+        Button btnadd = (Button) findViewById(R.id.btn_add);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,36 +88,35 @@ public class AddProjectImagesActivity extends AppCompatActivity {
                 pickIntent.setType("image/*");
 
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
                 startActivityForResult(chooserIntent, PICK_IMAGE);
 
             }
         });
 
-        Button btnnext = (Button)findViewById(R.id.btn_next);
+        Button btnnext = (Button) findViewById(R.id.btn_next);
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(stringimageList.size() > 0){
-                    Intent intent = new Intent(context,AddProjectReviewActivity.class);
-                    intent.putExtra("name",  name);
-                    intent.putExtra("desc",  desc);
-                    intent.putExtra("org",  org);
-                    intent.putExtra("date",  date);
-                    intent.putExtra("goal",  goal);
-                    intent.putExtra("image",  image);
-                    intent.putStringArrayListExtra("objectives",  objectives);
-                    intent.putStringArrayListExtra("person",  person);
-                    intent.putStringArrayListExtra("position",  position);
-                    intent.putStringArrayListExtra("contact",  contacts);
-                    intent.putStringArrayListExtra("imagesArray",  stringimageList);
+                if (stringimageList.size() > 0) {
+                    Intent intent = new Intent(context, AddProjectReviewActivity.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("desc", desc);
+                    intent.putExtra("org", org);
+                    intent.putExtra("date", date);
+                    intent.putExtra("goal", goal);
+                    intent.putExtra("image", image);
+                    intent.putStringArrayListExtra("objectives", objectives);
+                    intent.putStringArrayListExtra("person", person);
+                    intent.putStringArrayListExtra("position", position);
+                    intent.putStringArrayListExtra("contact", contacts);
+                    intent.putStringArrayListExtra("imagesArray", stringimageList);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(context, "Select atleast 1 image", Toast.LENGTH_SHORT).show();
                 }
-
 
 
 //                FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -136,10 +135,10 @@ public class AddProjectImagesActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             //TODO: action
-            if (data != null){
+            if (data != null) {
 
                 Uri imageUri = data.getData();
-                if(imageUri != null){
+                if (imageUri != null) {
                     imageList.add(imageUri);
                     adapter.notifyDataSetChanged();
 
@@ -149,6 +148,7 @@ public class AddProjectImagesActivity extends AppCompatActivity {
 
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here

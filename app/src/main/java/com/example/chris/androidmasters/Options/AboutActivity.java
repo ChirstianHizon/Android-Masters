@@ -72,7 +72,7 @@ public class AboutActivity extends AppCompatActivity {
         Date date = new Date();
         String year = (String) DateFormat.format("yyyy", date);
 
-        final String copyrights ="Copyright "+year;
+        final String copyrights = "Copyright " + year;
         copyRightsElement.setTitle(copyrights);
         copyRightsElement.setIconDrawable(R.drawable.copyright);
         copyRightsElement.setIconTint(mehdi.sakout.aboutpage.R.color.about_item_icon_color);

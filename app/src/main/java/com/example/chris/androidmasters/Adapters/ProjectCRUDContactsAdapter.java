@@ -23,25 +23,7 @@ public class ProjectCRUDContactsAdapter extends RecyclerView.Adapter<ProjectCRUD
     private final List<Contacts> contactsList;
     private Context context;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final CardView card;
-        private final TextView contact;
-        private final TextView position;
-        private final TextView name;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            name  = (TextView)view.findViewById(R.id.tv_name);
-            position = (TextView)view.findViewById(R.id.tv_position);
-            contact = (TextView)view.findViewById(R.id.tv_contact);
-            card = (CardView)view.findViewById(R.id.cv_card);
-
-        }
-    }
-
-    public ProjectCRUDContactsAdapter(Context context, List<Contacts> contactsList){
+    public ProjectCRUDContactsAdapter(Context context, List<Contacts> contactsList) {
         this.context = context;
         this.contactsList = contactsList;
     }
@@ -57,7 +39,7 @@ public class ProjectCRUDContactsAdapter extends RecyclerView.Adapter<ProjectCRUD
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Contacts contacts = contactsList.get(position);
 
-        Log.d("Adapter","OK");
+        Log.d("Adapter", "OK");
         holder.contact.setText(contacts.getContact());
         holder.name.setText(contacts.getName());
         holder.position.setText(contacts.getPosition());
@@ -68,7 +50,27 @@ public class ProjectCRUDContactsAdapter extends RecyclerView.Adapter<ProjectCRUD
         return contactsList.size();
     }
 
-    public void clear() {contactsList.clear();}
+    public void clear() {
+        contactsList.clear();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final CardView card;
+        private final TextView contact;
+        private final TextView position;
+        private final TextView name;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            name = (TextView) view.findViewById(R.id.tv_name);
+            position = (TextView) view.findViewById(R.id.tv_position);
+            contact = (TextView) view.findViewById(R.id.tv_contact);
+            card = (CardView) view.findViewById(R.id.cv_card);
+
+        }
+    }
 
 
 }

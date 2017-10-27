@@ -34,7 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectListActivity extends AppCompatActivity{
+public class ProjectListActivity extends AppCompatActivity {
 
     private Activity context = this;
     private RecyclerView recmain;
@@ -61,15 +61,15 @@ public class ProjectListActivity extends AppCompatActivity{
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser User = mAuth.getCurrentUser();
 
-        if(User == null){
+        if (User == null) {
             Toast.makeText(context, "Unable to Authenticate User", Toast.LENGTH_LONG).show();
             finish();
         }
 
-        recmain = (RecyclerView)findViewById(R.id.rec_main);
+        recmain = (RecyclerView) findViewById(R.id.rec_main);
 
         projectlist = new ArrayList<Project>();
-        adapter = new ProjectListAdapter(context,projectlist);
+        adapter = new ProjectListAdapter(context, projectlist);
 
         recmain.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -79,7 +79,7 @@ public class ProjectListActivity extends AppCompatActivity{
 
 //        ------------------------------------------------------------------------------------- //
 
-        Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
+        Query queryRef = db.collection("Projects").orderBy("added_date", Query.Direction.DESCENDING);
         getInitialProjects(queryRef);
 
 //        ------------------------------------------------------------------------------------- //
@@ -88,30 +88,29 @@ public class ProjectListActivity extends AppCompatActivity{
 
     }
 
-    private void getInitialProjects(Query queryRef){
+    private void getInitialProjects(Query queryRef) {
         listener = queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot snapshot, FirebaseFirestoreException e) {
 
-            if (e != null) {
-                Log.w(TAG, "Listen failed.", e);
-                return;
-            }
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
 
 
-
-            if(snapshot.isEmpty()){
-                Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
-            }else{
-                createRecyclerView(snapshot);
-            }
+                if (snapshot.isEmpty()) {
+                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+                } else {
+                    createRecyclerView(snapshot);
+                }
             }
         });
 
     }
 
-    private void createRecyclerView( QuerySnapshot documentSnap){
+    private void createRecyclerView(QuerySnapshot documentSnap) {
         adapter.clear();
         for (DocumentSnapshot docx : documentSnap) {
             Project project = docx.toObject(Project.class);
@@ -121,17 +120,17 @@ public class ProjectListActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();
     }
 
-    private void pullToRefresh(){
+    private void pullToRefresh() {
         final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 adapter.clear();
 
-                if(listener != null){
+                if (listener != null) {
                     listener.remove();
                 }
-                Query queryRef = db.collection("Projects").orderBy("added_date" , Query.Direction.DESCENDING);
+                Query queryRef = db.collection("Projects").orderBy("added_date", Query.Direction.DESCENDING);
                 getInitialProjects(queryRef);
 
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -160,7 +159,7 @@ public class ProjectListActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Query queryRef = db.collection("Projects")
-                        .whereEqualTo("search",query);
+                        .whereEqualTo("search", query);
                 getInitialProjects(queryRef);
 
                 searchView.clearFocus();

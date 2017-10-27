@@ -19,6 +19,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class FirebaseNotifications extends FirebaseMessagingService {
 
     private static final String TAG = "FCM Service";
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // TODO: Handle FCM messages here.
@@ -32,10 +33,10 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         Log.d(TAG, "Included Data: " + remoteMessage.getData());
         Log.d(TAG, "Key Data: " + remoteMessage.getData().get("key"));
 
-        NewProject("Project Boost",remoteMessage.getNotification().getBody());
+        NewProject("Project Boost", remoteMessage.getNotification().getBody());
     }
 
-    public void NewProject(String title,String message){
+    public void NewProject(String title, String message) {
         String appname = getResources().getString(R.string.app_name);
 
         Intent intent = new Intent(this, ProjectListActivity.class);

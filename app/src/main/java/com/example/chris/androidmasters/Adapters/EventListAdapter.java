@@ -37,29 +37,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                     new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
             };
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView event;
-        private final TextView date;
-        private final TextView time;
-        private final TextView remain;
-        private final CardView card;
-        private final TextView measure;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            event = (TextView)view.findViewById(R.id.tv_event);
-            date = (TextView)view.findViewById(R.id.tv_date);
-            time = (TextView)view.findViewById(R.id.tv_time);
-            remain = (TextView)view.findViewById(R.id.tv_remain);
-            measure = (TextView)view.findViewById(R.id.tv_date_measure);
-            card = (CardView)view.findViewById(R.id.cv_card);
-
-        }
-    }
-
-    public EventListAdapter(Context context, List<Events> eventlist){
+    public EventListAdapter(Context context, List<Events> eventlist) {
         this.context = context;
         this.eventlist = eventlist;
     }
@@ -78,38 +56,38 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         Date now = new Date();
         Date completion = events.getDate_event();
 
-        ElapsedTime elapsed = new ElapsedTime(now,completion);
+        ElapsedTime elapsed = new ElapsedTime(now, completion);
 
-        if(elapsed.getDay() != 0 ){
+        if (elapsed.getDay() != 0) {
             holder.remain.setText(elapsed.getDay() + "");
             holder.measure.setText("days to go");
-        }else if(elapsed.getHour()!= 0 ){
+        } else if (elapsed.getHour() != 0) {
             holder.remain.setText(elapsed.getHour() + "");
             holder.measure.setText("hours remaining");
-        }else if(elapsed.getMinute() != 0 ){
+        } else if (elapsed.getMinute() != 0) {
             holder.remain.setText(elapsed.getMinute() + "");
             holder.measure.setText("minutes left");
-        }else{
+        } else {
             holder.remain.setText("");
             holder.measure.setText("Finished");
         }
 
         holder.event.setText(events.getName());
-        String day          = (String) DateFormat.format("dd",   completion);
-        String monthString  = (String) DateFormat.format("MMM",  completion);
-        String year         = (String) DateFormat.format("yyyy", completion);
-        String hour         = (String) DateFormat.format("hh", completion);
-        String min         = (String) DateFormat.format("mm", completion);
+        String day = (String) DateFormat.format("dd", completion);
+        String monthString = (String) DateFormat.format("MMM", completion);
+        String year = (String) DateFormat.format("yyyy", completion);
+        String hour = (String) DateFormat.format("hh", completion);
+        String min = (String) DateFormat.format("mm", completion);
 
-        holder.date.setText(monthString +" "+day+", "+year);
-        holder.time.setText(hour+" : "+min);
+        holder.date.setText(monthString + " " + day + ", " + year);
+        holder.time.setText(hour + " : " + min);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String id = events.getId();
-                Intent intent =  new Intent(context, EventViewActivity.class);
-                intent.putExtra("id",id);
+                Intent intent = new Intent(context, EventViewActivity.class);
+                intent.putExtra("id", id);
                 context.startActivity(intent);
             }
         });
@@ -128,6 +106,28 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     public ColorDrawable getRandomDrawbleColor() {
         int idx = new Random().nextInt(vibrantLightColorList.length);
         return vibrantLightColorList[idx];
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView event;
+        private final TextView date;
+        private final TextView time;
+        private final TextView remain;
+        private final CardView card;
+        private final TextView measure;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            event = (TextView) view.findViewById(R.id.tv_event);
+            date = (TextView) view.findViewById(R.id.tv_date);
+            time = (TextView) view.findViewById(R.id.tv_time);
+            remain = (TextView) view.findViewById(R.id.tv_remain);
+            measure = (TextView) view.findViewById(R.id.tv_date_measure);
+            card = (CardView) view.findViewById(R.id.cv_card);
+
+        }
     }
 
 }

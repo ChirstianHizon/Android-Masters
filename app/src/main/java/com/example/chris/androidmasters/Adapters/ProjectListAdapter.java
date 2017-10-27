@@ -37,46 +37,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     private Context context;
     private List<Project> projectlist;
+    private ColorDrawable[] vibrantLightColorList =
+            {
+                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
+                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
+                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
+                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
+            };
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView name;
-        private final TextView description;
-        private final ImageView display;
-        private final TextView organization;
-        private final ImageView image;
-        private final TextView date;
-        private final TextView date_measure;
-        private final ImageView logo;
-        private final CardView card;
-        private final TextView id;
-        private final TextView goal;
-        private final TextView current;
-        private final TextView current_label;
-        private final ProgressBar status;
-        private final TextView donated;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            id = (TextView)view.findViewById(R.id.tv_id);
-            name = (TextView)view.findViewById(R.id.tv_name);
-            description = (TextView)view.findViewById(R.id.tv_desc);
-            display = (ImageView)view.findViewById(R.id.iv_image);
-            organization = (TextView)view.findViewById(R.id.tv_organization);
-            logo = (ImageView)view.findViewById(R.id.iv_logo);
-            image = (ImageView)view.findViewById(R.id.iv_image);
-            date = (TextView)view.findViewById(R.id.tv_date);
-            date_measure = (TextView)view.findViewById(R.id.tv_date_measure);
-            card = (CardView)view.findViewById(R.id.cv_card);
-            goal = (TextView) view.findViewById(R.id.tv_goal);
-            donated = (TextView) view.findViewById(R.id.tv_donated_value);
-            current = (TextView)view.findViewById(R.id.tv_current);
-            current_label = (TextView)view.findViewById(R.id.tv_current_label);
-            status = (ProgressBar)view.findViewById(R.id.pb_status);
-        }
-    }
-
-    public ProjectListAdapter( Context context, List<Project> projectlist){
+    public ProjectListAdapter(Context context, List<Project> projectlist) {
         this.context = context;
         this.projectlist = projectlist;
     }
@@ -93,14 +62,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         return vibrantLightColorList[idx];
     }
 
-    private ColorDrawable[] vibrantLightColorList =
-            {
-                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
-                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
-                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
-                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
-            };
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Project project = projectlist.get(position);
@@ -111,7 +72,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.name.setText(project.getName());
         holder.description.setText(project.getDescription());
 
-        holder.organization.setText("by "+project.getOrganization());
+        holder.organization.setText("by " + project.getOrganization());
         Double goal = Double.valueOf(project.getGoal());
         Double current = Double.valueOf(project.getCurrent());
 
@@ -119,26 +80,25 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         String currency = "₱";
 
         holder.current.setText(progress.intValue() + "%");
-        holder.donated.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
-        holder.goal.setText(currency+ NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getGoal())));
-
+        holder.donated.setText(currency + NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getCurrent())));
+        holder.goal.setText(currency + NumberFormat.getIntegerInstance().format(Integer.valueOf(project.getGoal())));
 
 
         Log.d("PROGRESS", String.valueOf(progress));
 
-        if(current > goal){
+        if (current > goal) {
             holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
             holder.current.setTextColor(Color.parseColor("#FF00C853"));
             holder.current_label.setTextColor(Color.parseColor("#FF00C853"));
-        }else if(current.equals(goal)){
+        } else if (current.equals(goal)) {
             holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF00C853"), PorterDuff.Mode.SRC_IN);
             holder.current.setTextColor(Color.parseColor("#FF00C853"));
             holder.current_label.setTextColor(Color.parseColor("#FF00C853"));
-        }else if(current.equals(0)){
+        } else if (current.equals(0)) {
             holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#F44336"), PorterDuff.Mode.SRC_IN);
             holder.current.setTextColor(Color.parseColor("#F44336"));
             holder.current_label.setTextColor(Color.parseColor("#F44336"));
-        }else{
+        } else {
             holder.status.getProgressDrawable().setColorFilter(Color.parseColor("#FF9800"), PorterDuff.Mode.SRC_IN);
             holder.current.setTextColor(Color.parseColor("#FF9800"));
             holder.current_label.setTextColor(Color.parseColor("#FF9800"));
@@ -146,12 +106,12 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.status.setProgress(progress.intValue(),true);
-        }else{
+            holder.status.setProgress(progress.intValue(), true);
+        } else {
             holder.status.setProgress(progress.intValue());
         }
 
-        Log.d("IMAGE",project.getImage());
+        Log.d("IMAGE", project.getImage());
 
         RequestOptions myOptions = new RequestOptions()
                 .error(R.color.white)
@@ -190,10 +150,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 String organization = holder.organization.getText().toString();
 //                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
-                Intent intent =  new Intent(context, ProjectView.class);
+                Intent intent = new Intent(context, ProjectView.class);
 //                Intent intent = new Intent(context, SampleCheckout.class);
-                intent.putExtra("id",id);
-                intent.putExtra("organization",organization);
+                intent.putExtra("id", id);
+                intent.putExtra("organization", organization);
                 context.startActivity(intent);
             }
         });
@@ -203,18 +163,18 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         Date now = new Date();
         Date completion = project.getCompletion_date();
 
-        ElapsedTime elapsed = new ElapsedTime(now,completion);
+        ElapsedTime elapsed = new ElapsedTime(now, completion);
 
-        if(elapsed.getDay() > 0 ){
+        if (elapsed.getDay() > 0) {
             holder.date.setText(elapsed.getDay() + "");
             holder.date_measure.setText("days to go");
-        }else if(elapsed.getHour() > 0 ){
+        } else if (elapsed.getHour() > 0) {
             holder.date.setText(elapsed.getHour() + "");
             holder.date_measure.setText("hours remaining");
-        }else if(elapsed.getMinute() > 0 ){
+        } else if (elapsed.getMinute() > 0) {
             holder.date.setText(elapsed.getMinute() + "");
             holder.date_measure.setText("minutes left");
-        }else{
+        } else {
             holder.date.setText("");
             holder.date_measure.setText("Finished");
         }
@@ -230,6 +190,44 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     public void clear() {
         projectlist.clear();
 
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView name;
+        private final TextView description;
+        private final ImageView display;
+        private final TextView organization;
+        private final ImageView image;
+        private final TextView date;
+        private final TextView date_measure;
+        private final ImageView logo;
+        private final CardView card;
+        private final TextView id;
+        private final TextView goal;
+        private final TextView current;
+        private final TextView current_label;
+        private final ProgressBar status;
+        private final TextView donated;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            id = (TextView) view.findViewById(R.id.tv_id);
+            name = (TextView) view.findViewById(R.id.tv_name);
+            description = (TextView) view.findViewById(R.id.tv_desc);
+            display = (ImageView) view.findViewById(R.id.iv_image);
+            organization = (TextView) view.findViewById(R.id.tv_organization);
+            logo = (ImageView) view.findViewById(R.id.iv_logo);
+            image = (ImageView) view.findViewById(R.id.iv_image);
+            date = (TextView) view.findViewById(R.id.tv_date);
+            date_measure = (TextView) view.findViewById(R.id.tv_date_measure);
+            card = (CardView) view.findViewById(R.id.cv_card);
+            goal = (TextView) view.findViewById(R.id.tv_goal);
+            donated = (TextView) view.findViewById(R.id.tv_donated_value);
+            current = (TextView) view.findViewById(R.id.tv_current);
+            current_label = (TextView) view.findViewById(R.id.tv_current_label);
+            status = (ProgressBar) view.findViewById(R.id.pb_status);
+        }
     }
 
 }

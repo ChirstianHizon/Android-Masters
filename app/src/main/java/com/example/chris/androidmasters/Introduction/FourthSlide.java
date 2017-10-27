@@ -17,6 +17,7 @@ import com.github.paolorotolo.appintro.ISlideBackgroundColorHolder;
 
 public class FourthSlide extends Fragment implements ISlideBackgroundColorHolder {
     View v;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
