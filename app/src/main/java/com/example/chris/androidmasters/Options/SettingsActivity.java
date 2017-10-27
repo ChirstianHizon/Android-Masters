@@ -210,6 +210,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.w(TAG,"Google Result Recieved");
+        Log.w(TAG,"Google Result RES:"+resultCode+" | REQ:"+requestCode+" |RC:"+RC_SIGN_IN);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
