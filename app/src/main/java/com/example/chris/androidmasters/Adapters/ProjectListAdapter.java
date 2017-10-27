@@ -21,7 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.androidmasters.Functions.ElapsedTime;
 import com.example.chris.androidmasters.Objects.Project;
-import com.example.chris.androidmasters.Projects.ProjectView;
+import com.example.chris.androidmasters.Projects.ProjectViewActivity;
 import com.example.chris.androidmasters.R;
 
 import java.text.NumberFormat;
@@ -150,7 +150,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 String organization = holder.organization.getText().toString();
 //                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(context, ProjectView.class);
+                Intent intent = new Intent(context, ProjectViewActivity.class);
 //                Intent intent = new Intent(context, SampleCheckout.class);
                 intent.putExtra("id", id);
                 intent.putExtra("organization", organization);

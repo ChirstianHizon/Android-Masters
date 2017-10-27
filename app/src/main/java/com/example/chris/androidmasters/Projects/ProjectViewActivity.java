@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProjectView extends AppCompatActivity {
+public class ProjectViewActivity extends AppCompatActivity {
 
     private static String id;
     private Activity context = this;
@@ -99,7 +99,7 @@ public class ProjectView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ProjectView.this, DonateActivity.class);
+                Intent intent = new Intent(ProjectViewActivity.this, DonateActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
 

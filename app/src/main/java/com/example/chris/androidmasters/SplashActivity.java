@@ -1,7 +1,9 @@
 package com.example.chris.androidmasters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.chris.androidmasters.Objects.Constants;
+import com.example.chris.androidmasters.Projects.ProjectListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +62,7 @@ public class SplashActivity extends AppCompatActivity {
         if (User == null) {
             signInUser();
         } else {
+
             splashpageCounter();
         }
 
@@ -124,6 +129,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void splashpageCounter() {
+        final SharedPreferences prefs = this.getSharedPreferences(
+                Constants.introSettings, Context.MODE_PRIVATE);
+        final boolean intro = prefs.getBoolean(Constants.isIntroEnabled,true);
 
         ImageView imgLogo = (ImageView) findViewById(R.id.img_logo);
         // Insert your AnimatedVectorDrawable resource identifier
@@ -143,7 +151,13 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     //do nothing
                 } finally {
-                    startActivity(new Intent(context, IntroActivity.class));
+                    if(intro){
+                        prefs.edit().putBoolean(Constants.isIntroEnabled,false).apply();
+                        startActivity(new Intent(context, IntroActivity.class));
+                    }else{
+                        startActivity(new Intent(context, ProjectListActivity.class));
+                    }
+
                     finish();
                 }
             }

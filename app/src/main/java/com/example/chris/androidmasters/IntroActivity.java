@@ -29,9 +29,7 @@ public class IntroActivity extends AppIntro {
         addSlide(new SecondSlide());
         addSlide(new ThirdSlide());
         addSlide(new FourthSlide());
-
         setColorTransitionsEnabled(true);
-
         showSkipButton(true);
     }
 

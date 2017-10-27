@@ -26,4 +26,7 @@ public class Constants {
         return symbol;
     }
 
+    public static String introSettings = "introSettings";
+    public static String isIntroEnabled = "isIntroEnabled";
+
 }
