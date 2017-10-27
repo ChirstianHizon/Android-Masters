@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,7 +46,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -357,45 +355,39 @@ public class ProjectViewActivity extends AppCompatActivity {
 
             if (details.getSelectedImages(x) != null && !details.getSelectedImages(x).equals("")) {
                 final ImageView myImage = new ImageView(this);
+                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 myImage.setImageResource(R.mipmap.ic_launcher);
                 llimagedisplay.addView(myImage);
 
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT);
-//
-//                myImage.setLayoutParams(params);
-//                myImage.getLayoutParams().height = 500;
-
                 if (!details.getSelectedImages(x).equals("") && details.getSelectedImages(x) != null) {
 
-                    Picasso.Builder builder = new Picasso.Builder(this);
-                    builder.listener(new Picasso.Listener() {
-                        @Override
-                        public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                            myImage.setVisibility(View.GONE);
-                        }
-                    });
-                    // Set to False to remove indicators on upper Left
-//                    builder.indicatorsEnabled(true);
-                    builder.build()
-                            .load(details.getSelectedImages(x))
-                            .resize(200,200)
-                            .centerCrop()
-                            .error(R.mipmap.ic_launcher)
-                            .into(myImage);
-
-//                    RequestOptions myOptions = new RequestOptions()
-//                            .error(R.color.white)
-//                            .centerCrop()
-//                            .fitCenter()
-//                            .override(350,350)
-//                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-
-
-//                    Glide.with(context)
+//                    Glide.Builder builder = new Glide.Builder(this);
+//                    builder.listener(new Picasso.Listener() {
+//                        @Override
+//                        public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+//                            myImage.setVisibility(View.GONE);
+//                        }
+//                    });
+//                    // Set to False to remove indicators on upper Left
+////                    builder.indicatorsEnabled(true);
+//                    builder.build()
 //                            .load(details.getSelectedImages(x))
-//                            .apply(myOptions)
+//                            .resize(200,200)
+//                            .centerCrop()
+//                            .error(R.mipmap.ic_launcher)
 //                            .into(myImage);
+
+                    RequestOptions myOptions = new RequestOptions()
+                            .error(R.color.white)
+                            .override(250, 250)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+
+                    Glide.with(context)
+                            .load(details.getSelectedImages(x))
+                            .apply(myOptions)
+                            .into(myImage);
                 } else {
                     myImage.setVisibility(View.GONE);
                 }
