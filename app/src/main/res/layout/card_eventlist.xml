@@ -10,12 +10,8 @@
         android:id="@+id/cv_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="8dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true">
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,12 +21,12 @@
                 android:id="@+id/linerLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="26dp"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -56,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:text="Event Name"
                         android:textColor="#333"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         tools:layout_editor_absoluteX="62dp"
                         tools:layout_editor_absoluteY="187dp" />
 
@@ -103,12 +99,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif-light"
+                            android:fontFamily="sans-serif"
                             android:text="Date Start"
                             android:textAlignment="viewStart"
                             android:textColor="#333"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
+                            android:textSize="14sp"
                             tools:layout_editor_absoluteX="62dp"
                             tools:layout_editor_absoluteY="187dp" />
 
@@ -139,12 +134,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif-light"
+                            android:fontFamily="sans-serif"
                             android:text="Time Start"
                             android:textAlignment="viewStart"
                             android:textColor="#333"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
+                            android:textSize="14sp"
                             tools:layout_editor_absoluteX="62dp"
                             tools:layout_editor_absoluteY="187dp" />
 
@@ -153,7 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="days to go"
+                            android:text="days left"
                             android:textAlignment="viewEnd"
                             android:textColor="#555"
                             android:textDirection="rtl"
