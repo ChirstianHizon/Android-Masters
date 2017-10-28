@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_settings);
 
-        getSupportActionBar().setTitle("SettingsActivity");
+        getSupportActionBar().setTitle("Settings");
 //        -----------  add back arrow to toolbar ------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -167,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 RequestOptions myOptions = new RequestOptions()
                         .error(R.drawable.images)
-                        .override(100, 100)
+                        .override(150, 150)
                         .circleCrop()
                         .placeholder(R.drawable.images)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -187,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
                 enterAdmin();
                 RequestOptions myOptions = new RequestOptions()
                         .error(R.drawable.images)
-                        .override(200, 200)
+                        .override(150, 150)
                         .circleCrop()
                         .placeholder(R.drawable.images)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

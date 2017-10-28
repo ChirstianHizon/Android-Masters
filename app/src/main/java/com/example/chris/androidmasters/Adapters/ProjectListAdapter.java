@@ -167,7 +167,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         if (elapsed.getDay() > 0) {
             holder.date.setText(elapsed.getDay() + "");
-            holder.date_measure.setText("days to go");
+            holder.date_measure.setText("days remaining");
         } else if (elapsed.getHour() > 0) {
             holder.date.setText(elapsed.getHour() + "");
             holder.date_measure.setText("hours remaining");

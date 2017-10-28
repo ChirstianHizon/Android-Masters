@@ -81,10 +81,11 @@ public class EventListActivity extends AppCompatActivity {
                 }
 
                 if (snapshot.isEmpty()) {
-                    Toast.makeText(context, "No Project Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "No Events Found Found", Toast.LENGTH_SHORT).show();
                 } else {
                     createRecyclerView(snapshot);
                 }
+
             }
         });
     }
