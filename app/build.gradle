@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.example.chris.mainactivity"
+        applicationId "com.projectboost.chris.androidmasters"
         minSdkVersion 22
         targetSdkVersion 25
         versionCode 1
@@ -29,7 +29,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+    compile ('com.paypal.sdk:paypal-android-sdk:2.15.3')
+            {
+                exclude group: 'io.card'
+            }
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:4.2.0'

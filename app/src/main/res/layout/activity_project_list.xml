@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chris.androidmasters.Projects.ProjectListActivity">
+    tools:context="com.projectboost.chris.androidmasters.Projects.ProjectListActivity">
+
+    <ProgressBar
+        android:id="@+id/pb_main"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh"
@@ -22,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/cardview_shadow_end_color"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.chris.androidmasters">
+    package="com.projectboost.chris.androidmasters">
 
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.projectboost.chris.androidmasters.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,46 +21,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Projects.ProjectListActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.Projects.ProjectListActivity" />
         <activity
-            android:name=".Projects.ProjectViewActivity"
+            android:name="com.projectboost.chris.androidmasters.Projects.ProjectViewActivity"
             android:theme="@style/AppTheme.NoActionBarTransparent" />
         <activity
-            android:name=".Projects.DonateActivity"
+            android:name="com.projectboost.chris.androidmasters.Projects.DonateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Options.AboutActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.Options.AboutActivity" />
         <activity
-            android:name=".IntroActivity"
+            android:name="com.projectboost.chris.androidmasters.IntroActivity"
             android:theme="@style/AppTheme.Fullscreen" />
 
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
 
-        <service android:name=".Notifications.FirebaseNotifications">
+        <service android:name="com.projectboost.chris.androidmasters.Notifications.FirebaseNotifications">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Notifications.FirebaseIDService">
+        <service android:name="com.projectboost.chris.androidmasters.Notifications.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".CRUD.Create.AddProjectDetailsActivity" />
-        <activity android:name=".CRUD.Create.AddProjectObjectivesActivity" />
-        <activity android:name=".CRUD.Create.AddProjectContactsActivity" />
-        <activity android:name=".CRUD.Create.AddProjectImagesActivity" />
-        <activity android:name=".CRUD.Create.AddProjectReviewActivity" />
-        <activity android:name=".Events.EventListActivity" />
-        <activity android:name=".Options.SettingsActivity" />
-        <activity android:name=".Events.EventViewActivity" />
-        <activity android:name=".CRUD.CRUDProjectListActivity" />
-        <activity android:name=".CRUD.CRUDEventListActivity" />
-        <activity android:name=".CRUD.Create.AddEventActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddProjectDetailsActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddProjectObjectivesActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddProjectContactsActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddProjectImagesActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddProjectReviewActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.Events.EventListActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.Options.SettingsActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.Events.EventViewActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.CRUDProjectListActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.CRUDEventListActivity" />
+        <activity android:name="com.projectboost.chris.androidmasters.CRUD.Create.AddEventActivity" />
         <activity
-            android:name=".Events.VolunteerActivity"
+            android:name="com.projectboost.chris.androidmasters.Events.VolunteerActivity"
             android:label="@string/title_activity_volunteer"></activity>
     </application>
 

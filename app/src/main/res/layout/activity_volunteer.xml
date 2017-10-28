@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chris.androidmasters.Events.VolunteerActivity">
+    tools:context="com.projectboost.chris.androidmasters.Events.VolunteerActivity">
 
     <Button
         android:id="@+id/btn_volunteer"
+        style="@android:style/Widget.DeviceDefault.Button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginBottom="-51dp"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
         android:text="Volunteer"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:layout_marginBottom="-1dp"
-        style="@android:style/Widget.DeviceDefault.Button"
-        android:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"

@@ -5,19 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eaeaea"
-    tools:context="com.example.chris.androidmasters.Events.EventViewActivity">
+    tools:context="com.projectboost.chris.androidmasters.Events.EventViewActivity">
 
     <Button
         android:id="@+id/btn_volunteer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
         android:text="Volunteer"
-        android:visibility="gone"
+        android:textColor="#FFF"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
